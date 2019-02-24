@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница с формой</title>
+</head>
+<body>
+<a href="table.html">Перейти на страницу с таблицей</a>
+
+<h1>Регистрационная форма</h1>
+<form method="post" action="echo.html" enctype="multipart/form-data">
+    <label>Логин <input type="text" name="login" placeholder="Ivanov"></label>
+    <br><br>
+    <label>Пароль <input type="password" name="password"></label>
+    <br><br>
+    <label>Почта <input type="email" name="email" placeholder="ivanov@gmail.com"></label>
+    <br><br>
+    <label><input type="checkbox" name="check-agree" checked> я согласен получать рассылку</label>
+    <br><br>
+    Пол:
+    <label><input type="radio" name="sex" value="male" checked> Мужчина </label>
+    <label><input type="radio" name="sex" value="female"> Женщина</label>
+    <br><br>
+    <label>Аватарка <input type="file" name="image"></label>
+    <br><br>
+    <label>Девиз<br>
+        <textarea name="motto" rows="4" cols="30"></textarea>
+    </label>
+    <br><br>
+    <label>Месяц рождения
+        <select name="month">
+            <option value="01" selected>январь</option>
+            <option value="02">февраль</option>
+            <option value="03">март</option>
+            <option value="04">апрель</option>
+            <option value="05">май</option>
+            <option value="06">июнь</option>
+            <option value="07">июль</option>
+            <option value="08">август</option>
+            <option value="09">сентябрь</option>
+            <option value="10">октябрь</option>
+            <option value="11">ноябрь</option>
+            <option value="12">декабрь</option>
+        </select>
+    </label>
+    <br><br>
+    <label>Любимые дни недели:<br>
+        <select name="days" multiple size="7">
+            <option value="1">понедельник</option>
+            <option value="2">вторник</option>
+            <option value="3">среда</option>
+            <option value="4">четверг</option>
+            <option value="5">пятница</option>
+            <option value="6" selected>суббота</option>
+            <option value="7" selected>воскресенье</option>
+        </select>
+    </label>
+    <br><br>
+    <input type="reset" value="Сбросить"> <input type="submit" value="Отправить">
+</form>
+</body>
+</html>
