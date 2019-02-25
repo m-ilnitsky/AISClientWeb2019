@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/AISClientWeb2019.iml" filepath="$PROJECT_DIR$/.idea/AISClientWeb2019.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task01_IntroHtml/Task01_IntroHtml.iml" filepath="$PROJECT_DIR$/Task01_IntroHtml/Task01_IntroHtml.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task02_CSS_Text/Task02_CSS_Text.iml" filepath="$PROJECT_DIR$/Task02_CSS_Text/Task02_CSS_Text.iml" />
     </modules>
   </component>
 </project>
