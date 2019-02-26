@@ -1,0 +1,74 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 12px;
+}
+
+.form-header {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #676565;
+    font-size: 1.5em;
+    font-weight: normal;
+    margin-left: 35px;
+    margin-bottom: 2px;
+}
+
+.form-div {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #676565;
+    background-color: #feeed6;
+    width: 610px;
+    margin: 1px 20px 20px 20px;
+    padding: 15px;
+}
+
+.form label {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.form p {
+    text-indent: 0;
+    line-height: 1.5;
+    margin: 10px 0 0 0;
+}
+
+.form input {
+    font-size: 1em;
+    border: 0;
+    margin: 2px 0 15px 0;
+    padding: 10px;
+    width: 580px;
+}
+
+.form textarea {
+    font-size: 1em;
+    border: 0;
+    margin: 2px 0 2px 0;
+    padding: 10px;
+    width: 580px;
+    resize: vertical;
+}
+
+.button-div {
+    position: relative;
+    width: 580px;
+    margin: 0;
+    padding: 0;
+    height: 30px;
+}
+
+.form input[type="submit"] {
+    width: 120px;
+    background-color: #378db2;
+    font-size: 1em;
+    font-weight: bold;
+    color: white;
+    padding: 5px;
+    margin: 10px 0 0 0;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
