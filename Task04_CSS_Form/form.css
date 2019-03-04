@@ -3,25 +3,25 @@
 }
 
 body {
-    font-size: 12px;
+    font-size: 16px;
 }
 
 .form-header {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #676565;
-    font-size: 1.5em;
+    font-size: 2em;
     font-weight: normal;
-    margin-left: 35px;
-    margin-bottom: 2px;
+    margin-left: 40px;
+    margin-bottom: 5px;
 }
 
 .form-div {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #676565;
     background-color: #feeed6;
-    width: 610px;
     margin: 1px 20px 20px 20px;
-    padding: 15px;
+    padding: 20px;
+    max-width: 840px;
 }
 
 .form label {
@@ -32,43 +32,48 @@ body {
 .form p {
     text-indent: 0;
     line-height: 1.5;
-    margin: 10px 0 0 0;
+    margin: 15px 0 0 0;
 }
 
 .form input {
     font-size: 1em;
     border: 0;
-    margin: 2px 0 15px 0;
+    margin: 5px 0 20px 0;
     padding: 10px;
-    width: 580px;
+    width: 100%;
 }
 
 .form textarea {
     font-size: 1em;
     border: 0;
-    margin: 2px 0 2px 0;
+    margin: 5px 0 5px 0;
     padding: 10px;
-    width: 580px;
     resize: vertical;
+    width: 100%;
 }
 
 .button-div {
     position: relative;
-    width: 580px;
     margin: 0;
     padding: 0;
-    height: 30px;
+    height: 40px;
+    width: auto;
 }
 
 .form input[type="submit"] {
-    width: 120px;
+    width: 170px;
     background-color: #378db2;
     font-size: 1em;
     font-weight: bold;
     color: white;
-    padding: 5px;
+    padding: 10px;
     margin: 10px 0 0 0;
     position: absolute;
     bottom: 0;
     right: 0;
+}
+
+.form input[type="submit"]:hover {
+    background-color: #32728d;
+    cursor: pointer;
 }
