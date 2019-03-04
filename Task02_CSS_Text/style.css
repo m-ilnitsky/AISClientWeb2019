@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #676565;
@@ -7,6 +11,7 @@ body > div {
     background-color: #feeed6;
     margin: 20px;
     padding: 10px;
+    max-width: 850px;
 }
 
 h1 {
