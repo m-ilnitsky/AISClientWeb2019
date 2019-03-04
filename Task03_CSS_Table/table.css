@@ -2,44 +2,43 @@
     box-sizing: border-box;
 }
 
-table {
+div.persons {
+    max-width: 860px;
+}
+
+table.persons {
+    table-layout: initial;
+    margin: 20px;
     border-collapse: collapse;
     border: 1px solid #cccccc;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 20px;
-    width: 1070px;
+    font-size: 24px;
+    width: 100%;
 }
 
-th {
+table.persons th {
     border: 1px solid #cccccc;
     background-color: #3498db;
     color: #fff;
-    padding: 20px 15px;
+    padding: 12px 12px;
     text-align: left;
 }
 
-td {
+table.persons td {
     border: 1px solid #cccccc;
     color: #211e2b;
-    padding: 20px 15px;
+    padding: 12px 12px;
 }
 
-tr:nth-child(even) td {
+table.persons tbody tr:nth-child(even) td {
     background-color: #eeeeee;
 }
 
-th:nth-child(1) {
-    width: 220px;
+table.persons th.column1,
+table.persons th.column2 {
+    width: 20.5%;
 }
 
-th:nth-child(2) {
-    width: 220px;
-}
-
-th:nth-child(3) {
-    width: 380px;
-}
-
-th:nth-child(4) {
-    width: 250px;
+table.persons th.column3 {
+    width: 36%;
 }
