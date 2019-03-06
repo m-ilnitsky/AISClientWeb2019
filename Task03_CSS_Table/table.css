@@ -2,11 +2,11 @@
     box-sizing: border-box;
 }
 
-div.persons {
+.persons-div {
     max-width: 860px;
 }
 
-table.persons {
+.persons {
     table-layout: initial;
     margin: 20px;
     border-collapse: collapse;
@@ -16,7 +16,7 @@ table.persons {
     width: 100%;
 }
 
-table.persons th {
+.persons th {
     border: 1px solid #cccccc;
     background-color: #3498db;
     color: #fff;
@@ -24,21 +24,21 @@ table.persons th {
     text-align: left;
 }
 
-table.persons td {
+.persons td {
     border: 1px solid #cccccc;
     color: #211e2b;
     padding: 12px 12px;
 }
 
-table.persons tbody tr:nth-child(even) td {
+.persons tbody tr:nth-child(even) td {
     background-color: #eeeeee;
 }
 
-table.persons th.column1,
-table.persons th.column2 {
+.persons .column1,
+.persons .column2 {
     width: 20.5%;
 }
 
-table.persons th.column3 {
+.persons .column3 {
     width: 36%;
 }
