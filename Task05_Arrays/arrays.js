@@ -5,7 +5,7 @@
 
     var primeNumbers = [1, 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37];
 
-    console.log("Исходный массив list: " + primeNumbers);
+    console.log("Исходный массив primeNumbers: " + primeNumbers);
 
 
     function compareNumeric(a, b) {
@@ -14,7 +14,7 @@
 
     primeNumbers.sort(compareNumeric);
 
-    console.log("Отсортированный массив list: " + primeNumbers);
+    console.log("Отсортированный массив primeNumbers: " + primeNumbers);
 
 
     var numberElements = 5;
