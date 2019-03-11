@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 
-.persons-div {
+.persons-wrapper {
     max-width: 860px;
 }
 
