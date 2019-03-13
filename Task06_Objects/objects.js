@@ -4,43 +4,43 @@
 
     function createCountryList() {
         var russia = {
-            "Название": "Россия",
-            "Города": [
-                {"Название": "Москва", "Население": 12e6},
-                {"Название": "Петроград", "Население": 5e6},
-                {"Название": "Новосибирск", "Население": 1.6e6},
-                {"Название": "Екатеринбург", "Население": 1.4e6},
-                {"Название": "Нижний Новгород", "Население": 1.2e6}
+            "name": "Россия",
+            "cities": [
+                {"name": "Москва", "population": 12e6},
+                {"name": "Петроград", "population": 5e6},
+                {"name": "Новосибирск", "population": 1.6e6},
+                {"name": "Екатеринбург", "population": 1.4e6},
+                {"name": "Нижний Новгород", "population": 1.2e6}
             ]
         };
 
         var ukraine = {
-            "Название": "Украина",
-            "Города": [
-                {"Название": "Киев", "Население": 2.9e6},
-                {"Название": "Харьков", "Население": 1.4e6},
-                {"Название": "Одесса", "Население": 1e6},
-                {"Название": "Днепропетровск", "Население": 1e6},
-                {"Название": "Донецк", "Население": 0.9e6}
+            "name": "Украина",
+            "cities": [
+                {"name": "Киев", "population": 2.9e6},
+                {"name": "Харьков", "population": 1.4e6},
+                {"name": "Одесса", "population": 1e6},
+                {"name": "Днепропетровск", "population": 1e6},
+                {"name": "Донецк", "population": 0.9e6}
             ]
         };
 
         var belarus = {
-            "Название": "Беларусь",
-            "Города": [
-                {"Название": "Минск", "Население": 1.9e6},
-                {"Название": "Брест", "Население": 0.3e6},
-                {"Название": "Гомель", "Население": 0.5e6}
+            "name": "Беларусь",
+            "cities": [
+                {"name": "Минск", "population": 1.9e6},
+                {"name": "Брест", "population": 0.3e6},
+                {"name": "Гомель", "population": 0.5e6}
             ]
         };
 
         var kazakhstan = {
-            "Название": "Казахстан",
-            "Города": [
-                {"Название": "Алма-Ата", "Население": 1.8e6},
-                {"Название": "Астана", "Население": 1e6},
-                {"Название": "Шимкент", "Население": 1e6},
-                {"Название": "Караганда", "Население": 0.5e6}
+            "name": "Казахстан",
+            "cities": [
+                {"name": "Алма-Ата", "population": 1.8e6},
+                {"name": "Астана", "population": 1e6},
+                {"name": "Шимкент", "population": 1e6},
+                {"name": "Караганда", "population": 0.5e6}
             ]
         };
 
@@ -49,50 +49,28 @@
 
     var countries = createCountryList();
 
-
-    function numberOfCities(a) {
-        return a["Города"].length;
-    }
-
-    function max(max, current) {
-        if (current > max) {
-            return current;
-        } else {
-            return max;
-        }
-    }
-
-    var maxNumberOfCities = countries.map(numberOfCities).reduce(max, 0);
-
+    var maxNumberOfCities = countries.map(function (a) {
+        return a["cities"].length;
+    }).reduce(function (max, current) {
+        return Math.max(max, current);
+    }, 0);
     console.log("Максимальное число городов: " + maxNumberOfCities);
 
-    function isMaxNumberOfCities(a) {
-        return a["Города"].length === maxNumberOfCities;
-    }
-
-    function getCountryName(a) {
-        return a["Название"];
-    }
-
-    var countriesWithMaxNumberOfCities = countries.filter(isMaxNumberOfCities).map(getCountryName);
-
+    var countriesWithMaxNumberOfCities = countries.filter(function (a) {
+        return a["cities"].length === maxNumberOfCities;
+    }).map(function (a) {
+        return a["name"];
+    });
     console.log("Страны с максимальным числом городов: " + countriesWithMaxNumberOfCities);
 
-
-    function createCountryMap(object, current) {
+    var countryMap = countries.reduce(function (object, current) {
         function sumPopulation(sum, current) {
-            return sum + current["Население"];
+            return sum + current["population"];
         }
 
-        var population = current["Города"].reduce(sumPopulation, 0);
-
-        object[current["Название"]] = population;
-
+        object[current["name"]] = current["cities"].reduce(sumPopulation, 0);
         return object;
-    }
-
-    var countryMap = countries.reduce(createCountryMap, {});
-
+    }, {});
     console.log("Страны и их население: ");
     for (var property in countryMap) {
         console.log(property + " : " + countryMap[property]);
