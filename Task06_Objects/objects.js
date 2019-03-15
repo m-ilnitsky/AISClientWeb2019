@@ -67,7 +67,7 @@
     });
     console.log("Страны с максимальным числом городов: " + countriesWithMaxNumberOfCities);
 
-    var countryMap = {}
+    var countryMap = {};
     countries.forEach(function(country) {
         countryMap[country.name] = country.cities.reduce(function(sum, current) {
             return sum + current.population;
