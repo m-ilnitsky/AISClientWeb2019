@@ -1,0 +1,66 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 16px;
+}
+
+.form-header {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #39c;
+    font-size: 2em;
+    font-weight: normal;
+    margin-left: 40px;
+    margin-bottom: 5px;
+}
+
+.form-wrapper {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #fff;
+    background-color: #48f;
+    margin: 1px 20px 20px 20px;
+    padding: 20px;
+    max-width: 500px;
+}
+
+.form-wrapper label {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.form-wrapper p {
+    text-indent: 0;
+    line-height: 1.5;
+    margin: 15px 0 0 0;
+}
+
+.form-wrapper input {
+    font-size: 1em;
+    border: 0;
+    margin: 5px 0 20px 0;
+    padding: 10px;
+    width: 100%;
+}
+
+.form-wrapper input:last-of-type {
+    margin-bottom: 5px;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    position: absolute;
+    top: 15px;
+    left: 500px;
+    width: 300px;
+    display: none;
+}
+
+.show-error {
+    display: block;
+}
