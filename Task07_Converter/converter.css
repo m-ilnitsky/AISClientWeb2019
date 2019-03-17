@@ -19,8 +19,9 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #fff;
     background-color: #48f;
-    margin: 1px 20px 20px 20px;
+    border-radius: 6px;
     padding: 20px;
+    margin: 1px 20px 20px 20px;
     max-width: 500px;
     min-width: 380px;
 }
@@ -46,6 +47,14 @@ body {
 
 .form-wrapper input:last-of-type {
     margin-bottom: 5px;
+}
+
+.form-wrapper input:focus {
+    outline: #248 solid 2px;
+}
+
+.form-wrapper input.show-error {
+    outline: red solid 2px;
 }
 
 .input-wrapper {

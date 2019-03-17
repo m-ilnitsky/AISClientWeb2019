@@ -34,33 +34,37 @@
             errorK.className = "error-message";
             errorC.className = "error-message";
             errorF.className = "error-message";
+
+            inputK.className = "";
+            inputC.className = "";
+            inputF.className = "";
         }
 
         var minValueMessage = "Минимальное значение: ";
         var numberErrorMessage = "Введите корректное число!";
 
-        function showErrorMessage(errorElement, errorMessage) {
+        function showErrorMessage(inputElement, errorElement, errorMessage) {
             errorElement.textContent = errorMessage;
             errorElement.className = "error-message show-error";
+            inputElement.className = "show-error";
         }
 
-        function validateInputValue(inputElement, min, errorElement) {
+        function validateInputValue(inputElement, errorElement, min) {
             var value = parseFloat(inputElement.value);
             if (isNaN(value) || typeof (value) !== "number") {
-                showErrorMessage(errorElement, numberErrorMessage);
+                showErrorMessage(inputElement, errorElement, numberErrorMessage);
                 return false;
             }
             clearErrorMessages();
             if (value < min) {
-                value = min;
                 inputElement.value = min;
-                showErrorMessage(errorElement, minValueMessage + min);
+                showErrorMessage(inputElement, errorElement, minValueMessage + min);
             }
             return true;
         }
 
         function onInputC() {
-            if (!validateInputValue(inputC, minC, errorC)) {
+            if (!validateInputValue(inputC, errorC, minC)) {
                 return
             }
             var C = parseFloat(inputC.value);
@@ -69,7 +73,7 @@
         }
 
         function onInputK() {
-            if (!validateInputValue(inputK, minK, errorK)) {
+            if (!validateInputValue(inputK, errorK, minK)) {
                 return
             }
             var C = convertKtoC(parseFloat(inputK.value));
@@ -78,7 +82,7 @@
         }
 
         function onInputF() {
-            if (!validateInputValue(inputF, minF, errorF)) {
+            if (!validateInputValue(inputF, errorF, minF)) {
                 return
             }
             var C = convertFtoC(parseFloat(inputF.value));
@@ -86,8 +90,14 @@
             inputK.value = convertCtoK(C);
         }
 
-        inputC.addEventListener("change", onInputC);
         inputK.addEventListener("change", onInputK);
+        inputC.addEventListener("change", onInputC);
         inputF.addEventListener("change", onInputF);
+
+        inputF.addEventListener("keydown", function (e) {
+            if (e.keyCode === 9) {
+                inputK.focus();
+            }
+        });
     });
 })();
