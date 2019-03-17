@@ -21,9 +21,6 @@
         return (parseFloat(F) - 32) * 5 / 9;
     }
 
-    var minValueMessage = "Минимальное значение: ";
-    var errorNumberMessage = "Введите корректное число!";
-
     document.addEventListener("DOMContentLoaded", function () {
         var inputK = document.getElementById("temperatureK");
         var inputC = document.getElementById("temperatureC");
@@ -39,58 +36,52 @@
             errorF.className = "error-message";
         }
 
-        function onInputC() {
-            var C = parseFloat(inputC.value);
-            if (isNaN(C) || typeof (C) !== "number") {
-                errorC.textContent = errorNumberMessage;
-                errorC.className = "error-message show-error";
-                return
+        var minValueMessage = "Минимальное значение: ";
+        var numberErrorMessage = "Введите корректное число!";
+
+        function showErrorMessage(errorElement, errorMessage) {
+            errorElement.textContent = errorMessage;
+            errorElement.className = "error-message show-error";
+        }
+
+        function validateInputValue(inputElement, min, errorElement) {
+            var value = parseFloat(inputElement.value);
+            if (isNaN(value) || typeof (value) !== "number") {
+                showErrorMessage(errorElement, numberErrorMessage);
+                return false;
             }
             clearErrorMessages();
-            if (C < minC) {
-                C = minC;
-                inputC.value = minC;
-                errorC.textContent = minValueMessage + minC;
-                errorC.className = "error-message show-error";
+            if (value < min) {
+                value = min;
+                inputElement.value = min;
+                showErrorMessage(errorElement, minValueMessage + min);
             }
+            return true;
+        }
+
+        function onInputC() {
+            if (!validateInputValue(inputC, minC, errorC)) {
+                return
+            }
+            var C = parseFloat(inputC.value);
             inputK.value = convertCtoK(C);
             inputF.value = convertCtoF(C);
         }
 
         function onInputK() {
-            var K = parseFloat(inputK.value);
-            if (isNaN(K) || typeof (K) !== "number") {
-                errorK.textContent = errorNumberMessage;
-                errorK.className = "error-message show-error";
+            if (!validateInputValue(inputK, minK, errorK)) {
                 return
             }
-            clearErrorMessages();
-            if (K < minK) {
-                K = minK;
-                inputK.value = minK;
-                errorK.textContent = minValueMessage + minK;
-                errorK.className = "error-message show-error";
-            }
-            var C = convertKtoC(K);
+            var C = convertKtoC(parseFloat(inputK.value));
             inputC.value = C;
             inputF.value = convertCtoF(C);
         }
 
         function onInputF() {
-            var F = parseFloat(inputF.value);
-            if (isNaN(F) || typeof (F) !== "number") {
-                errorF.textContent = errorNumberMessage;
-                errorF.className = "error-message show-error";
+            if (!validateInputValue(inputF, minF, errorF)) {
                 return
             }
-            clearErrorMessages();
-            if (F < minF) {
-                F = minF;
-                inputF.value = minF;
-                errorF.textContent = minValueMessage + minF;
-                errorF.className = "error-message show-error";
-            }
-            var C = convertFtoC(F);
+            var C = convertFtoC(parseFloat(inputF.value));
             inputC.value = C;
             inputK.value = convertCtoK(C);
         }
