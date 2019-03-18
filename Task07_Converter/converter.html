@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title>Задача "Перевод температур"</title>
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="converter.css">
 </head>
+
 <body>
-<h1 class="form-header">Конвертер температур</h1>
-<div class="form-wrapper">
-    <label for="temperatureK">Температура в градусах Кельвина</label>
-    <br>
-    <div class="input-wrapper">
-        <input id="temperatureK" type="number" name="temperatureK" placeholder="Температура в градусах Кельвина">
-        <div class="error-message"></div>
+    <h1 class="form-header">Конвертер температур</h1>
+    <div class="form-wrapper">
+        <div class="label-wrapper">
+            <label for="temperatureK">Температура в градусах Кельвина</label>
+        </div>
+        <div class="input-wrapper">
+            <input id="temperatureK" type="number" name="temperatureK" placeholder="Температура в градусах Кельвина">
+            <div class="error-message"></div>
+        </div>
+        <div class="label-wrapper">
+            <label for="temperatureC">Температура в градусах Цельсия</label>
+        </div>
+        <div class="input-wrapper">
+            <input id="temperatureC" type="number" name="temperatureC" placeholder="Температура в градусах Цельсия">
+            <div class="error-message"></div>
+        </div>
+        <div class="label-wrapper">
+            <label for="temperatureF">Температура в градусах Фаренгейта</label>
+        </div>
+        <div class="input-wrapper">
+            <input id="temperatureF" type="number" name="temperatureF" placeholder="Температура в градусах Фаренгейта">
+            <div class="error-message"></div>
+        </div>
     </div>
-    <br>
-    <label for="temperatureC">Температура в градусах Цельсия</label>
-    <br>
-    <div class="input-wrapper">
-        <input id="temperatureC" type="number" name="temperatureC" placeholder="Температура в градусах Цельсия">
-        <div class="error-message"></div>
-    </div>
-    <br>
-    <label for="temperatureF">Температура в градусах Фаренгейта</label>
-    <br>
-    <div class="input-wrapper">
-        <input id="temperatureF" type="number" name="temperatureF" placeholder="Температура в градусах Фаренгейта">
-        <div class="error-message"></div>
-    </div>
-</div>
-<script src="converter.js"></script>
+    <script src="converter.js"></script>
 </body>
+
 </html>

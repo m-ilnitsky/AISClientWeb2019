@@ -1,27 +1,27 @@
 "use strict";
 
-(function () {
+(function() {
     var minK = 0;
     var minC = -273.15;
     var minF = -459.67;
 
-    function convertCtoK(C) {
-        return parseFloat(C) + 273.15;
+    function convertCtoK(tC) {
+        return parseFloat(tC) + 273.15;
     }
 
-    function convertKtoC(K) {
-        return parseFloat(K) - 273.15;
+    function convertKtoC(tK) {
+        return parseFloat(tK) - 273.15;
     }
 
-    function convertCtoF(C) {
-        return parseFloat(C) * 9 / 5 + 32;
+    function convertCtoF(tC) {
+        return parseFloat(tC) * 9 / 5 + 32;
     }
 
-    function convertFtoC(F) {
-        return (parseFloat(F) - 32) * 5 / 9;
+    function convertFtoC(tF) {
+        return (parseFloat(tF) - 32) * 5 / 9;
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         var inputK = document.getElementById("temperatureK");
         var inputC = document.getElementById("temperatureC");
         var inputF = document.getElementById("temperatureF");
@@ -51,7 +51,7 @@
 
         function validateInputValue(inputElement, errorElement, min) {
             var value = parseFloat(inputElement.value);
-            if (isNaN(value) || typeof (value) !== "number") {
+            if (isNaN(value) || typeof(value) !== "number") {
                 showErrorMessage(inputElement, errorElement, numberErrorMessage);
                 return false;
             }
@@ -67,35 +67,36 @@
             if (!validateInputValue(inputC, errorC, minC)) {
                 return
             }
-            var C = parseFloat(inputC.value);
-            inputK.value = convertCtoK(C);
-            inputF.value = convertCtoF(C);
+            var tC = parseFloat(inputC.value);
+            inputK.value = convertCtoK(tC);
+            inputF.value = convertCtoF(tC);
         }
 
         function onInputK() {
             if (!validateInputValue(inputK, errorK, minK)) {
                 return
             }
-            var C = convertKtoC(parseFloat(inputK.value));
-            inputC.value = C;
-            inputF.value = convertCtoF(C);
+            var tC = convertKtoC(parseFloat(inputK.value));
+            inputC.value = tC;
+            inputF.value = convertCtoF(tC);
         }
 
         function onInputF() {
             if (!validateInputValue(inputF, errorF, minF)) {
                 return
             }
-            var C = convertFtoC(parseFloat(inputF.value));
-            inputC.value = C;
-            inputK.value = convertCtoK(C);
+            var tC = convertFtoC(parseFloat(inputF.value));
+            inputC.value = tC;
+            inputK.value = convertCtoK(tC);
         }
 
         inputK.addEventListener("change", onInputK);
         inputC.addEventListener("change", onInputC);
         inputF.addEventListener("change", onInputF);
 
-        inputF.addEventListener("keydown", function (e) {
+        inputF.addEventListener("keydown", function(e) {
             if (e.keyCode === 9) {
+                e.preventDefault();
                 inputK.focus();
             }
         });
