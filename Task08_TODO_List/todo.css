@@ -18,7 +18,6 @@
 .todo-table th {
     padding: 15px 5px;
     border: 2px solid white;
-    font-size: 20px;
 }
 
 .todo-table td {
@@ -28,7 +27,7 @@
 .todo-table thead {
     border-color: white;
     background-color: lightgray;
-    color: blue;
+    color: darkslateblue;
 }
 
 .todo-table .as-button {
