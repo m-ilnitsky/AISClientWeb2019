@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/Task05_Arrays/Task05_Arrays.iml" filepath="$PROJECT_DIR$/Task05_Arrays/Task05_Arrays.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task06_Objects/Task06_Objects.iml" filepath="$PROJECT_DIR$/Task06_Objects/Task06_Objects.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task07_Converter/Task07_Converter.iml" filepath="$PROJECT_DIR$/Task07_Converter/Task07_Converter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task08_TODO_List/Task08_TODO_List.iml" filepath="$PROJECT_DIR$/Task08_TODO_List/Task08_TODO_List.iml" />
     </modules>
   </component>
 </project>

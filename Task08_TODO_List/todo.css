@@ -1,0 +1,56 @@
+* {
+    box-sizing: border-box;
+}
+
+.todo-wrapper {
+    font-size: 16px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 30px;
+    width: 100%;
+}
+
+.todo-table {
+    border-collapse: collapse;
+    border: 2px solid black;
+    width: 100%;
+}
+
+.todo-table th {
+    padding: 15px 5px;
+    border: 2px solid white;
+    font-size: 20px;
+}
+
+.todo-table td {
+    border: 2px solid lightgray;
+}
+
+.todo-table thead {
+    border-color: white;
+    background-color: lightgray;
+    color: blue;
+}
+
+.todo-table .as-button {
+    width: 150px;
+}
+
+.todo-table .button {
+    background-color: blue;
+    color: white;
+    border-color: white;
+    width: 150px;
+    padding: 15px 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.todo-table .button:hover {
+    background-color: darkblue;
+    cursor: pointer;
+}
+
+.date {
+    width: 100px;
+}
