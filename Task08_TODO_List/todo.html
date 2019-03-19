@@ -8,37 +8,71 @@
 </head>
 <body>
 <div class="todo-wrapper">
-    <table class="todo-table">
-        <thead>
-        <tr>
-            <th colspan="4" class="button">Создать задачу</th>
-        </tr>
-        <tr>
-            <th colspan="4">Список задач</th>
-        </tr>
-        <tr>
-            <th class="date">Дата</th>
-            <th>Задача</th>
-            <th class="as-button"></th>
-            <th class="button">Удалить всё</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td class="date">123</td>
-            <td>qwerty</td>
-            <td class="button">Изменить</td>
-            <td class="button">Удалить</td>
-        </tr>
-        </tbody>
-        <tr>
-            <td class="date">123</td>
-            <td>qwerty</td>
-            <td class="button">Изменить</td>
-            <td class="button">Удалить</td>
-        </tr>
-        </tbody>
-    </table>
+    <div class="todo-border">
+        <table class="todo-table">
+            <thead>
+            <tr>
+                <th colspan="4" class="button" id="todo_add-task">Создать задачу</th>
+            </tr>
+            <tr>
+                <th colspan="4">Список задач</th>
+            </tr>
+            <tr>
+                <th class="date">Дата</th>
+                <th>Задача</th>
+                <th class="as-button"></th>
+                <th class="button" id="todo_remove-all">Удалить всё</th>
+            </tr>
+            </thead>
+            <tbody id="todo_tbody">
+            <tr>
+                <td class="date">123</td>
+                <td>qwerty</td>
+                <td class="button">Изменить</td>
+                <td class="button">Удалить</td>
+            </tr>
+            <tr>
+                <td class="date">123</td>
+                <td>qwerty</td>
+                <td class="button">Изменить</td>
+                <td class="button">Удалить</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="todo-windows">
+    <div class="shield-window invisible" id="shield-window">
+    </div>
+
+    <div class="remove-confirmation invisible" id="remove-all-window">
+        <table>
+            <tr>
+                <th colspan="2">Вы действительно хотите удалить все задачи?</th>
+            </tr>
+            <tr>
+                <td class="button" id="remove-all_cancel">Отменить</td>
+                <td class="button" id="remove-all_ok">Подтвердить</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="add-task invisible" id="add-task-window">
+        <table>
+            <tr>
+                <td colspan="3">Введите текст задачи</td>
+            </tr>
+            <tr>
+                <td colspan="3"><textarea id="add-task_text"></textarea></td>
+            </tr>
+            <tr>
+                <td class="button" id="add-task_cancel">Отменить</td>
+                <td></td>
+                <td class="button" id="add-task_add">Добавить</td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <script src="todo.js"></script>

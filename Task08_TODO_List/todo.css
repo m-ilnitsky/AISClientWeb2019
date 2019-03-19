@@ -9,32 +9,49 @@
     width: 100%;
 }
 
+.todo-border {
+    border: 5px solid gray;
+    padding: 0;
+}
+
 .todo-table {
     border-collapse: collapse;
-    border: 2px solid black;
+    border: none;
     width: 100%;
 }
 
 .todo-table th {
     padding: 15px 5px;
-    border: 2px solid white;
+    border: 3px solid white;
 }
 
 .todo-table td {
-    border: 2px solid lightgray;
+    padding: 4px;
+    border: 3px solid white;
 }
 
 .todo-table thead {
     border-color: white;
+    background-color: gray;
+    color: white;
+}
+
+.todo-table tbody {
+    border-color: white;
     background-color: lightgray;
-    color: darkslateblue;
+    color: black;
+}
+
+tbody tr:nth-child(even) td {
+    background-color: darkgray;
 }
 
 .todo-table .as-button {
     width: 150px;
 }
 
-.todo-table .button {
+.todo-table .button,
+.remove-confirmation .button {
     background-color: blue;
     color: white;
     border-color: white;
@@ -45,11 +62,87 @@
     text-align: center;
 }
 
-.todo-table .button:hover {
+.todo-table .button:hover,
+.remove-confirmation .button:hover {
     background-color: darkblue;
     cursor: pointer;
 }
 
 .date {
     width: 100px;
+    text-align: center;
+}
+
+.todo-windows {
+    position: relative;
+}
+
+.invisible {
+    display: none;
+}
+
+.shield-window {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: lightgray;
+    opacity: 0.7;
+}
+
+.remove-confirmation {
+    position: fixed;
+    left: calc(50% - 159px);
+    top: 200px;
+    border: 5px solid gray;
+    width: 319px;
+    height: auto;
+    font-size: 16px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    opacity: 1;
+}
+
+.remove-confirmation table {
+    border-collapse: collapse;
+    border: 3px solid white;
+}
+
+.remove-confirmation table th {
+    background-color: gray;
+    color: white;
+    padding: 15px 5px;
+    border: 3px solid white;
+}
+
+.remove-confirmation table td {
+    border: 3px solid white;
+}
+
+.add-task {
+    position: fixed;
+    left: calc(50% - 259px);
+    top: 200px;
+    border: 5px solid gray;
+    width: 519px;
+    height: auto;
+    font-size: 16px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    opacity: 1;
+}
+
+.add-task table {
+    border-collapse: collapse;
+    border: 3px solid white;
+}
+
+.add-task table th {
+    background-color: gray;
+    color: white;
+    padding: 15px 5px;
+    border: 3px solid white;
+}
+
+.add-task table td {
+    border: 3px solid white;
 }
