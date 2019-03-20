@@ -46,23 +46,30 @@ tbody tr:nth-child(even) td {
     background-color: darkgray;
 }
 
+tbody tr:hover td {
+    background-color: lightblue;
+}
+
 .todo-table .as-button {
-    width: 150px;
+    width: 110px;
 }
 
 .todo-table .button,
+.add-task .button,
 .remove-confirmation .button {
     background-color: blue;
     color: white;
     border-color: white;
-    width: 150px;
-    padding: 15px 5px;
+    width: 110px;
+    padding: 15px 2px;
     font-size: 16px;
     font-weight: bold;
     text-align: center;
+    vertical-align: middle;
 }
 
 .todo-table .button:hover,
+.add-task .button:hover,
 .remove-confirmation .button:hover {
     background-color: darkblue;
     cursor: pointer;
@@ -71,6 +78,7 @@ tbody tr:nth-child(even) td {
 .date {
     width: 100px;
     text-align: center;
+    vertical-align: top;
 }
 
 .todo-windows {
@@ -124,7 +132,7 @@ tbody tr:nth-child(even) td {
     left: calc(50% - 259px);
     top: 200px;
     border: 5px solid gray;
-    width: 519px;
+    min-width: 519px;
     height: auto;
     font-size: 16px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -134,6 +142,7 @@ tbody tr:nth-child(even) td {
 .add-task table {
     border-collapse: collapse;
     border: 3px solid white;
+    width: 509px;
 }
 
 .add-task table th {
@@ -143,6 +152,14 @@ tbody tr:nth-child(even) td {
     border: 3px solid white;
 }
 
-.add-task table td {
-    border: 3px solid white;
+.add-task table textarea {
+    min-width: 500px;
+    min-height: 40px;
+    height: 100px;
+    margin: 5px;
+    margin-bottom: 2px;
+}
+
+.add-task table .task-text {
+    padding: 0;
 }
