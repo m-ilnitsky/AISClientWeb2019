@@ -1,0 +1,564 @@
+@keyframes time-killer-top {
+    0% {
+        transform: rotate(0);
+        bottom: 110px;
+        right: 30px;
+    }
+
+    1% {
+        transform: rotate(5deg);
+        bottom: 110px;
+        right: 40px;
+    }
+    2% {
+        transform: rotate(0);
+        bottom: 110px;
+        right: 70px;
+    }
+    3% {
+        transform: rotate(5deg);
+        bottom: 110px;
+        right: 80px;
+    }
+    4% {
+        transform: rotate(0);
+        bottom: 110px;
+        right: 110px;
+    }
+    5% {
+        transform: rotate(5deg);
+        bottom: 110px;
+        right: 120px;
+    }
+    6% {
+        transform: rotate(0);
+        bottom: 110px;
+        right: 150px;
+    }
+    7% {
+        transform: rotate(5deg);
+        bottom: 110px;
+        right: 160px;
+    }
+    8% {
+        transform: rotate(0);
+        bottom: 110px;
+        right: 190px;
+    }
+    9% {
+        transform: rotate(5deg);
+        bottom: 110px;
+        right: 200px;
+    }
+    10% {
+        transform: rotate(0);
+        bottom: 110px;
+        right: 230px;
+    }
+
+    15% {
+        transform: rotate(0);
+        bottom: -90px;
+        right: 230px;
+    }
+
+    15.1% {
+        transform: rotate(0);
+        bottom: -90px;
+        right: -300px;
+    }
+    15.2% {
+        transform: rotate(0);
+        bottom: 200%;
+        right: -300px;
+    }
+    15.3% {
+        transform: rotate(0);
+        bottom: 200%;
+        right: 30px;
+    }
+    15.4% {
+        transform: rotate(0);
+        bottom: 100%;
+        right: 30px;
+    }
+
+    20% {
+        transform: rotate(0);
+        bottom: 110px;
+        right: 30px;
+    }
+
+    100% {
+        transform: rotate(0);
+        bottom: 110px;
+        right: 30px;
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0);
+    }
+    2% {
+        transform: rotate(5deg);
+    }
+    4% {
+        transform: rotate(-10deg);
+    }
+    6% {
+        transform: rotate(15deg);
+    }
+    8% {
+        transform: rotate(-20deg);
+    }
+    10% {
+        transform: rotate(40deg);
+    }
+    12% {
+        transform: rotate(-400deg);
+    }
+    14% {
+        transform: rotate(-345deg);
+    }
+    16% {
+        transform: rotate(-370deg);
+    }
+    18% {
+        transform: rotate(-355deg);
+    }
+    20% {
+        transform: rotate(-360deg);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+
+.banner {
+    position: fixed;
+    right: 30px;
+    width: 190px;
+    height: 60px;
+    margin: 0;
+    padding: 0;
+    background: #999999;
+}
+
+.banner-above-shadow {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    top: -5px;
+    left: -5px;
+}
+
+.banner-academ-it-school {
+    bottom: 110px;
+}
+
+.banner-academ-it-school.free {
+    bottom: 110px;
+
+    animation-name: time-killer-top;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+}
+
+.banner-academ-it-school img {
+    max-height: 60px;
+    max-width: 190px;
+    background: #378DB2;
+    margin: 0;
+    padding: 10px 11px;
+}
+
+.banner-html-academy {
+    bottom: 30px;
+}
+
+.banner-html-academy.free {
+    bottom: 30px;
+
+    transform-origin: 50% 50%;
+    animation-name: rotate;
+    animation-duration: 15s;
+    animation-iteration-count: infinite;
+}
+
+.banner-html-academy img {
+    height: 60px;
+    background: #2d2d44;
+    margin: 0;
+    padding: 10px 36px;
+}
+
+@keyframes attack-top {
+    0% {
+        bottom: 110px;
+    }
+    5% {
+        bottom: 130px;
+    }
+    10% {
+        bottom: 90px;
+    }
+    15% {
+        bottom: 150px;
+    }
+    20% {
+        bottom: 70px;
+    }
+    25% {
+        bottom: 170px;
+    }
+    30% {
+        bottom: 60px;
+    }
+    35% {
+        bottom: 50%;
+    }
+    40% {
+        bottom: 50px;
+    }
+    42.5% {
+        bottom: 90%;
+    }
+    45% {
+        bottom: 40px;
+    }
+    50% {
+        bottom: 110px;
+    }
+    100% {
+        bottom: 110px;
+    }
+}
+
+@keyframes attack-top-fall-bottom {
+    0% {
+        transform: rotate(0);
+        bottom: 30px;
+    }
+    5% {
+        bottom: 30px;
+    }
+    10% {
+        bottom: 30px;
+    }
+    15% {
+        bottom: 0;
+    }
+    20% {
+        bottom: 10px;
+    }
+    25% {
+        bottom: -20px;
+    }
+    30% {
+        bottom: 0;
+    }
+    35% {
+        bottom: -20px;
+    }
+    40% {
+        bottom: -10px;
+    }
+    42.5% {
+        bottom: -30px;
+    }
+    45% {
+        bottom: -20px;
+    }
+    47.5% {
+        transform: rotate(0);
+        bottom: -90px;
+    }
+    50% {
+        transform: rotate(0);
+        bottom: -70px;
+    }
+    60% {
+        transform: rotate(-10deg);
+        bottom: -55px;
+    }
+    65% {
+        transform: rotate(10deg);
+        bottom: -40px;
+    }
+    70% {
+        transform: rotate(-10deg);
+        bottom: -25px;
+    }
+    75% {
+        transform: rotate(10deg);
+        bottom: -10px;
+    }
+    80% {
+        transform: rotate(-10deg);
+        bottom: 5px;
+    }
+    85% {
+        transform: rotate(10deg);
+        bottom: 20px;
+    }
+    90% {
+        transform: rotate(-5deg);
+        bottom: 25px;
+    }
+    95% {
+        transform: rotate(5deg);
+        bottom: 30px;
+    }
+    100% {
+        transform: rotate(0);
+        bottom: 30px;
+    }
+}
+
+.banner-academ-it-school.free:hover {
+    animation-name: attack-top;
+    animation-duration: 3s;
+    animation-delay: 0.5s;
+    animation-iteration-count: infinite;
+}
+
+.banner-academ-it-school.free:hover ~ .banner-html-academy.free {
+    transform-origin: 50% 50%;
+    animation-name: attack-top-fall-bottom;
+    animation-duration: 3s;
+    animation-delay: 0.5s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes attack-bottom {
+    0% {
+        bottom: 30px;
+    }
+    20% {
+        bottom: -60px;
+    }
+    25% {
+        bottom: 50px;
+    }
+    30% {
+        bottom: 70px;
+    }
+    35% {
+        bottom: 20px;
+    }
+    40% {
+        bottom: 40px;
+    }
+    45% {
+        bottom: 30px;
+    }
+    100% {
+        bottom: 30px;
+    }
+}
+
+@keyframes attack-bottom-jump-top {
+    0% {
+        transform: rotate(0);
+        bottom: 110px;
+    }
+    25% {
+        transform: rotate(0);
+        bottom: 110px;
+    }
+    55% {
+        transform: rotate(-360deg);
+        bottom: 510px;
+    }
+    85% {
+        transform: rotate(-720deg);
+        bottom: 110px;
+    }
+    90% {
+        transform: rotate(-720deg);
+        bottom: 100px;
+    }
+    95% {
+        transform: rotate(-720deg);
+        bottom: 115px;
+    }
+    100% {
+        transform: rotate(-720deg);
+        bottom: 110px;
+    }
+}
+
+.banner-html-academy.free.bottom-attack {
+    transform-origin: 50% 50%;
+    animation-name: attack-bottom;
+    animation-duration: 1.6s;
+    animation-iteration-count: infinite;
+}
+
+.banner-academ-it-school.free.bottom-attack {
+    transform-origin: 50% 50%;
+    animation-name: attack-bottom-jump-top;
+    animation-duration: 1.6s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes shake-top {
+    0% {
+        bottom: 110px;
+    }
+    25% {
+        bottom: 125px;
+    }
+    50% {
+        bottom: 110px;
+    }
+    75% {
+        bottom: 95px;
+    }
+    100% {
+        bottom: 110px;
+    }
+}
+
+@keyframes shake-bottom {
+    0% {
+        right: 30px;
+    }
+    25% {
+        right: 45px;
+    }
+    50% {
+        right: 30px;
+    }
+    75% {
+        right: 15px;
+    }
+    100% {
+        right: 30px;
+    }
+}
+
+@keyframes shake-color-top {
+    0% {
+        background-color: #378DB2;
+    }
+    50% {
+        background-color: white;
+    }
+    100% {
+        background-color: #378DB2;
+    }
+}
+
+@keyframes shake-color-bottom {
+    0% {
+        background-color: #2d2d44;
+    }
+    50% {
+        background-color: white;
+    }
+    100% {
+        background-color: #2d2d44;
+    }
+}
+
+.banner-academ-it-school.shake {
+    transform-origin: 50% 50%;
+    animation-name: shake-top;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+}
+
+.banner-html-academy.shake {
+    transform-origin: 50% 50%;
+    animation-name: shake-bottom;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+}
+
+.banner-academ-it-school.shake img {
+    transform-origin: 50% 50%;
+    animation-name: shake-color-top;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+}
+
+.banner-html-academy.shake img {
+    transform-origin: 50% 50%;
+    animation-name: shake-color-bottom;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes move-top-to-top {
+    0% {
+        bottom: 110px;
+    }
+    100% {
+        bottom: 120%;
+    }
+}
+
+@keyframes move-top-to-top-2 {
+    0% {
+        top: -100px;
+    }
+    100% {
+        top: 30px;
+    }
+}
+
+@keyframes move-bottom-to-left {
+    0% {
+        right: 30px;
+    }
+    100% {
+        right: 120%;
+    }
+}
+
+@keyframes move-bottom-to-left-2 {
+    0% {
+        left: -200px;
+    }
+    100% {
+        left: 30px;
+    }
+}
+
+.banner-academ-it-school.move-to-1 {
+    animation-name: move-top-to-top;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+
+.banner-academ-it-school.move-to-2 {
+    animation-name: move-top-to-top-2;
+    animation-duration: 0.2s;
+    animation-iteration-count: infinite;
+}
+
+.banner-html-academy.move-to-1 {
+    animation-name: move-bottom-to-left;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}
+
+.banner-html-academy.move-to-2 {
+    animation-name: move-bottom-to-left-2;
+    animation-duration: 0.2s;
+    animation-iteration-count: infinite;
+}
+
+.banner-academ-it-school.position-2 {
+    top: 30px;
+    right: 30px;
+    animation-name: none;
+}
+
+.banner-html-academy.position-2 {
+    left: 30px;
+    bottom: 30px;
+    animation-name: none;
+}

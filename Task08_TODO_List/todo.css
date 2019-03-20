@@ -47,7 +47,8 @@ tbody tr:nth-child(even) td {
 }
 
 tbody tr:hover td {
-    background-color: lightblue;
+    background-color: gray;
+    color: white;
 }
 
 .todo-table .as-button {
