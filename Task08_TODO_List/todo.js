@@ -1,7 +1,29 @@
 "use strict";
 
-(function () {
-    document.addEventListener("DOMContentLoaded", function () {
+(function() {
+
+    function getDateAndTime() {
+        var date = new Date();
+        var month = date.getMonth();
+        ++month;
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var minutes = date.getMinutes();
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        var seconds = date.getSeconds();
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        var createDate = date.getDate() + "." + month + "." + date.getFullYear();
+        var createTime = date.getHours() + ":" + minutes + ":" + seconds;
+
+        return createDate + "\n" + createTime;
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
         var buttonAddTask = document.getElementById("todo_add-task");
         var buttonRemoveAll = document.getElementById("todo_remove-all");
 
@@ -19,23 +41,28 @@
         var textareaAddTask = document.getElementById("add-task_text");
         var captionAddTask = document.getElementById("add-task_caption");
 
-        buttonRemoveAll.addEventListener("click", function () {
-            windowShield.className = "shield-window";
-            windowRemoveAll.className = "remove-confirmation";
+        buttonRemoveAll.addEventListener("click", function() {
+            var numberOfTasks = tbody.childElementCount;
+            if (numberOfTasks > 1) {
+                windowShield.className = "shield-window";
+                windowRemoveAll.className = "remove-confirmation";
+            } else if (numberOfTasks === 1) {
+                tbody.innerHTML = "";
+            }
         });
 
-        buttonRemoveAllOk.addEventListener("click", function () {
+        buttonRemoveAllOk.addEventListener("click", function() {
             tbody.innerHTML = "";
             windowShield.className = "shield-window invisible";
             windowRemoveAll.className = "remove-confirmation invisible";
         });
 
-        buttonRemoveAllCancel.addEventListener("click", function () {
+        buttonRemoveAllCancel.addEventListener("click", function() {
             windowShield.className = "shield-window invisible";
             windowRemoveAll.className = "remove-confirmation invisible";
         });
 
-        buttonAddTask.addEventListener("click", function () {
+        buttonAddTask.addEventListener("click", function() {
             captionAddTask.innerText = "Введите текст задачи";
             buttonAddTaskAdd.innerText = "Добавить";
             windowShield.className = "shield-window";
@@ -43,14 +70,14 @@
             textareaAddTask.focus();
         });
 
-        buttonAddTaskCancel.addEventListener("click", function () {
+        buttonAddTaskCancel.addEventListener("click", function() {
             windowShield.className = "shield-window invisible";
             windowAddTask.className = "add-task invisible";
         });
 
         var editTD;
 
-        buttonAddTaskAdd.addEventListener("click", function () {
+        buttonAddTaskAdd.addEventListener("click", function() {
             if ("Добавить" === buttonAddTaskAdd.innerText) {
                 var taskText = textareaAddTask.value;
 
@@ -58,27 +85,10 @@
                     return
                 }
 
-                var date = new Date();
-                var month = date.getMonth();
-                ++month;
-                if (month < 10) {
-                    month = "0" + month;
-                }
-                var minutes = date.getMinutes();
-                if (minutes < 10) {
-                    minutes = "0" + minutes;
-                }
-                var seconds = date.getSeconds();
-                if (seconds < 10) {
-                    seconds = "0" + seconds;
-                }
-                var createDate = date.getDate() + "." + month + "." + date.getFullYear();
-                var createTime = date.getHours() + ":" + minutes + ":" + seconds;
-
                 var tr = document.createElement("tr");
                 var tdDate = document.createElement("td");
                 tdDate.className = "date";
-                tdDate.innerText = createDate + "\n" + createTime;
+                tdDate.innerText = getDateAndTime();
                 var tdText = document.createElement("td");
                 tdText.innerText = taskText;
                 var tdButtonEdit = document.createElement("td");
@@ -95,11 +105,11 @@
 
                 tbody.appendChild(tr);
 
-                tdButtonDelete.addEventListener("click", function () {
+                tdButtonDelete.addEventListener("click", function() {
                     tbody.removeChild(tr);
                 });
 
-                tdButtonEdit.addEventListener("click", function () {
+                tdButtonEdit.addEventListener("click", function() {
                     captionAddTask.innerText = "Измените текст задачи";
                     buttonAddTaskAdd.innerText = "Сохранить";
                     windowShield.className = "shield-window";
