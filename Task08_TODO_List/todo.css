@@ -102,6 +102,7 @@ tbody tr:hover td {
 
 .remove-confirmation {
     position: fixed;
+    left: 40%;
     left: calc(50% - 120px);
     top: 25%;
     border: 5px solid gray;
@@ -130,6 +131,7 @@ tbody tr:hover td {
 
 .add-task {
     position: fixed;
+    left: 25%;
     left: calc(50% - 259px);
     top: 25%;
     border: 5px solid gray;
