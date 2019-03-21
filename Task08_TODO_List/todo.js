@@ -1,11 +1,10 @@
 "use strict";
 
-(function() {
+(function () {
 
     function getDateAndTime() {
         var date = new Date();
-        var month = date.getMonth();
-        ++month;
+        var month = date.getMonth() + 1;
         if (month < 10) {
             month = "0" + month;
         }
@@ -23,7 +22,7 @@
         return createDate + "\n" + createTime;
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var buttonAddTask = document.getElementById("todo_add-task");
         var buttonRemoveAll = document.getElementById("todo_remove-all");
 
@@ -41,28 +40,28 @@
         var textareaAddTask = document.getElementById("add-task_text");
         var captionAddTask = document.getElementById("add-task_caption");
 
-        buttonRemoveAll.addEventListener("click", function() {
-            var numberOfTasks = tbody.childElementCount;
-            if (numberOfTasks > 1) {
+        buttonRemoveAll.addEventListener("click", function () {
+            var tasksNumber = tbody.childElementCount;
+            if (tasksNumber > 1) {
                 windowShield.className = "shield-window";
                 windowRemoveAll.className = "remove-confirmation";
-            } else if (numberOfTasks === 1) {
+            } else if (tasksNumber === 1) {
                 tbody.innerHTML = "";
             }
         });
 
-        buttonRemoveAllOk.addEventListener("click", function() {
+        buttonRemoveAllOk.addEventListener("click", function () {
             tbody.innerHTML = "";
             windowShield.className = "shield-window invisible";
             windowRemoveAll.className = "remove-confirmation invisible";
         });
 
-        buttonRemoveAllCancel.addEventListener("click", function() {
+        buttonRemoveAllCancel.addEventListener("click", function () {
             windowShield.className = "shield-window invisible";
             windowRemoveAll.className = "remove-confirmation invisible";
         });
 
-        buttonAddTask.addEventListener("click", function() {
+        buttonAddTask.addEventListener("click", function () {
             captionAddTask.innerText = "Введите текст задачи";
             buttonAddTaskAdd.innerText = "Добавить";
             windowShield.className = "shield-window";
@@ -70,14 +69,14 @@
             textareaAddTask.focus();
         });
 
-        buttonAddTaskCancel.addEventListener("click", function() {
+        buttonAddTaskCancel.addEventListener("click", function () {
             windowShield.className = "shield-window invisible";
             windowAddTask.className = "add-task invisible";
         });
 
         var editTD;
 
-        buttonAddTaskAdd.addEventListener("click", function() {
+        buttonAddTaskAdd.addEventListener("click", function () {
             if ("Добавить" === buttonAddTaskAdd.innerText) {
                 var taskText = textareaAddTask.value;
 
@@ -105,11 +104,11 @@
 
                 tbody.appendChild(tr);
 
-                tdButtonDelete.addEventListener("click", function() {
+                tdButtonDelete.addEventListener("click", function () {
                     tbody.removeChild(tr);
                 });
 
-                tdButtonEdit.addEventListener("click", function() {
+                tdButtonEdit.addEventListener("click", function () {
                     captionAddTask.innerText = "Измените текст задачи";
                     buttonAddTaskAdd.innerText = "Сохранить";
                     windowShield.className = "shield-window";
