@@ -1,6 +1,6 @@
 "use strict";
 
-(function () {
+(function() {
 
     function getDateAndTime() {
         var date = new Date();
@@ -22,7 +22,7 @@
         return createDate + "\n" + createTime;
     }
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         var buttonAddTask = $("#todo_add-task")[0];
         var buttonRemoveAll = $("#todo_remove-all")[0];
 
@@ -40,7 +40,7 @@
         var textareaAddTask = $("#add-task_text")[0];
         var captionAddTask = $("#add-task_caption")[0];
 
-        buttonRemoveAll.addEventListener("click", function () {
+        buttonRemoveAll.addEventListener("click", function() {
             var tasksNumber = tbody.childElementCount;
             if (tasksNumber > 1) {
                 $(windowShield).removeClass("invisible");
@@ -50,18 +50,18 @@
             }
         });
 
-        buttonRemoveAllOk.addEventListener("click", function () {
+        buttonRemoveAllOk.addEventListener("click", function() {
             tbody.innerHTML = "";
             $(windowShield).addClass("invisible");
             $(windowRemoveAll).addClass("invisible");
         });
 
-        buttonRemoveAllCancel.addEventListener("click", function () {
+        buttonRemoveAllCancel.addEventListener("click", function() {
             $(windowShield).addClass("invisible");
             $(windowRemoveAll).addClass("invisible");
         });
 
-        buttonAddTask.addEventListener("click", function () {
+        buttonAddTask.addEventListener("click", function() {
             captionAddTask.innerText = "Введите текст задачи";
             buttonAddTaskAdd.innerText = "Добавить";
             $(windowShield).removeClass("invisible");
@@ -69,14 +69,14 @@
             textareaAddTask.focus();
         });
 
-        buttonAddTaskCancel.addEventListener("click", function () {
+        buttonAddTaskCancel.addEventListener("click", function() {
             $(windowShield).addClass("invisible");
             $(windowAddTask).addClass("invisible");
         });
 
         var editTD;
 
-        buttonAddTaskAdd.addEventListener("click", function () {
+        buttonAddTaskAdd.addEventListener("click", function() {
             if ("Добавить" === buttonAddTaskAdd.innerText) {
                 var taskText = textareaAddTask.value;
 
@@ -84,33 +84,21 @@
                     return
                 }
 
-                var tdDate = ($("td").addClass("date").text(getDateAndTime()))[0];
-                var tdText = ($("td").text(taskText))[0];
-                var tdButtonEdit = ($("td").addClass("button").text("Изменить"))[0];
-                var tdButtonDelete = ($("td").addClass("button").text("Удалить"))[0];
-
-                var tr = $("tr")[0];
-
-                tr.appendChild(tdDate);
-                tr.appendChild(tdText);
-                tr.appendChild(tdButtonEdit);
-                tr.appendChild(tdButtonDelete);
-
-                tbody.appendChild(tr);
-
-                tdButtonDelete.addEventListener("click", function () {
-                    tbody.removeChild(tr);
-                });
-
-                tdButtonEdit.addEventListener("click", function () {
+                var tr = $("<tr></tr>").appendTo(tbody);
+                var tdDate = $("<td></td>").addClass("date").text(getDateAndTime()).appendTo(tr);
+                var tdText = $("<td></td>").text(taskText).appendTo(tr);
+                var tdButtonEdit = $("<td></td>").addClass("button").text("Изменить").click(function() {
                     captionAddTask.innerText = "Измените текст задачи";
                     buttonAddTaskAdd.innerText = "Сохранить";
                     $(windowShield).removeClass("invisible");
                     $(windowAddTask).removeClass("invisible");
-                    textareaAddTask.value = tdText.innerText;
+                    textareaAddTask.value = tdText[0].innerText;
                     textareaAddTask.focus();
-                    editTD = tdText;
-                });
+                    editTD = tdText[0];
+                }).appendTo(tr);
+                var tdButtonDelete = $("<td></td>").addClass("button").text("Удалить").click(function() {
+                    tbody.removeChild(tr[0]);
+                }).appendTo(tr);
 
                 textareaAddTask.value = "";
 
@@ -125,6 +113,7 @@
                 }
 
                 editTD.innerText = newText;
+                textareaAddTask.value = "";
 
                 $(windowShield).addClass("invisible");
                 $(windowAddTask).addClass("invisible");
