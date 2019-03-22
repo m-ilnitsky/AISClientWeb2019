@@ -10,7 +10,7 @@
 }
 
 .todo-border {
-    border: 5px solid gray;
+    border: 5px solid green;
     padding: 0;
 }
 
@@ -22,33 +22,28 @@
 
 .todo-table th {
     padding: 15px 5px;
-    border: 3px solid white;
+    border: 3px solid green;
 }
 
 .todo-table td {
     padding: 4px;
-    border: 3px solid white;
+    border: 3px solid green;
 }
 
 .todo-table thead {
-    border-color: white;
-    background-color: gray;
-    color: white;
+    border-color: green;
+    background-color: lightgreen;
+    color: green;
 }
 
 .todo-table tbody {
-    border-color: white;
-    background-color: lightgray;
+    border-color: green;
+    background-color: white;
     color: black;
 }
 
 tbody tr:nth-child(even) td {
-    background-color: darkgray;
-}
-
-tbody tr:hover td {
-    background-color: gray;
-    color: white;
+    background-color: lightgreen;
 }
 
 .todo-table .as-button {
@@ -58,9 +53,9 @@ tbody tr:hover td {
 .todo-table .button,
 .add-task .button,
 .remove-confirmation .button {
-    background-color: blue;
+    background-color: limegreen;
     color: white;
-    border-color: white;
+    border-color: green;
     width: 110px;
     padding: 15px 2px;
     font-size: 16px;
@@ -72,7 +67,8 @@ tbody tr:hover td {
 .todo-table .button:hover,
 .add-task .button:hover,
 .remove-confirmation .button:hover {
-    background-color: darkblue;
+    background-color: lawngreen;
+    color: green;
     cursor: pointer;
 }
 
@@ -102,10 +98,11 @@ tbody tr:hover td {
 
 .remove-confirmation {
     position: fixed;
-    left: 40%;
-    left: calc(50% - 120px);
+    left: 50%;
+    margin-left: -120px;
+    /*left: calc(50% - 120px);*/
     top: 25%;
-    border: 5px solid gray;
+    border: 5px solid green;
     max-width: 240px;
     height: auto;
     font-size: 16px;
@@ -115,26 +112,27 @@ tbody tr:hover td {
 
 .remove-confirmation table {
     border-collapse: collapse;
-    border: 3px solid white;
+    border: 3px solid green;
 }
 
 .remove-confirmation table th {
-    background-color: gray;
-    color: white;
+    background-color: lightgreen;
+    color: green;
     padding: 15px 5px;
-    border: 3px solid white;
+    border: 3px solid green;
 }
 
 .remove-confirmation table td {
-    border: 3px solid white;
+    border: 3px solid green;
 }
 
 .add-task {
     position: fixed;
-    left: 25%;
-    left: calc(50% - 259px);
+    left: 50%;
+    margin-left: -259px;
+    /*left: calc(50% - 259px);*/
     top: 25%;
-    border: 5px solid gray;
+    border: 5px solid green;
     min-width: 519px;
     height: auto;
     font-size: 16px;
@@ -144,15 +142,15 @@ tbody tr:hover td {
 
 .add-task table {
     border-collapse: collapse;
-    border: 3px solid white;
+    border: 3px solid green;
     width: 509px;
 }
 
 .add-task table th {
-    background-color: gray;
-    color: white;
+    background-color: lightgreen;
+    color: green;
     padding: 15px 5px;
-    border: 3px solid white;
+    border: 3px solid green;
 }
 
 .add-task table textarea {

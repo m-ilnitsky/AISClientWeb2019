@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Задача "TODO List jQuery"</title>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="todo.css">
+</head>
+
+<body>
+<div class="todo-wrapper">
+    <div class="todo-border">
+        <table class="todo-table">
+            <thead>
+            <tr>
+                <th colspan="4" class="button" id="todo_add-task">Создать задачу</th>
+            </tr>
+            <tr>
+                <th colspan="4">Список задач</th>
+            </tr>
+            <tr>
+                <th class="date">Дата</th>
+                <th>Задача</th>
+                <th class="as-button"></th>
+                <th class="button" id="todo_remove-all">Удалить всё</th>
+            </tr>
+            </thead>
+            <tbody id="todo_tbody">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="todo-windows">
+    <div class="shield-window invisible" id="shield-window">
+    </div>
+
+    <div class="remove-confirmation invisible" id="remove-all-window">
+        <table>
+            <tr>
+                <th colspan="2">Вы действительно хотите удалить все задачи?</th>
+            </tr>
+            <tr>
+                <td class="button" id="remove-all_cancel">Отменить</td>
+                <td class="button" id="remove-all_ok">Подтвердить</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="add-task invisible" id="add-task-window">
+        <table>
+            <tr>
+                <th colspan="3"><label id="add-task_caption" for="add-task_text">Введите текст задачи</label></th>
+            </tr>
+            <tr>
+                <th colspan="3" class="task-text"><textarea id="add-task_text"></textarea></th>
+            </tr>
+            <tr>
+                <th class="button" id="add-task_cancel">Отменить</th>
+                <th></th>
+                <th class="button" id="add-task_add">Добавить</th>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script src="lib/jquery-3.3.1.js"></script>
+<script src="todo.js"></script>
+</body>
+
+</html>

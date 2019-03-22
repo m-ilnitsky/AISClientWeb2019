@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/Task06_Objects/Task06_Objects.iml" filepath="$PROJECT_DIR$/Task06_Objects/Task06_Objects.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task07_Converter/Task07_Converter.iml" filepath="$PROJECT_DIR$/Task07_Converter/Task07_Converter.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task08_TODO_List/Task08_TODO_List.iml" filepath="$PROJECT_DIR$/Task08_TODO_List/Task08_TODO_List.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task09_TODO_List_jQuery/Task09_TODO_List_jQuery.iml" filepath="$PROJECT_DIR$/Task09_TODO_List_jQuery/Task09_TODO_List_jQuery.iml" />
     </modules>
   </component>
 </project>
