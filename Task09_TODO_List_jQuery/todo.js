@@ -1,7 +1,6 @@
 "use strict";
 
-(function () {
-
+(function() {
     function getDateAndTime() {
         var date = new Date();
         var month = date.getMonth() + 1;
@@ -22,112 +21,90 @@
         return createDate + "\n" + createTime;
     }
 
-    $(document).ready(function () {
-        var buttonAddTask = $("#todo_add-task")[0];
-        var buttonRemoveAll = $("#todo_remove-all")[0];
+    $(document).ready(function() {
+        var tbody = $("#todo_tbody");
+        var buttonAddTask = $("#todo_add-task");
+        var buttonRemoveAll = $("#todo_remove-all");
 
-        var tbody = $("#todo_tbody")[0];
+        var windowRemoveAll = $("#remove-all-window").add("#shield-window");
+        var buttonRemoveAllCancel = $("#remove-all_cancel");
+        var buttonRemoveAllOk = $("#remove-all_ok");
 
-        var windowShield = $("#shield-window")[0];
+        var windowAddTask = $("#add-task-window").add("#shield-window");
+        var buttonAddTaskCancel = $("#add-task_cancel");
+        var buttonAddTaskAdd = $("#add-task_add");
+        var textareaAddTask = $("#add-task_text");
+        var captionAddTask = $("#add-task_caption");
 
-        var windowRemoveAll = $("#remove-all-window")[0];
-        var buttonRemoveAllCancel = $("#remove-all_cancel")[0];
-        var buttonRemoveAllOk = $("#remove-all_ok")[0];
-
-        var windowAddTask = $("#add-task-window")[0];
-        var buttonAddTaskCancel = $("#add-task_cancel")[0];
-        var buttonAddTaskAdd = $("#add-task_add")[0];
-        var textareaAddTask = $("#add-task_text")[0];
-        var captionAddTask = $("#add-task_caption")[0];
-
-        buttonRemoveAll.addEventListener("click", function () {
-            var tasksNumber = tbody.childElementCount;
+        buttonRemoveAll.click(function() {
+            var tasksNumber = tbody.children().length;
             if (tasksNumber > 1) {
-                $(windowShield).removeClass("invisible");
-                $(windowRemoveAll).removeClass("invisible");
+                windowRemoveAll.removeClass("invisible");
             } else if (tasksNumber === 1) {
-                tbody.innerHTML = "";
+                tbody.html("");
             }
         });
 
-        buttonRemoveAllOk.addEventListener("click", function () {
-            tbody.innerHTML = "";
-            $(windowShield).addClass("invisible");
-            $(windowRemoveAll).addClass("invisible");
+        buttonRemoveAllOk.click(function() {
+            tbody.html("");
+            windowRemoveAll.addClass("invisible");
         });
 
-        buttonRemoveAllCancel.addEventListener("click", function () {
-            $(windowShield).addClass("invisible");
-            $(windowRemoveAll).addClass("invisible");
+        buttonRemoveAllCancel.click(function() {
+            windowRemoveAll.addClass("invisible");
         });
 
-        buttonAddTask.addEventListener("click", function () {
-            captionAddTask.innerText = "Введите текст задачи";
-            buttonAddTaskAdd.innerText = "Добавить";
-            $(windowShield).removeClass("invisible");
-            $(windowAddTask).removeClass("invisible");
+        buttonAddTask.click(function() {
+            captionAddTask.text("Введите текст задачи");
+            buttonAddTaskAdd.text("Добавить");
+            windowAddTask.removeClass("invisible");
             textareaAddTask.focus();
         });
 
-        buttonAddTaskCancel.addEventListener("click", function () {
-            $(windowShield).addClass("invisible");
-            $(windowAddTask).addClass("invisible");
+        buttonAddTaskCancel.click(function() {
+            windowAddTask.addClass("invisible");
         });
 
         var editTD;
 
-        buttonAddTaskAdd.addEventListener("click", function () {
-            if ("Добавить" === buttonAddTaskAdd.innerText) {
-                var taskText = textareaAddTask.value;
+        buttonAddTaskAdd.click(function() {
+            if ("Добавить" === buttonAddTaskAdd.text()) {
+                var taskText = textareaAddTask.val();
 
                 if (taskText.trim() === "") {
                     return
                 }
 
-                var tdDate = ($("td").addClass("date").text(getDateAndTime()))[0];
-                var tdText = ($("td").text(taskText))[0];
-                var tdButtonEdit = ($("td").addClass("button").text("Изменить"))[0];
-                var tdButtonDelete = ($("td").addClass("button").text("Удалить"))[0];
-
-                var tr = $("tr")[0];
-
-                tr.appendChild(tdDate);
-                tr.appendChild(tdText);
-                tr.appendChild(tdButtonEdit);
-                tr.appendChild(tdButtonDelete);
-
-                tbody.appendChild(tr);
-
-                tdButtonDelete.addEventListener("click", function () {
-                    tbody.removeChild(tr);
-                });
-
-                tdButtonEdit.addEventListener("click", function () {
-                    captionAddTask.innerText = "Измените текст задачи";
-                    buttonAddTaskAdd.innerText = "Сохранить";
-                    $(windowShield).removeClass("invisible");
-                    $(windowAddTask).removeClass("invisible");
-                    textareaAddTask.value = tdText.innerText;
+                var tr = $("<tr></tr>").appendTo(tbody);
+                var tdDate = $("<td></td>").addClass("date").text(getDateAndTime()).appendTo(tr);
+                var tdText = $("<td></td>").text(taskText).appendTo(tr);
+                var tdButtonEdit = $("<td></td>").addClass("button").text("Изменить").click(function() {
+                    captionAddTask.text("Измените текст задачи");
+                    buttonAddTaskAdd.text("Сохранить");
+                    windowAddTask.removeClass("invisible");
+                    textareaAddTask.val(tdText.text());
                     textareaAddTask.focus();
                     editTD = tdText;
-                });
+                }).appendTo(tr);
+                var tdButtonDelete = $("<td></td>").addClass("button").text("Удалить").click(function() {
+                    tr.remove();
+                }).appendTo(tr);
 
-                textareaAddTask.value = "";
+                textareaAddTask.val("");
 
-                $(windowShield).addClass("invisible");
-                $(windowAddTask).addClass("invisible");
+                windowAddTask.addClass("invisible");
 
-            } else if ("Сохранить" === buttonAddTaskAdd.innerText) {
-                var newText = textareaAddTask.value;
+            } else if ("Сохранить" === buttonAddTaskAdd.text()) {
+                var newText = textareaAddTask.val();
 
                 if (newText.trim() === "") {
                     return
                 }
 
-                editTD.innerText = newText;
+                editTD.text(newText);
+                textareaAddTask.val("");
 
-                $(windowShield).addClass("invisible");
-                $(windowAddTask).addClass("invisible");
+                windowAddTask.addClass("invisible");
             }
         });
     });
