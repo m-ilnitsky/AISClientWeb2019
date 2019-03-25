@@ -25,42 +25,28 @@
 .phone-book_header-wrapper {
     position: fixed;
     width: 100%;
-    height: 100px;
     left: 0;
     top: 0;
 }
 
 .phone-book_header {
     position: static;
-    height: 100px;
     margin: 0 20px;
-    background-color: palegreen;
+    background-color: #c8ff00;
     color: darkgreen;
-    border-bottom: 2px solid darkgreen;
+    overflow-x: hidden;
 }
 
 .phone-book_header-top {
-    height: 69px;
-    border-bottom: 2px solid darkgreen;
-}
-
-.phone-book_table.phone-book_table-header td {
-    border-top: 4px solid palegreen;
-    border-bottom: 4px solid palegreen;
-    border-right: 2px solid darkgreen;
-    padding: 1px 0 1px 5px;
-    background-color: palegreen;
-}
-
-.phone-book_table.phone-book_table-header td:last-child {
-    border-right: none;
+    padding-left: 5px;
+    min-width: 650px;
 }
 
 
 /*Таблица контактов: Стили*/
 
 .phone-book_table-wrapper {
-    margin: 100px 0 0 0;
+    margin: 81px 0 0 0;
 }
 
 .phone-book_table {
@@ -82,10 +68,10 @@
     position: relative;
 }
 
+.phone-book_table.phone-book_table-header td,
 .phone-book_table tfoot td {
-    border-top: 2px solid darkgreen;
-    border-bottom: 2px solid darkgreen;
-    background-color: palegreen;
+    background-color: darkgreen;
+    color: white;
     padding: 5px 0 5px 5px;
 }
 
@@ -94,12 +80,7 @@
 }
 
 .phone-book_table tbody tr:nth-last-child(even) td {
-    background-color: #e0f5c2;
-}
-
-.tdata {
-    width: 150px;
-    overflow: hidden;
+    background-color: #c8ff00;
 }
 
 
@@ -117,9 +98,14 @@
     width: 150px;
 }
 
+.phone-book_table td:nth-last-child(2) {
+    width: 20px;
+    min-width: 20px;
+}
+
 .phone-book_table td:last-child {
-    width: 80px;
-    min-width: 80px;
+    width: 85px;
+    min-width: 85px;
 }
 
 
@@ -137,8 +123,12 @@
     cursor: pointer;
 }
 
+.phone-book .circle-button.add-button {
+    background-color: blue;
+}
+
 .phone-book .circle-button.edit-button {
-    background-color: lawngreen;
+    background-color: #22fc01;
 }
 
 .phone-book .circle-button.delete-button {
@@ -149,18 +139,21 @@
     background-color: darkgreen;
 }
 
+
+/*Флажки*/
+
 .phone-book .checkbox {
     display: inline-block;
     width: 18px;
     height: 18px;
     border: none;
     vertical-align: middle;
-    margin: 1px;
+    margin: 1px 2px 1px 0;
     padding: 0;
 }
 
 
-/*Прямоугольные нопки*/
+/*Большие нопки*/
 
 .phone-book .button {
     display: inline-block;
@@ -179,7 +172,7 @@
 }
 
 .phone-book .edit-button {
-    background-color: lawngreen;
+    background-color: #22fc01;
 }
 
 .phone-book .add-button {
@@ -190,6 +183,21 @@
     background-color: darkgreen;
 }
 
+
+/*Поисковое поле*/
+
+.phone-book .text-search {
+    display: inline-block;
+    width: 240px;
+    height: 30px;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+    margin: 10px 3px;
+    color: darkgreen;
+    font-weight: bold;
+    padding: 5px;
+}
 
 /*Диалоговые окна*/
 
@@ -219,12 +227,12 @@
 .dialog-window {
     border: 5px solid darkgreen;
     border-radius: 20px;
-    background-color: palegreen;
+    background-color: #c8ff00;
     color: darkgreen;
     position: fixed;
     top: 25%;
     left: 50%;
-    box-shadow: 15px 15px gray;
+    box-shadow: 10px 20px rgba(128, 128, 128, 0.7);
 }
 
 .dialog-window table {
