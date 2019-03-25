@@ -2,9 +2,19 @@
     box-sizing: border-box;
 }
 
-/******************/
+
 /*Телефонная книга*/
-/******************/
+
+.phone-book {
+    font-size: 16px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.phone-book_window {
+    margin: 0 20px;
+    overflow-x: auto;
+}
+
 
 /*Шапка телефонной книги*/
 
@@ -26,8 +36,6 @@
     margin: 0 20px;
     background-color: palegreen;
     color: darkgreen;
-    font-size: 16px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     border-bottom: 2px solid darkgreen;
 }
 
@@ -35,12 +43,6 @@
     height: 69px;
     border-bottom: 2px solid darkgreen;
 }
-
-/*.phone-book_table-header {*/
-/*border-collapse: collapse;*/
-/*border: none;*/
-/*width: 100%;*/
-/*}*/
 
 .phone-book_table.phone-book_table-header td {
     border-top: 4px solid palegreen;
@@ -54,32 +56,33 @@
     border-right: none;
 }
 
+
 /*Таблица контактов: Стили*/
 
 .phone-book_table-wrapper {
-    margin: 105px 20px 0 20px;
-    font-size: 16px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 100px 0 0 0;
 }
 
 .phone-book_table {
     border-collapse: collapse;
     border: none;
     width: 100%;
-    min-width: 320px;
 }
 
 .phone-book_table td {
     border-right: 2px solid darkgreen;
     padding-left: 5px;
-    /*overflow: fragments;*/
 }
 
 .phone-book_table td:last-child {
     border-right: none;
 }
 
-.phone-book_table thead td {
+.phone-book_table thead {
+    position: relative;
+}
+
+.phone-book_table tfoot td {
     border-top: 2px solid darkgreen;
     border-bottom: 2px solid darkgreen;
     background-color: palegreen;
@@ -94,27 +97,35 @@
     background-color: #e0f5c2;
 }
 
-/*Таблица контактов: Размеры*/
-
-.phone-book_table td:first-child {
-    max-width: 10%;
+.tdata {
+    width: 150px;
+    overflow: hidden;
 }
 
+
+/*Таблица контактов: Размеры*/
+
 .phone-book_table td:nth-child(1) {
-    max-width: 30%;
+    width: 30px;
 }
 
 .phone-book_table td:nth-child(2) {
-    max-width: 30%;
+    width: 150px;
+}
+
+.phone-book_table td:nth-child(3) {
+    width: 150px;
 }
 
 .phone-book_table td:last-child {
     width: 80px;
+    min-width: 80px;
 }
+
 
 /*Круглые кнопки*/
 
-.circle-button {
+.phone-book .circle-button {
     display: inline-block;
     width: 18px;
     height: 18px;
@@ -123,25 +134,22 @@
     text-align: center;
     vertical-align: middle;
     margin: 1px 2px;
-}
-
-.circle-button:hover {
     cursor: pointer;
 }
 
-.circle-button.edit-button {
+.phone-book .circle-button.edit-button {
     background-color: lawngreen;
 }
 
-.circle-button.delete-button {
+.phone-book .circle-button.delete-button {
     background-color: red;
 }
 
-.circle-button:hover{
+.phone-book .circle-button:hover {
     background-color: darkgreen;
 }
 
-.checkbox {
+.phone-book .checkbox {
     display: inline-block;
     width: 18px;
     height: 18px;
@@ -151,15 +159,47 @@
     padding: 0;
 }
 
-/*****************/
+
+/*Прямоугольные нопки*/
+
+.phone-book .button {
+    display: inline-block;
+    width: 120px;
+    height: 30px;
+    border-radius: 15px;
+    border: none;
+    text-align: center;
+    vertical-align: middle;
+    margin: 10px 3px;
+    cursor: pointer;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.phone-book .edit-button {
+    background-color: lawngreen;
+}
+
+.phone-book .add-button {
+    background-color: blue;
+}
+
+.phone-book .button:hover {
+    background-color: darkgreen;
+}
+
+
 /*Диалоговые окна*/
-/*****************/
+
 
 /*Невидимость для диалоговых окон*/
 
 .invisible {
     display: none;
 }
+
 
 /*Полупрозрачный экран для диалоговых окон*/
 
@@ -174,3 +214,58 @@
 }
 
 
+/*Общие стили диалоговых окон*/
+
+.dialog-window {
+    border: 5px solid darkgreen;
+    border-radius: 20px;
+    background-color: palegreen;
+    color: darkgreen;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    box-shadow: 15px 15px gray;
+}
+
+.dialog-window table {
+    border-collapse: collapse;
+    border: none;
+    width: 100%;
+    position: static;
+    text-align: center;
+}
+
+.dialog-window td.message {
+    background-color: darkgreen;
+    color: white;
+    font-weight: bold;
+    padding: 15px 0;
+}
+
+
+/*Диалоговое окно вывода сообщений*/
+
+.message-dialog {
+    width: 300px;
+    margin-left: -150px;
+}
+
+
+/*Диалоговое окно подтверждения*/
+
+.confirm-dialog {
+    width: 300px;
+    margin-left: -150px;
+}
+
+
+/*Диалоговое окно редактирования*/
+
+.edit-dialog {
+    width: 300px;
+    margin-left: -150px;
+}
+
+.edit-dialog .input {
+    text-align: right;
+}

@@ -1,162 +1,195 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title>Задача "PhoneBook"</title>
     <link rel="stylesheet" href="lib/normalize.css">
     <link rel="stylesheet" href="phone_book.css">
 </head>
-<body>
 
-<div class="phone-book_header-position">
-    <div class="phone-book_header-wrapper">
-        <div class="phone-book_header">
-            <div class="phone-book_header-top">
+<body>
+    <div class="phone-book">
+        <div class="phone-book_window">
+            <div class="phone-book_header-position">
+                <div class="phone-book_header-wrapper">
+                    <div class="phone-book_header">
+                        <div class="phone-book_header-top">
+                            <div class="button add-button" id="add-button">Добавить</div>
+                            <div class="button edit-button" id="edit-button">Изменить</div>
+                            <div class="button" id="delete-button">Удалить</div>
+                        </div>
+                        <table class="phone-book_table-header phone-book_table">
+                            <tr>
+                                <td>№</td>
+                                <td>Фамилия</td>
+                                <td>Имя</td>
+                                <td>Телефон</td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <table class="phone-book_table-header phone-book_table">
-                <tr>
-                    <td>№</td>
-                    <td>Фамилия</td>
-                    <td>Имя</td>
-                    <td>Телефон</td>
-                    <td></td>
-                </tr>
-            </table>
+
+            <div class="phone-book_table-wrapper">
+                <table class="phone-book_table">
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Фамилия</td>
+                            <td>Имя</td>
+                            <td>Телефон</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Фамилия</td>
+                            <td>Имя</td>
+                            <td>Телефон</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Фамилия</td>
+                            <td>Имя</td>
+                            <td>Телефон</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Фамилия</td>
+                            <td>Имя</td>
+                            <td>Телефон</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Фамилия</td>
+                            <td>Имя</td>
+                            <td>Телефон</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>
+                                Фамилия11334455
+                            </td>
+                            <td>
+                                Имя123345
+                            </td>
+                            <td>
+                                Телефон1
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>
+                                <div class="tdata">Фамилия12345</div>
+                            </td>
+                            <td>
+                                <div class="tdata">Имя122</div>
+                            </td>
+                            <td>
+                                <div class="tdata">Телефон12</div>
+                            </td>
+                            <td><input type="checkbox" class="checkbox">
+                                <div class="circle-button edit-button"></div>
+                                <div class="circle-button delete-button"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>
+                                <div class="tdata">Фамилия123</div>
+                            </td>
+                            <td>
+                                <div class="tdata">Имя11</div>
+                            </td>
+                            <td>
+                                <div class="tdata">Телефон123</div>
+                            </td>
+                            <td><input type="checkbox" class="checkbox">
+                                <div class="circle-button edit-button"></div>
+                                <div class="circle-button delete-button"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>№</td>
+                            <td>Фамилия</td>
+                            <td>Имя</td>
+                            <td>Телефон</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div class="phone-book_dialog-wrapper">
+            <div class="shield-window invisible" id="shield-window"></div>
+
+            <div class="dialog-window message-dialog invisible" id="message-dialog">
+                <table>
+                    <tr>
+                        <td class="message" id="message-dialog_message"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="button" id="message-dialog_ok">Понятно</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="dialog-window confirm-dialog invisible" id="confirm-dialog">
+                <table>
+                    <tr>
+                        <td colspan="2" class="message" id="confirm-dialog_message"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="button" id="confirm-dialog_cancel">Отменить</div>
+                        </td>
+                        <td>
+                            <div class="button" id="confirm-dialog_ok">Подтвердить</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="dialog-window edit-dialog invisible" id="edit-dialog">
+                <table>
+                    <tr>
+                        <td colspan="2" class="message" id="edit-dialog_message"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="input"><label>Фамилия <input type="text" name="family" id="edit-dialog_family"></label></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="input"><label>Имя <input type="text" name="name" id="edit-dialog_name"></label></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="input"><label>Телефон <input type="phone" name="phone" id="edit-dialog_phone"></label></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="button" id="edit-dialog_cancel">Отменить</div>
+                        </td>
+                        <td>
+                            <div class="button" id="edit-dialog_ok">Применить</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="phone-book_table-wrapper">
-    <table class="phone-book_table">
-        <thead>
-        <tr>
-            <td>№</td>
-            <td>Фамилия</td>
-            <td>Имя</td>
-            <td>Телефон</td>
-            <td></td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>1</td>
-            <td>Фамилия</td>
-            <td>Имя</td>
-            <td>Телефон</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Фамилия</td>
-            <td>Имя</td>
-            <td>Телефон</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Фамилия</td>
-            <td>Имя</td>
-            <td>Телефон</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>Фамилия</td>
-            <td>Имя</td>
-            <td>Телефон</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td>Фамилия</td>
-            <td>Имя</td>
-            <td>Телефон</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td>Фамилия11334455</td>
-            <td>Имя123345</td>
-            <td>Телефон1</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>7</td>
-            <td>Фамилия12345</td>
-            <td>Имя122</td>
-            <td>Телефон12</td>
-            <td><input type="checkbox" class="checkbox">
-                <div class="circle-button edit-button"></div>
-                <div class="circle-button delete-button"></div>
-            </td>
-        </tr>
-        <tr>
-            <td>8</td>
-            <td>Фамилия123</td>
-            <td>Имя11</td>
-            <td>Телефон123</td>
-            <td><input type="checkbox" class="checkbox">
-                <div class="circle-button edit-button"></div>
-                <div class="circle-button delete-button"></div>
-            </td>
-        </tr>
-        </tbody>
-        <thead>
-        <tr>
-            <td>№</td>
-            <td>Фамилия</td>
-            <td>Имя</td>
-            <td>Телефон</td>
-            <td></td>
-        </tr>
-        </thead>
-    </table>
-</div>
-
-<div class="phone-book_dialog-wrapper">
-    <div class="shield-window invisible" id="shield-window"></div>
-
-    <div class="message-dialog invisible" id="message-dialog">
-        <table>
-            <tr>
-                <th colspan="2"></th>
-            </tr>
-            <tr>
-                <td class="button" id="message-dialog_ok">Подтвердить</td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="confirm-dialog invisible" id="confirm-dialog">
-        <table>
-            <tr>
-                <th colspan="2"></th>
-            </tr>
-            <tr>
-                <td class="button" id="confirm-dialog_cancel">Отменить</td>
-                <td class="button" id="confirm-dialog_ok">Подтвердить</td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="edit-dialog invisible" id="edit-dialog">
-        <table>
-            <tr>
-                <th colspan="3"><label id="add-task_caption" for="add-task_text">Введите текст задачи</label></th>
-            </tr>
-            <tr>
-                <th colspan="3" class="task-text"><textarea id="add-task_text"></textarea></th>
-            </tr>
-            <tr>
-                <th class="button" id="add-task_cancel">Отменить</th>
-                <th></th>
-                <th class="button" id="add-task_add">Добавить</th>
-            </tr>
-        </table>
-    </div>
-</div>
-
-<script src="lib/jquery-3.3.1.js"></script>
-<script src="phone_book.js"></script>
+    <script src="lib/jquery-3.3.1.js"></script>
+    <script src="phone_book.js"></script>
 </body>
+
 </html>
