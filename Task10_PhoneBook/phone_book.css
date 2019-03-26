@@ -83,6 +83,10 @@
     background-color: #c8ff00;
 }
 
+.phone-book_table tbody tr.checked-row td {
+    background-color: orange;
+}
+
 
 /*Таблица контактов: Размеры*/
 
@@ -104,8 +108,8 @@
 }
 
 .phone-book_table td:last-child {
-    width: 85px;
-    min-width: 85px;
+    width: 75px;
+    min-width: 75px;
 }
 
 
@@ -198,6 +202,7 @@
     font-weight: bold;
     padding: 5px;
 }
+
 
 /*Диалоговые окна*/
 
