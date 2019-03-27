@@ -2,6 +2,26 @@
     box-sizing: border-box;
 }
 
+@media screen and (max-width: 750px) {
+    .phone-book_window {
+        margin: 0 5px;
+    }
+
+    .phone-book_header {
+        margin: 0 5px;
+    }
+}
+
+@media screen and (min-width: 750px) {
+    .phone-book_window {
+        margin: 0 30px;
+    }
+
+    .phone-book_header {
+        margin: 0 30px;
+    }
+}
+
 
 /*Телефонная книга*/
 
@@ -11,7 +31,6 @@
 }
 
 .phone-book_window {
-    margin: 0 20px;
     overflow-x: auto;
 }
 
@@ -31,7 +50,6 @@
 
 .phone-book_header {
     position: static;
-    margin: 0 20px;
     background-color: #c8ff00;
     color: darkgreen;
     overflow-x: hidden;
@@ -200,7 +218,7 @@
     margin: 10px 3px;
     color: darkgreen;
     font-weight: bold;
-    padding: 5px;
+    padding: 5px 5px 5px 15px;
 }
 
 
@@ -281,4 +299,8 @@
 
 .edit-dialog .input {
     text-align: right;
+}
+
+.edit-dialog .error-marker {
+    outline: 2px solid red;
 }

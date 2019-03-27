@@ -1,10 +1,11 @@
 "use strict";
 
-(function() {
-    $(document).ready(function() {
+(function () {
+    $(document).ready(function () {
         var addButton = $("#add-button");
         var editButton = $("#edit-button");
         var deleteButton = $("#delete-button");
+        var textSearchInput = $("#text-search");
 
         var topCheckbox = $("#all-checkbox-top");
         var bottomCheckbox = $("#all-checkbox-bottom");
@@ -12,7 +13,7 @@
         var topCounter = $("#checked-counter-top");
         var bottomCounter = $("#checked-counter-bottom");
 
-        var messageDialog = $("#message-dialog").add("#shield-window");
+        var messageDialog = $("#message-dialog").add("#message-shield-window");
         var messageDialogButton = $("#message-dialog_ok");
         var messageDialogMessage = $("#message-dialog_message");
 
@@ -33,6 +34,55 @@
 
         var rowCounter = 0;
         var checkedCounter = 0;
+
+        function isPhoneNumber(phoneNumber) {
+            var newPhone = phoneNumber.trim();
+            var phones = $("#table-body .column-phone");
+            for (var i = 0; i < phones.length; ++i) {
+                if (phones.eq(i).text() === newPhone) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        function filterRows(searchingString) {
+            var str = searchingString.toLowerCase().trim();
+            var rows = $("#table-body tr");
+            var families = $("#table-body .column-family");
+            var names = $("#table-body .column-name");
+            var phones = $("#table-body .column-phone");
+
+            var family;
+            var name;
+            var phone;
+            for (var i = 0; i < rows.length; ++i) {
+                family = families.eq(i).text().toLowerCase();
+                name = names.eq(i).text().toLowerCase();
+                phone = phones.eq(i).text().toLowerCase();
+
+                if ((family.indexOf(str) >= 0) || (name.indexOf(str) >= 0) || (phone.indexOf(str) >= 0)) {
+                    rows.eq(i).show();
+                } else {
+                    rows.eq(i).hide();
+                }
+            }
+        }
+
+        textSearchInput.on("change", function () {
+            filterRows(textSearchInput.val());
+        });
+
+        textSearchInput.on("keyup", function () {
+            filterRows(textSearchInput.val());
+        });
+
+        function setRowNumbers() {
+            var numberColumnElements = $("#table-body .column-number");
+            for (var i = 0; i < numberColumnElements.length; ++i) {
+                numberColumnElements.eq(i).text(i + 1);
+            }
+        }
 
         function showCheckedRowsNumber() {
             if (checkedCounter === 0) {
@@ -61,12 +111,12 @@
         function createRow(number, family, name, phone) {
             var tr = $("<tr></tr>").appendTo(tableBody);
 
-            var tdNumber = $("<td></td>").addClass("column-number").text(number).appendTo(tr);
+            $("<td></td>").addClass("column-number").text(number).appendTo(tr);
             var tdFamily = $("<td></td>").addClass("column-family").text(family).appendTo(tr);
             var tdName = $("<td></td>").addClass("column-name").text(name).appendTo(tr);
             var tdPhone = $("<td></td>").addClass("column-phone").text(phone).appendTo(tr);
             var tdCheckbox = $("<td></td>").addClass("column-checkbox").appendTo(tr);
-            var checkbox = $("<input type='checkbox'>").addClass("checkbox").click(function() {
+            var checkbox = $("<input type='checkbox'>").addClass("checkbox").click(function () {
                 if (checkbox.is(":checked")) {
                     tr.addClass("checked-row");
                     checkedCounter++;
@@ -77,7 +127,7 @@
                 showCheckedRowsNumber();
             }).appendTo(tdCheckbox);
             var tdButtons = $("<td></td>").addClass("column-buttons").appendTo(tr);
-            $("<div></div>").addClass("circle-button").addClass("add-button").click(function() {
+            $("<div></div>").addClass("circle-button").addClass("add-button").click(function () {
                 editDialogMessage.text("Введите данные нового контакта");
                 editDialogOkButton.text("Добавить");
                 editDialog.removeClass("invisible");
@@ -86,7 +136,7 @@
                 editDialogInputPhone.val("");
                 editDialogInputFamily.focus();
             }).appendTo(tdButtons);
-            $("<div></div>").addClass("circle-button").addClass("edit-button").click(function() {
+            $("<div></div>").addClass("circle-button").addClass("edit-button").click(function () {
                 editDialogMessage.text("Измените данные существующего контакта");
                 editDialogOkButton.text("Применить");
                 editDialog.removeClass("invisible");
@@ -99,12 +149,13 @@
                 editedPhone = tdPhone;
                 editedCheckbox = checkbox;
             }).appendTo(tdButtons);
-            $("<div></div>").addClass("circle-button").addClass("delete-button").click(function() {
+            $("<div></div>").addClass("circle-button").addClass("delete-button").click(function () {
                 if (checkbox.is(":checked")) {
                     checkedCounter--;
                 }
                 rowCounter--;
                 tr.remove();
+                setRowNumbers();
                 showCheckedRowsNumber();
             }).appendTo(tdButtons);
 
@@ -112,7 +163,7 @@
             return tr;
         }
 
-        $(deleteButton).click(function() {
+        $(deleteButton).click(function () {
             if (checkedCounter === 0) {
                 messageDialogMessage.text("Не выбрано ни одного контакта!\nДля выполнения операции выберите контакты!");
                 messageDialog.removeClass("invisible");
@@ -123,7 +174,7 @@
             }
         });
 
-        $(editButton).click(function() {
+        $(editButton).click(function () {
             if (checkedCounter === 0) {
                 messageDialogMessage.text("Не выбрано ни одного контакта!\nДля выполнения операции выберите контакты!");
                 messageDialog.removeClass("invisible");
@@ -134,22 +185,22 @@
             }
         });
 
-        $(addButton).click(function() {
+        $(addButton).click(function () {
             editDialogMessage.text("Введите данные нового контакта");
             editDialogOkButton.text("Добавить");
             editDialog.removeClass("invisible");
             editDialogInputFamily.focus();
         });
 
-        $(messageDialogButton).click(function() {
+        $(messageDialogButton).click(function () {
             messageDialog.addClass("invisible");
         });
 
-        $(confirmDialogCencelButton).click(function() {
+        $(confirmDialogCencelButton).click(function () {
             confirmDialog.addClass("invisible");
         });
 
-        $(confirmDialogOkButton).click(function() {
+        $(confirmDialogOkButton).click(function () {
             if (confirmDialogOkButton.text() === "Удалить") {
                 var checkedDeleteButtons = $("#table-body tr:has(input[type='checkbox']:checked) .delete-button");
                 checkedDeleteButtons.click();
@@ -160,24 +211,70 @@
             confirmDialog.addClass("invisible");
         });
 
-        $(editDialogCancelButton).click(function() {
+        $(editDialogCancelButton).click(function () {
             editDialog.addClass("invisible");
         });
 
-        $(editDialogOkButton).click(function() {
-            editDialog.addClass("invisible");
+        function isValidNewData() {
+            if (editDialogInputFamily.val().trim() === "" && editDialogInputName.val().trim() === "") {
+                editDialogInputFamily.addClass("error-marker");
+                editDialogInputName.addClass("error-marker");
+                messageDialogMessage.text("Не введено ни имени, ни фамилии! Нужно задать хотя бы одно из них!");
+                messageDialog.removeClass("invisible");
+                return false;
+            } else {
+                editDialogInputFamily.removeClass("error-marker");
+                editDialogInputName.removeClass("error-marker");
+            }
+
+            if (editDialogInputPhone.val().trim() === "") {
+                editDialogInputPhone.addClass("error-marker");
+                messageDialogMessage.text("Не введён номер телефона!");
+                messageDialog.removeClass("invisible");
+                return false;
+            } else {
+                editDialogInputPhone.removeClass("error-marker");
+            }
+
+            return true;
+        }
+
+        function isNewPhoneNumber() {
+            if (isPhoneNumber(editDialogInputPhone.val())) {
+                editDialogInputPhone.addClass("error-marker");
+                messageDialogMessage.text("Такой номер телефона уже есть!");
+                messageDialog.removeClass("invisible");
+                return false;
+            } else {
+                editDialogInputPhone.removeClass("error-marker");
+                return true;
+            }
+        }
+
+        $(editDialogOkButton).click(function () {
+            if (!isValidNewData()) {
+                return
+            }
 
             if (editDialogOkButton.text() === "Добавить") {
-                createRow(rowCounter + 1, editDialogInputFamily.val(), editDialogInputName.val(), editDialogInputPhone.val());
+                if (!isNewPhoneNumber()) {
+                    return
+                }
+
+                editDialog.addClass("invisible");
+                createRow(rowCounter + 1, editDialogInputFamily.val().trim(), editDialogInputName.val().trim(), editDialogInputPhone.val().trim());
                 editDialogInputFamily.val("");
                 editDialogInputName.val("");
                 editDialogInputPhone.val("");
                 showCheckedRowsNumber();
             } else if (editDialogOkButton.text() === "Применить") {
-                editedFamily.text(editDialogInputFamily.val());
-                editedName.text(editDialogInputName.val());
-                editedPhone.text(editDialogInputPhone.val());
-                editedCheckbox.click();
+                editDialog.addClass("invisible");
+                editedFamily.text(editDialogInputFamily.val().trim());
+                editedName.text(editDialogInputName.val().trim());
+                editedPhone.text(editDialogInputPhone.val().trim());
+                if (editedCheckbox.is(":checked")) {
+                    editedCheckbox.click();
+                }
                 showCheckedRowsNumber();
             }
         });
@@ -195,7 +292,7 @@
             }
         }
 
-        $(topCheckbox).click(function() {
+        $(topCheckbox).click(function () {
             if (topCheckbox.is(":checked")) {
                 bottomCheckbox.prop("checked", true);
                 setAllCheckbox(true);
@@ -205,7 +302,7 @@
             }
         });
 
-        $(bottomCheckbox).click(function() {
+        $(bottomCheckbox).click(function () {
             if (bottomCheckbox.is(":checked")) {
                 topCheckbox.prop("checked", true);
                 setAllCheckbox(true);
@@ -224,6 +321,14 @@
             createRow(6, "Рагнарсон", "Сигурд", "678678");
             createRow(7, "Сигурдсон", "Снорри", "789789");
             createRow(8, "Стурлуссон", "Снорри", "890890");
+            createRow(9, "Барбаросса", "Фридрих", "779988");
+            createRow(10, "Арагонский", "Фердинанд", "123456");
+            createRow(11, "Македонский", "Александр", "112233");
+            createRow(12, "Итакский", "Одиссей", "123456789");
+            createRow(13, "Африканский", "Сципион", "123456");
+            createRow(14, "Кортес", "Эрнан", "7654321");
+            createRow(15, "Юлий Цезарь", "Гай", "123123");
+            createRow(16, "", "Ксенофонт", "7775777");
         }
 
         createTestContacts();
