@@ -105,6 +105,10 @@
     background-color: orange;
 }
 
+.phone-book_table-wrapper .phone-book_table tbody tr:hover {
+    outline: 3px solid red;
+}
+
 
 /*Таблица контактов: Размеры*/
 
@@ -174,7 +178,6 @@
     padding: 0;
 }
 
-
 /*Большие нопки*/
 
 .phone-book .button {
@@ -208,19 +211,53 @@
 
 /*Поисковое поле*/
 
-.phone-book .text-search {
+.phone-book .search-wrapper,
+.phone-book .search-input {
     display: inline-block;
-    width: 240px;
+    position: static;
     height: 30px;
     border-radius: 15px;
     border: none;
     outline: none;
-    margin: 10px 3px;
-    color: darkgreen;
-    font-weight: bold;
-    padding: 5px 5px 5px 15px;
+    background-color: white;
 }
 
+.phone-book .search-wrapper {
+    width: 240px;
+    margin: 10px 3px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.phone-book .search-input {
+    width: 200px;
+    margin: 0;
+    padding: 5px 5px 5px 15px;
+    padding-right: auto;
+    color: darkgreen;
+    font-weight: bold;
+}
+
+.phone-book .search-reset-button {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    border: none;
+    margin: 6px 7px 8px 10px;
+    background-color: white;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    padding-left: 4px;
+    vertical-align: middle;
+    line-height: 14px;
+}
+
+.phone-book .search-reset-button.visible {
+    cursor: pointer;
+    background-color: red;
+}
 
 /*Диалоговые окна*/
 

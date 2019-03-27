@@ -5,7 +5,8 @@
         var addButton = $("#add-button");
         var editButton = $("#edit-button");
         var deleteButton = $("#delete-button");
-        var textSearchInput = $("#text-search");
+        var textSearchInput = $("#search-input");
+        var searchResetButton = $("#search-reset-button");
 
         var topCheckbox = $("#all-checkbox-top");
         var bottomCheckbox = $("#all-checkbox-bottom");
@@ -48,6 +49,13 @@
 
         function filterRows(searchingString) {
             var str = searchingString.toLowerCase().trim();
+
+            if (str.length === 0) {
+                searchResetButton.removeClass("visible");
+            } else {
+                searchResetButton.addClass("visible");
+            }
+
             var rows = $("#table-body tr");
             var families = $("#table-body .column-family");
             var names = $("#table-body .column-name");
@@ -69,12 +77,18 @@
             }
         }
 
+        textSearchInput.on("keyup", function () {
+            filterRows(textSearchInput.val());
+        });
+
         textSearchInput.on("change", function () {
             filterRows(textSearchInput.val());
         });
 
-        textSearchInput.on("keyup", function () {
-            filterRows(textSearchInput.val());
+        searchResetButton.on("click", function () {
+            textSearchInput.val("");
+            searchResetButton.removeClass("visible");
+            textSearchInput.change();
         });
 
         function setRowNumbers() {
@@ -163,12 +177,27 @@
             return tr;
         }
 
+        function getContactString(number) {
+            var twoDigits = number % 100;
+            var lastDigit = number % 10;
+
+            if ((twoDigits >= 5 && twoDigits <= 20) || (lastDigit === 0) || (lastDigit >= 5 && lastDigit <= 9)) {
+                return "контактов";
+            } else if (lastDigit === 1) {
+                return "контакт";
+            } else if (lastDigit >= 2 && lastDigit <= 4) {
+                return "контакта";
+            } else {
+                return "хм..мммм";
+            }
+        }
+
         $(deleteButton).click(function () {
             if (checkedCounter === 0) {
                 messageDialogMessage.text("Не выбрано ни одного контакта!\nДля выполнения операции выберите контакты!");
                 messageDialog.removeClass("invisible");
             } else {
-                confirmDialogMessage.text("Вы действительно хотите удалить " + checkedCounter + " контактов?");
+                confirmDialogMessage.text("Вы действительно хотите удалить " + checkedCounter + " " + getContactString(checkedCounter) + "?");
                 confirmDialogOkButton.text("Удалить");
                 confirmDialog.removeClass("invisible");
             }
@@ -179,7 +208,7 @@
                 messageDialogMessage.text("Не выбрано ни одного контакта!\nДля выполнения операции выберите контакты!");
                 messageDialog.removeClass("invisible");
             } else {
-                confirmDialogMessage.text("Вы действительно хотите изменить " + checkedCounter + " контактов?");
+                confirmDialogMessage.text("Вы действительно хотите изменить " + checkedCounter + " " + getContactString(checkedCounter) + "?");
                 confirmDialogOkButton.text("Изменить");
                 confirmDialog.removeClass("invisible");
             }
@@ -313,7 +342,7 @@
         });
 
         function createTestContacts() {
-            createRow(1, "Иванов", "Василий", "123123");
+            createRow(1, "Иванов", "Василий", "123321");
             createRow(2, "Васильев", "Дмитрий", "234234");
             createRow(3, "Дмитриев", "Иоган", "345345");
             createRow(4, "Йохансон", "Скарлетт", "456456");
@@ -325,10 +354,14 @@
             createRow(10, "Арагонский", "Фердинанд", "123456");
             createRow(11, "Македонский", "Александр", "112233");
             createRow(12, "Итакский", "Одиссей", "123456789");
-            createRow(13, "Африканский", "Сципион", "123456");
+            createRow(13, "Африканский", "Сципион", "123456123");
             createRow(14, "Кортес", "Эрнан", "7654321");
-            createRow(15, "Юлий Цезарь", "Гай", "123123");
-            createRow(16, "", "Ксенофонт", "7775777");
+            createRow(15, "Юлий Цезарь", "Гай", "123123123");
+            createRow(16, "", "Ксенофонт", "7775773");
+            createRow(17, "", "Фукидид", "7775772");
+            createRow(18, "", "Геродод", "7775771");
+            createRow(19, "", "Аристотель", "5775773");
+            createRow(20, "", "Платон", "5775772");
         }
 
         createTestContacts();
