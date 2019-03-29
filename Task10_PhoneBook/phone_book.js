@@ -2,6 +2,8 @@
 
 (function () {
     $(document).ready(function () {
+        var editKey = false;
+
         var addButton = $("#add-button");
         var editButton = $("#edit-button");
         var deleteButton = $("#delete-button");
@@ -235,13 +237,25 @@
                 checkedDeleteButtons.click();
             } else if (confirmDialogOkButton.text() === "Изменить") {
                 var checkedEditButtons = $("#table-body tr:has(input[type='checkbox']:checked) .edit-button");
-                checkedEditButtons.click();
+                var i = 0;
+                editKey = false;
+                var timerId = setInterval(function () {
+                    if (!editKey) {
+                        editKey = true;
+                        checkedEditButtons[i].click();
+                        i++;
+                    }
+                    if (i >= checkedEditButtons.length) {
+                        clearInterval(timerId);
+                    }
+                }, 50);
             }
             confirmDialog.addClass("invisible");
         });
 
         $(editDialogCancelButton).click(function () {
             editDialog.addClass("invisible");
+            editKey = false;
         });
 
         function isValidNewData() {
@@ -305,6 +319,7 @@
                     editedCheckbox.click();
                 }
                 showCheckedRowsNumber();
+                editKey = false;
             }
         });
 
