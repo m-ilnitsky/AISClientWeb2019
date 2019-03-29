@@ -4,6 +4,9 @@
     $(document).ready(function () {
         var editKey = false;
 
+        var filterKey = false;
+        var lastFilterString = "";
+
         var addButton = $("#add-button");
         var editButton = $("#edit-button");
         var deleteButton = $("#delete-button");
@@ -77,20 +80,41 @@
                     rows.eq(i).hide();
                 }
             }
+            console.log("filter");
+            filterKey = false;
+        }
+
+        function callFiltering() {
+            var newFilterString = textSearchInput.val().toLowerCase().trim();
+            if (newFilterString === lastFilterString) {
+                return
+            } else {
+                lastFilterString = newFilterString;
+            }
+
+            if (!filterKey) {
+                filterKey = true;
+                setTimeout(function () {
+                    filterRows(textSearchInput.val());
+                }, 100);
+            }
         }
 
         textSearchInput.on("keyup", function () {
-            filterRows(textSearchInput.val());
+            console.log("keyup");
+            callFiltering();
         });
 
         textSearchInput.on("change", function () {
-            filterRows(textSearchInput.val());
+            console.log("change");
+            callFiltering();
         });
 
         searchResetButton.on("click", function () {
             textSearchInput.val("");
             searchResetButton.removeClass("visible");
-            textSearchInput.change();
+            lastFilterString = "";
+            filterRows(textSearchInput.val());
         });
 
         function setRowNumbers() {
@@ -143,7 +167,7 @@
                 showCheckedRowsNumber();
             }).appendTo(tdCheckbox);
             var tdButtons = $("<td></td>").addClass("column-buttons").appendTo(tr);
-            $("<div></div>").addClass("circle-button").addClass("add-button").click(function () {
+            $("<div></div>").addClass("circle-button").addClass("add-button").attr("title", "Создать новый контакт на основе данного").click(function () {
                 editDialogMessage.text("Введите данные нового контакта");
                 editDialogOkButton.text("Добавить");
                 editDialog.removeClass("invisible");
@@ -152,7 +176,7 @@
                 editDialogInputPhone.val("");
                 editDialogInputFamily.focus();
             }).appendTo(tdButtons);
-            $("<div></div>").addClass("circle-button").addClass("edit-button").click(function () {
+            $("<div></div>").addClass("circle-button").addClass("edit-button").attr("title", "Изменить контакт").click(function () {
                 editDialogMessage.text("Измените данные существующего контакта");
                 editDialogOkButton.text("Применить");
                 editDialog.removeClass("invisible");
@@ -165,7 +189,7 @@
                 editedPhone = tdPhone;
                 editedCheckbox = checkbox;
             }).appendTo(tdButtons);
-            $("<div></div>").addClass("circle-button").addClass("delete-button").click(function () {
+            $("<div></div>").addClass("circle-button").addClass("delete-button").attr("title", "Удалить контакт").click(function () {
                 if (checkbox.is(":checked")) {
                     checkedCounter--;
                 }
@@ -385,5 +409,6 @@
         }
 
         createTestContacts();
+        textSearchInput.focus();
     });
 })();
