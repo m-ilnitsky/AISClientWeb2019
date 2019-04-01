@@ -1,11 +1,14 @@
 "use strict";
 
-(function () {
-    $(document).ready(function () {
+(function() {
+    $(document).ready(function() {
         var editKey = false;
 
         var filterKey = false;
         var lastFilterString = "";
+
+        var sinleDeleteKey = true;
+        var deletingRowDelButton;
 
         var addButton = $("#add-button");
         var editButton = $("#edit-button");
@@ -25,7 +28,7 @@
 
         var confirmDialog = $("#confirm-dialog").add("#shield-window");
         var confirmDialogMessage = $("#confirm-dialog_message");
-        var confirmDialogCencelButton = $("#confirm-dialog_cancel");
+        var confirmDialogCancelButton = $("#confirm-dialog_cancel");
         var confirmDialogOkButton = $("#confirm-dialog_ok");
 
         var editDialog = $("#edit-dialog").add("#shield-window");
@@ -44,12 +47,30 @@
         function isPhoneNumber(phoneNumber) {
             var newPhone = phoneNumber.trim();
             var phones = $("#table-body .column-phone");
-            for (var i = 0; i < phones.length; ++i) {
+
+            var isPhone = false;
+            phones.each(function(index, phone) {
+                if ($(this).text() === newPhone) {
+                    isPhone = true;
+                    return false;
+                }
+            });
+            return isPhone;
+
+            /* for (var i = 0; i < phones.length; ++i) {
                 if (phones.eq(i).text() === newPhone) {
                     return true;
                 }
             }
-            return false;
+            return false;*/
+        }
+
+        function setRowNumbers() {
+            var numberColumnElements = $("#table-body tr:visible .column-number");
+            for (var i = 0; i < numberColumnElements.length; ++i) {
+                numberColumnElements.eq(i).text(i + 1);
+            }
+            rowCounter = numberColumnElements.length;
         }
 
         function filterRows(searchingString) {
@@ -65,21 +86,38 @@
             var families = $("#table-body .column-family");
             var names = $("#table-body .column-name");
             var phones = $("#table-body .column-phone");
+            var checkboxes = $("#table-body .column-checkbox input");
 
             var family;
             var name;
             var phone;
-            for (var i = 0; i < rows.length; ++i) {
+
+            rowCounter = rows.length;
+
+            rows.each(function(i, row) {
                 family = families.eq(i).text().toLowerCase();
                 name = names.eq(i).text().toLowerCase();
                 phone = phones.eq(i).text().toLowerCase();
 
-                if ((family.indexOf(str) >= 0) || (name.indexOf(str) >= 0) || (phone.indexOf(str) >= 0)) {
-                    rows.eq(i).show();
-                } else {
-                    rows.eq(i).hide();
+                var isString = (family.indexOf(str) >= 0) || (name.indexOf(str) >= 0) || (phone.indexOf(str) >= 0);
+                $(this).toggle(isString);
+
+                if (!isString) {
+                    if (checkboxes.eq(i).is(":checked")) {
+                        checkboxes.eq(i).click();
+                    }
+                    rowCounter--;
                 }
+            });
+
+            if (rowCounter === 0) {
+                messageDialogMessage.text("Не найдено ни одного совпадения!");
+                messageDialog.removeClass("invisible");
             }
+
+            setRowNumbers();
+            showCheckedRowsNumber();
+
             console.log("filter");
             filterKey = false;
         }
@@ -94,59 +132,32 @@
 
             if (!filterKey) {
                 filterKey = true;
-                setTimeout(function () {
+                setTimeout(function() {
                     filterRows(textSearchInput.val());
                 }, 100);
             }
         }
 
-        textSearchInput.on("keyup", function () {
+        textSearchInput.on("keyup", function() {
             console.log("keyup");
             callFiltering();
         });
 
-        textSearchInput.on("change", function () {
+        textSearchInput.on("change", function() {
             console.log("change");
             callFiltering();
         });
 
-        searchResetButton.on("click", function () {
+        searchResetButton.on("click", function() {
             textSearchInput.val("");
             searchResetButton.removeClass("visible");
             lastFilterString = "";
             filterRows(textSearchInput.val());
         });
 
-        function setRowNumbers() {
-            var numberColumnElements = $("#table-body .column-number");
-            for (var i = 0; i < numberColumnElements.length; ++i) {
-                numberColumnElements.eq(i).text(i + 1);
-            }
-        }
-
-        function showCheckedRowsNumber() {
-            if (checkedCounter === 0) {
-                topCounter.text("");
-                bottomCounter.text("");
-                topCheckbox.prop("checked", false);
-                bottomCheckbox.prop("checked", false);
-            } else if (checkedCounter === rowCounter) {
-                topCounter.text("все(" + checkedCounter + ")");
-                bottomCounter.text("все(" + checkedCounter + ")");
-                topCheckbox.prop("checked", true);
-                bottomCheckbox.prop("checked", true);
-            } else {
-                topCounter.text(checkedCounter);
-                bottomCounter.text(checkedCounter);
-                topCheckbox.prop("checked", false);
-                bottomCheckbox.prop("checked", false);
-            }
-        }
-
         var editedFamily;
         var editedName;
         var editedPhone;
-        var editedCheckbox;
 
         function createRow(number, family, name, phone) {
             var tr = $("<tr></tr>").appendTo(tableBody);
@@ -156,48 +167,66 @@
             var tdName = $("<td></td>").addClass("column-name").text(name).appendTo(tr);
             var tdPhone = $("<td></td>").addClass("column-phone").text(phone).appendTo(tr);
             var tdCheckbox = $("<td></td>").addClass("column-checkbox").appendTo(tr);
-            var checkbox = $("<input type='checkbox'>").addClass("checkbox").click(function () {
-                if (checkbox.is(":checked")) {
-                    tr.addClass("checked-row");
-                    checkedCounter++;
-                } else {
-                    tr.removeClass("checked-row");
-                    checkedCounter--;
-                }
-                showCheckedRowsNumber();
-            }).appendTo(tdCheckbox);
+            var checkbox = $("<input type='checkbox'>")
+                .addClass("checkbox")
+                .click(function() {
+                    if (checkbox.is(":checked")) {
+                        tr.addClass("checked-row");
+                        checkedCounter++;
+                    } else {
+                        tr.removeClass("checked-row");
+                        checkedCounter--;
+                    }
+                    showCheckedRowsNumber();
+                }).appendTo(tdCheckbox);
             var tdButtons = $("<td></td>").addClass("column-buttons").appendTo(tr);
-            $("<div></div>").addClass("circle-button").addClass("add-button").attr("title", "Создать новый контакт на основе данного").click(function () {
-                editDialogMessage.text("Введите данные нового контакта");
-                editDialogOkButton.text("Добавить");
-                editDialog.removeClass("invisible");
-                editDialogInputFamily.val(tdFamily.text());
-                editDialogInputName.val(tdName.text());
-                editDialogInputPhone.val("");
-                editDialogInputFamily.focus();
-            }).appendTo(tdButtons);
-            $("<div></div>").addClass("circle-button").addClass("edit-button").attr("title", "Изменить контакт").click(function () {
-                editDialogMessage.text("Измените данные существующего контакта");
-                editDialogOkButton.text("Применить");
-                editDialog.removeClass("invisible");
-                editDialogInputFamily.val(tdFamily.text());
-                editDialogInputName.val(tdName.text());
-                editDialogInputPhone.val(tdPhone.text());
-                editDialogInputFamily.focus();
-                editedFamily = tdFamily;
-                editedName = tdName;
-                editedPhone = tdPhone;
-                editedCheckbox = checkbox;
-            }).appendTo(tdButtons);
-            $("<div></div>").addClass("circle-button").addClass("delete-button").attr("title", "Удалить контакт").click(function () {
-                if (checkbox.is(":checked")) {
-                    checkedCounter--;
-                }
-                rowCounter--;
-                tr.remove();
-                setRowNumbers();
-                showCheckedRowsNumber();
-            }).appendTo(tdButtons);
+            $("<div></div>").addClass("circle-button add-button")
+                .attr("title", "Создать новый контакт на основе данного")
+                .click(function() {
+                    editDialogMessage.text("Введите данные нового контакта");
+                    editDialogOkButton.text("Добавить");
+                    editDialog.removeClass("invisible");
+                    editDialogInputFamily.val(tdFamily.text());
+                    editDialogInputName.val(tdName.text());
+                    editDialogInputPhone.val("");
+                    editDialogInputFamily.focus();
+                }).appendTo(tdButtons);
+            $("<div></div>").addClass("circle-button edit-button")
+                .attr("title", "Изменить контакт")
+                .click(function() {
+                    editDialogMessage.text("Измените данные существующего контакта");
+                    editDialogOkButton.text("Применить");
+                    editDialog.removeClass("invisible");
+                    editDialogInputFamily.val(tdFamily.text());
+                    editDialogInputName.val(tdName.text());
+                    editDialogInputPhone.val(tdPhone.text());
+                    editDialogInputFamily.focus();
+                    editedFamily = tdFamily;
+                    editedName = tdName;
+                    editedPhone = tdPhone;
+                }).appendTo(tdButtons);
+            var delButton = $("<div></div>").addClass("circle-button delete-button")
+                .attr("title", "Удалить контакт")
+                .click(function() {
+                    if (sinleDeleteKey) {
+                        var message = "Вы действительно хотите удалить контакт? <br>" +
+                            tdFamily.text() + " <br>" +
+                            tdName.text() + " <br>" +
+                            tdPhone.text();
+                        confirmDialogMessage.html(message);
+                        confirmDialogOkButton.text("Удалить");
+                        confirmDialog.removeClass("invisible");
+                        deletingRowDelButton = delButton;
+                    } else {
+                        if (checkbox.is(":checked")) {
+                            checkedCounter--;
+                        }
+                        rowCounter--;
+                        tr.remove();
+                        setRowNumbers();
+                        showCheckedRowsNumber();
+                    }
+                }).appendTo(tdButtons);
 
             rowCounter++;
             return tr;
@@ -213,23 +242,27 @@
                 return "контакт";
             } else if (lastDigit >= 2 && lastDigit <= 4) {
                 return "контакта";
-            } else {
-                return "хм..мммм";
             }
+
+            return "хм..мммм";
         }
 
-        $(deleteButton).click(function () {
+        $(deleteButton).click(function() {
             if (checkedCounter === 0) {
                 messageDialogMessage.text("Не выбрано ни одного контакта!\nДля выполнения операции выберите контакты!");
                 messageDialog.removeClass("invisible");
+            } else if (checkedCounter === 1) {
+                var checkedDeleteButtons = $("#table-body tr:has(input[type='checkbox']:checked) .delete-button");
+                sinleDeleteKey = true;
+                checkedDeleteButtons.click();
             } else {
                 confirmDialogMessage.text("Вы действительно хотите удалить " + checkedCounter + " " + getContactString(checkedCounter) + "?");
-                confirmDialogOkButton.text("Удалить");
+                confirmDialogOkButton.text("Удалить все");
                 confirmDialog.removeClass("invisible");
             }
         });
 
-        $(editButton).click(function () {
+        $(editButton).click(function() {
             if (checkedCounter === 0) {
                 messageDialogMessage.text("Не выбрано ни одного контакта!\nДля выполнения операции выберите контакты!");
                 messageDialog.removeClass("invisible");
@@ -240,30 +273,36 @@
             }
         });
 
-        $(addButton).click(function () {
+        $(addButton).click(function() {
             editDialogMessage.text("Введите данные нового контакта");
             editDialogOkButton.text("Добавить");
             editDialog.removeClass("invisible");
             editDialogInputFamily.focus();
         });
 
-        $(messageDialogButton).click(function () {
+        $(messageDialogButton).click(function() {
             messageDialog.addClass("invisible");
         });
 
-        $(confirmDialogCencelButton).click(function () {
+        $(confirmDialogCancelButton).click(function() {
             confirmDialog.addClass("invisible");
         });
 
-        $(confirmDialogOkButton).click(function () {
+        $(confirmDialogOkButton).click(function() {
             if (confirmDialogOkButton.text() === "Удалить") {
+                sinleDeleteKey = false;
+                deletingRowDelButton.click();
+                sinleDeleteKey = true;
+            } else if (confirmDialogOkButton.text() === "Удалить все") {
                 var checkedDeleteButtons = $("#table-body tr:has(input[type='checkbox']:checked) .delete-button");
+                sinleDeleteKey = false;
                 checkedDeleteButtons.click();
+                sinleDeleteKey = true;
             } else if (confirmDialogOkButton.text() === "Изменить") {
                 var checkedEditButtons = $("#table-body tr:has(input[type='checkbox']:checked) .edit-button");
                 var i = 0;
                 editKey = false;
-                var timerId = setInterval(function () {
+                var timerId = setInterval(function() {
                     if (!editKey) {
                         editKey = true;
                         checkedEditButtons[i].click();
@@ -277,7 +316,7 @@
             confirmDialog.addClass("invisible");
         });
 
-        $(editDialogCancelButton).click(function () {
+        $(editDialogCancelButton).click(function() {
             editDialog.addClass("invisible");
             editKey = false;
         });
@@ -318,7 +357,7 @@
             }
         }
 
-        $(editDialogOkButton).click(function () {
+        $(editDialogOkButton).click(function() {
             if (!isValidNewData()) {
                 return
             }
@@ -334,6 +373,7 @@
                 editDialogInputName.val("");
                 editDialogInputPhone.val("");
                 showCheckedRowsNumber();
+
             } else if (editDialogOkButton.text() === "Применить") {
                 editDialog.addClass("invisible");
                 editedFamily.text(editDialogInputFamily.val().trim());
@@ -347,8 +387,27 @@
             }
         });
 
+        function showCheckedRowsNumber() {
+            if (checkedCounter === 0) {
+                topCounter.text("");
+                bottomCounter.text("");
+                topCheckbox.prop("checked", false);
+                bottomCheckbox.prop("checked", false);
+            } else if (checkedCounter === rowCounter) {
+                topCounter.text("все(" + checkedCounter + ")");
+                bottomCounter.text("все(" + checkedCounter + ")");
+                topCheckbox.prop("checked", true);
+                bottomCheckbox.prop("checked", true);
+            } else {
+                topCounter.text(checkedCounter);
+                bottomCounter.text(checkedCounter);
+                topCheckbox.prop("checked", false);
+                bottomCheckbox.prop("checked", false);
+            }
+        }
+
         function setAllCheckbox(isChecked) {
-            var allTableBodyCheckboxes = $("#table-body input[type='checkbox']");
+            var allTableBodyCheckboxes = $("#table-body tr:visible input[type='checkbox']");
             if (isChecked) {
                 checkedCounter = 0;
                 allTableBodyCheckboxes.prop("checked", false);
@@ -360,24 +419,16 @@
             }
         }
 
-        $(topCheckbox).click(function () {
-            if (topCheckbox.is(":checked")) {
-                bottomCheckbox.prop("checked", true);
-                setAllCheckbox(true);
-            } else {
-                bottomCheckbox.prop("checked", false);
-                setAllCheckbox(false);
-            }
+        $(topCheckbox).click(function() {
+            var isChecked = topCheckbox.is(":checked");
+            bottomCheckbox.prop("checked", isChecked);
+            setAllCheckbox(isChecked);
         });
 
-        $(bottomCheckbox).click(function () {
-            if (bottomCheckbox.is(":checked")) {
-                topCheckbox.prop("checked", true);
-                setAllCheckbox(true);
-            } else {
-                topCheckbox.prop("checked", false);
-                setAllCheckbox(false);
-            }
+        $(bottomCheckbox).click(function() {
+            var isChecked = bottomCheckbox.is(":checked");
+            topCheckbox.prop("checked", isChecked);
+            setAllCheckbox(isChecked);
         });
 
         function createTestContacts() {
