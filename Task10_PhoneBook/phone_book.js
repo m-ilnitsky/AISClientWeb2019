@@ -54,7 +54,7 @@
 
             var isPhone = false;
             phones.each(function (index, phone) {
-                var phoneInRow = $(this).text()
+                var phoneInRow = $(this).text().trim()
                     .replace(/[+]/g, "")
                     .replace(/[(]/g, "")
                     .replace(/[)]/g, "")
@@ -100,6 +100,7 @@
             var family;
             var name;
             var phone;
+            var phoneDigits;
 
             rowCounter = rows.length;
 
@@ -107,8 +108,16 @@
                 family = families.eq(i).text().toLowerCase();
                 name = names.eq(i).text().toLowerCase();
                 phone = phones.eq(i).text().toLowerCase();
+                phoneDigits = phone.replace(/[+]/g, "")
+                    .replace(/[(]/g, "")
+                    .replace(/[)]/g, "")
+                    .replace(/[-]/g, "");
 
-                var isString = (family.indexOf(str) >= 0) || (name.indexOf(str) >= 0) || (phone.indexOf(str) >= 0);
+                var isString = (family.indexOf(str) >= 0)
+                    || (name.indexOf(str) >= 0)
+                    || (phone.indexOf(str) >= 0)
+                    || (phoneDigits.indexOf(str) >= 0);
+
                 $(this).toggle(isString);
 
                 if (!isString) {
