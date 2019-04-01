@@ -45,12 +45,21 @@
         var checkedCounter = 0;
 
         function isPhoneNumber(phoneNumber) {
-            var newPhone = phoneNumber.trim();
+            var newPhone = phoneNumber.trim()
+                .replace(/[+]/g, "")
+                .replace(/[(]/g, "")
+                .replace(/[)]/g, "")
+                .replace(/[-]/g, "");
             var phones = $("#table-body .column-phone");
 
             var isPhone = false;
             phones.each(function (index, phone) {
-                if ($(this).text() === newPhone) {
+                var phoneInRow = $(this).text()
+                    .replace(/[+]/g, "")
+                    .replace(/[(]/g, "")
+                    .replace(/[)]/g, "")
+                    .replace(/[-]/g, "");
+                if (phoneInRow === newPhone) {
                     isPhone = true;
                     return false;
                 }
@@ -359,8 +368,26 @@
             }
         }
 
+        var phoneRegexp = /^(\+[0-9]+)?([(][0-9]+[)])?([\-0-9]+)?[0-9]$/;
+
+        function isValidPhoneNumber() {
+            if (!phoneRegexp.test(editDialogInputPhone.val())) {
+                editDialogInputPhone.addClass("error-marker");
+                messageDialogMessage.text("Некорректный номер телефона!");
+                messageDialog.removeClass("invisible");
+                return false;
+            } else {
+                editDialogInputPhone.removeClass("error-marker");
+                return true;
+            }
+        }
+
         $(editDialogOkButton).click(function () {
             if (!isValidNewData()) {
+                return
+            }
+
+            if (!isValidPhoneNumber()) {
                 return
             }
 
