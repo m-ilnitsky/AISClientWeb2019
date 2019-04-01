@@ -1,13 +1,13 @@
 "use strict";
 
-(function() {
-    $(document).ready(function() {
+(function () {
+    $(document).ready(function () {
         var editKey = false;
 
         var filterKey = false;
         var lastFilterString = "";
 
-        var sinleDeleteKey = true;
+        var singleDeleteKey = true;
         var deletingRowDelButton;
 
         var addButton = $("#add-button");
@@ -49,7 +49,7 @@
             var phones = $("#table-body .column-phone");
 
             var isPhone = false;
-            phones.each(function(index, phone) {
+            phones.each(function (index, phone) {
                 if ($(this).text() === newPhone) {
                     isPhone = true;
                     return false;
@@ -94,7 +94,7 @@
 
             rowCounter = rows.length;
 
-            rows.each(function(i, row) {
+            rows.each(function (i, row) {
                 family = families.eq(i).text().toLowerCase();
                 name = names.eq(i).text().toLowerCase();
                 phone = phones.eq(i).text().toLowerCase();
@@ -132,23 +132,23 @@
 
             if (!filterKey) {
                 filterKey = true;
-                setTimeout(function() {
+                setTimeout(function () {
                     filterRows(textSearchInput.val());
                 }, 100);
             }
         }
 
-        textSearchInput.on("keyup", function() {
+        textSearchInput.on("keyup", function () {
             console.log("keyup");
             callFiltering();
         });
 
-        textSearchInput.on("change", function() {
+        textSearchInput.on("change", function () {
             console.log("change");
             callFiltering();
         });
 
-        searchResetButton.on("click", function() {
+        searchResetButton.on("click", function () {
             textSearchInput.val("");
             searchResetButton.removeClass("visible");
             lastFilterString = "";
@@ -158,6 +158,7 @@
         var editedFamily;
         var editedName;
         var editedPhone;
+        var editedCheckbox;
 
         function createRow(number, family, name, phone) {
             var tr = $("<tr></tr>").appendTo(tableBody);
@@ -169,7 +170,7 @@
             var tdCheckbox = $("<td></td>").addClass("column-checkbox").appendTo(tr);
             var checkbox = $("<input type='checkbox'>")
                 .addClass("checkbox")
-                .click(function() {
+                .click(function () {
                     if (checkbox.is(":checked")) {
                         tr.addClass("checked-row");
                         checkedCounter++;
@@ -182,7 +183,7 @@
             var tdButtons = $("<td></td>").addClass("column-buttons").appendTo(tr);
             $("<div></div>").addClass("circle-button add-button")
                 .attr("title", "Создать новый контакт на основе данного")
-                .click(function() {
+                .click(function () {
                     editDialogMessage.text("Введите данные нового контакта");
                     editDialogOkButton.text("Добавить");
                     editDialog.removeClass("invisible");
@@ -193,7 +194,7 @@
                 }).appendTo(tdButtons);
             $("<div></div>").addClass("circle-button edit-button")
                 .attr("title", "Изменить контакт")
-                .click(function() {
+                .click(function () {
                     editDialogMessage.text("Измените данные существующего контакта");
                     editDialogOkButton.text("Применить");
                     editDialog.removeClass("invisible");
@@ -204,11 +205,12 @@
                     editedFamily = tdFamily;
                     editedName = tdName;
                     editedPhone = tdPhone;
+                    editedCheckbox = checkbox;
                 }).appendTo(tdButtons);
             var delButton = $("<div></div>").addClass("circle-button delete-button")
                 .attr("title", "Удалить контакт")
-                .click(function() {
-                    if (sinleDeleteKey) {
+                .click(function () {
+                    if (singleDeleteKey) {
                         var message = "Вы действительно хотите удалить контакт? <br>" +
                             tdFamily.text() + " <br>" +
                             tdName.text() + " <br>" +
@@ -247,13 +249,13 @@
             return "хм..мммм";
         }
 
-        $(deleteButton).click(function() {
+        $(deleteButton).click(function () {
             if (checkedCounter === 0) {
                 messageDialogMessage.text("Не выбрано ни одного контакта!\nДля выполнения операции выберите контакты!");
                 messageDialog.removeClass("invisible");
             } else if (checkedCounter === 1) {
                 var checkedDeleteButtons = $("#table-body tr:has(input[type='checkbox']:checked) .delete-button");
-                sinleDeleteKey = true;
+                singleDeleteKey = true;
                 checkedDeleteButtons.click();
             } else {
                 confirmDialogMessage.text("Вы действительно хотите удалить " + checkedCounter + " " + getContactString(checkedCounter) + "?");
@@ -262,7 +264,7 @@
             }
         });
 
-        $(editButton).click(function() {
+        $(editButton).click(function () {
             if (checkedCounter === 0) {
                 messageDialogMessage.text("Не выбрано ни одного контакта!\nДля выполнения операции выберите контакты!");
                 messageDialog.removeClass("invisible");
@@ -273,39 +275,39 @@
             }
         });
 
-        $(addButton).click(function() {
+        $(addButton).click(function () {
             editDialogMessage.text("Введите данные нового контакта");
             editDialogOkButton.text("Добавить");
             editDialog.removeClass("invisible");
             editDialogInputFamily.focus();
         });
 
-        $(messageDialogButton).click(function() {
+        $(messageDialogButton).click(function () {
             messageDialog.addClass("invisible");
         });
 
-        $(confirmDialogCancelButton).click(function() {
+        $(confirmDialogCancelButton).click(function () {
             confirmDialog.addClass("invisible");
         });
 
-        $(confirmDialogOkButton).click(function() {
+        $(confirmDialogOkButton).click(function () {
             if (confirmDialogOkButton.text() === "Удалить") {
-                sinleDeleteKey = false;
+                singleDeleteKey = false;
                 deletingRowDelButton.click();
-                sinleDeleteKey = true;
+                singleDeleteKey = true;
             } else if (confirmDialogOkButton.text() === "Удалить все") {
                 var checkedDeleteButtons = $("#table-body tr:has(input[type='checkbox']:checked) .delete-button");
-                sinleDeleteKey = false;
+                singleDeleteKey = false;
                 checkedDeleteButtons.click();
-                sinleDeleteKey = true;
+                singleDeleteKey = true;
             } else if (confirmDialogOkButton.text() === "Изменить") {
                 var checkedEditButtons = $("#table-body tr:has(input[type='checkbox']:checked) .edit-button");
                 var i = 0;
                 editKey = false;
-                var timerId = setInterval(function() {
+                var timerId = setInterval(function () {
                     if (!editKey) {
                         editKey = true;
-                        checkedEditButtons[i].click();
+                        checkedEditButtons.eq(i).click();
                         i++;
                     }
                     if (i >= checkedEditButtons.length) {
@@ -316,7 +318,7 @@
             confirmDialog.addClass("invisible");
         });
 
-        $(editDialogCancelButton).click(function() {
+        $(editDialogCancelButton).click(function () {
             editDialog.addClass("invisible");
             editKey = false;
         });
@@ -357,7 +359,7 @@
             }
         }
 
-        $(editDialogOkButton).click(function() {
+        $(editDialogOkButton).click(function () {
             if (!isValidNewData()) {
                 return
             }
@@ -419,13 +421,13 @@
             }
         }
 
-        $(topCheckbox).click(function() {
+        $(topCheckbox).click(function () {
             var isChecked = topCheckbox.is(":checked");
             bottomCheckbox.prop("checked", isChecked);
             setAllCheckbox(isChecked);
         });
 
-        $(bottomCheckbox).click(function() {
+        $(bottomCheckbox).click(function () {
             var isChecked = bottomCheckbox.is(":checked");
             topCheckbox.prop("checked", isChecked);
             setAllCheckbox(isChecked);
