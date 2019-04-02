@@ -53,7 +53,7 @@
             var phones = $("#table-body .column-phone");
 
             var isPhone = false;
-            phones.each(function (index, phone) {
+            phones.each(function () {
                 var phoneInRow = $(this).text().trim()
                     .replace(/[+]/g, "")
                     .replace(/[(]/g, "")
@@ -65,31 +65,20 @@
                 }
             });
             return isPhone;
-
-            /* for (var i = 0; i < phones.length; ++i) {
-                if (phones.eq(i).text() === newPhone) {
-                    return true;
-                }
-            }
-            return false;*/
         }
 
         function setRowNumbers() {
             var numberColumnElements = $("#table-body tr:visible .column-number");
-            for (var i = 0; i < numberColumnElements.length; ++i) {
+            numberColumnElements.each(function (i) {
                 numberColumnElements.eq(i).text(i + 1);
-            }
+            });
             rowCounter = numberColumnElements.length;
         }
 
         function filterRows(searchingString) {
             var str = searchingString.toLowerCase().trim();
 
-            if (str.length === 0) {
-                searchResetButton.removeClass("visible");
-            } else {
-                searchResetButton.addClass("visible");
-            }
+            searchResetButton.toggleClass("visible", str.length === 0);
 
             var rows = $("#table-body tr");
             var families = $("#table-body .column-family");
@@ -97,18 +86,13 @@
             var phones = $("#table-body .column-phone");
             var checkboxes = $("#table-body .column-checkbox input");
 
-            var family;
-            var name;
-            var phone;
-            var phoneDigits;
-
             rowCounter = rows.length;
 
-            rows.each(function (i, row) {
-                family = families.eq(i).text().toLowerCase();
-                name = names.eq(i).text().toLowerCase();
-                phone = phones.eq(i).text().toLowerCase();
-                phoneDigits = phone.replace(/[+]/g, "")
+            rows.each(function (i) {
+                var family = families.eq(i).text().toLowerCase();
+                var name = names.eq(i).text().toLowerCase();
+                var phone = phones.eq(i).text().toLowerCase();
+                var phoneDigits = phone.replace(/[+]/g, "")
                     .replace(/[(]/g, "")
                     .replace(/[)]/g, "")
                     .replace(/[-]/g, "");
@@ -136,14 +120,13 @@
             setRowNumbers();
             showCheckedRowsNumber();
 
-            console.log("filter");
             filterKey = false;
         }
 
         function callFiltering() {
             var newFilterString = textSearchInput.val().toLowerCase().trim();
             if (newFilterString === lastFilterString) {
-                return
+                return;
             } else {
                 lastFilterString = newFilterString;
             }
@@ -157,12 +140,10 @@
         }
 
         textSearchInput.on("keyup", function () {
-            console.log("keyup");
             callFiltering();
         });
 
         textSearchInput.on("change", function () {
-            console.log("change");
             callFiltering();
         });
 
@@ -348,19 +329,19 @@
                 messageDialogMessage.text("Не введено ни имени, ни фамилии! Нужно задать хотя бы одно из них!");
                 messageDialog.removeClass("invisible");
                 return false;
-            } else {
-                editDialogInputFamily.removeClass("error-marker");
-                editDialogInputName.removeClass("error-marker");
             }
+
+            editDialogInputFamily.removeClass("error-marker");
+            editDialogInputName.removeClass("error-marker");
 
             if (editDialogInputPhone.val().trim() === "") {
                 editDialogInputPhone.addClass("error-marker");
                 messageDialogMessage.text("Не введён номер телефона!");
                 messageDialog.removeClass("invisible");
                 return false;
-            } else {
-                editDialogInputPhone.removeClass("error-marker");
             }
+
+            editDialogInputPhone.removeClass("error-marker");
 
             return true;
         }
@@ -371,10 +352,10 @@
                 messageDialogMessage.text("Такой номер телефона уже есть!");
                 messageDialog.removeClass("invisible");
                 return false;
-            } else {
-                editDialogInputPhone.removeClass("error-marker");
-                return true;
             }
+
+            editDialogInputPhone.removeClass("error-marker");
+            return true;
         }
 
         var phoneRegexp = /^(\+[0-9]+)?([(][0-9]+[)])?([\-0-9]+)?[0-9]$/;
@@ -385,24 +366,24 @@
                 messageDialogMessage.text("Некорректный номер телефона!");
                 messageDialog.removeClass("invisible");
                 return false;
-            } else {
-                editDialogInputPhone.removeClass("error-marker");
-                return true;
             }
+
+            editDialogInputPhone.removeClass("error-marker");
+            return true;
         }
 
         $(editDialogOkButton).click(function () {
             if (!isValidNewData()) {
-                return
+                return;
             }
 
             if (!isValidPhoneNumber()) {
-                return
+                return;
             }
 
             if (editDialogOkButton.text() === "Добавить") {
                 if (!isNewPhoneNumber()) {
-                    return
+                    return;
                 }
 
                 editDialog.addClass("invisible");
