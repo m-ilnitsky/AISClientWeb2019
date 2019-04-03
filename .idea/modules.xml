@@ -13,6 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/Task08_TODO_List/Task08_TODO_List.iml" filepath="$PROJECT_DIR$/Task08_TODO_List/Task08_TODO_List.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task09_TODO_List_jQuery/Task09_TODO_List_jQuery.iml" filepath="$PROJECT_DIR$/Task09_TODO_List_jQuery/Task09_TODO_List_jQuery.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task10_PhoneBook/Task10_PhoneBook.iml" filepath="$PROJECT_DIR$/Task10_PhoneBook/Task10_PhoneBook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task11_Underscore/Task11_Underscore.iml" filepath="$PROJECT_DIR$/Task11_Underscore/Task11_Underscore.iml" />
     </modules>
   </component>
 </project>
