@@ -1,0 +1,14 @@
+{
+  "name": "task11_underscore_npm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "underscore": "^1.9.1"
+  }
+}
