@@ -28,18 +28,16 @@
     print(people);
     console.log();
 
-    people = _.chain(people).each(function (p) {
+    people = _.each(people, function (p) {
         p.fullName = p.lastName + " " + p.name;
-    }).value();
+    });
     console.log("Массив people с полным именем:");
     print(people);
     console.log();
 
-    var averageAge = _.chain(people)
-        .reduce(function (memo, p) {
-            return memo + p.age;
-        }, 0)
-        .value() / people.length;
+    var averageAge = _.reduce(people, function (memo, p) {
+        return memo + p.age;
+    }, 0) / people.length;
     console.log("Средний возраст:" + averageAge);
     console.log();
 
