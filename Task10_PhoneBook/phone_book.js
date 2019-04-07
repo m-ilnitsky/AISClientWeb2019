@@ -78,7 +78,7 @@
         function filterRows(searchingString) {
             var str = searchingString.toLowerCase().trim();
 
-            searchResetButton.toggleClass("visible", str.length === 0);
+            searchResetButton.toggleClass("visible", str.length !== 0);
 
             var rows = $("#table-body tr");
             var families = $("#table-body .column-family");
