@@ -1,0 +1,358 @@
+/** {*/
+/*box-sizing: border-box;*/
+/*}*/
+
+/*@media screen and (max-width: 750px) {*/
+/*.phone-book_window {*/
+/*margin: 0 5px;*/
+/*}*/
+
+/*.phone-book_header {*/
+/*margin: 0 5px;*/
+/*}*/
+/*}*/
+
+/*@media screen and (min-width: 750px) {*/
+/*.phone-book_window {*/
+/*margin: 0 30px;*/
+/*}*/
+
+/*.phone-book_header {*/
+/*margin: 0 30px;*/
+/*}*/
+/*}*/
+
+
+/*Телефонная книга*/
+
+.phone-book {
+    /*font-size: 16px;*/
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/*.phone-book_window {*/
+/*overflow-x: auto;*/
+/*}*/
+
+
+/*Шапка телефонной книги*/
+
+/*.phone-book_header-position {*/
+/*position: relative;*/
+/*}*/
+
+/*.phone-book_header-wrapper {*/
+/*position: fixed;*/
+/*width: 100%;*/
+/*left: 0;*/
+/*top: 0;*/
+/*}*/
+
+/*.phone-book_header {*/
+/*width: 100%;*/
+/*position: static;*/
+/*background-color: #c8ff00;*/
+/*color: darkgreen;*/
+/*overflow-x: hidden;*/
+/*}*/
+
+.phone-book_add-dialog {
+    padding-top: 20px;
+    margin-bottom: 10px;
+}
+
+.phone-book_header {
+    padding-left: 5px;
+    min-width: 520px;
+}
+
+
+/*Таблица контактов: Стили*/
+
+/*.phone-book_table-wrapper {*/
+/*margin: 81px 0 0 0;*/
+/*}*/
+
+.phone-book_table {
+    /*border-collapse: collapse;*/
+    /*border: none;*/
+    width: 100%;
+    min-width: 520px;
+    /*margin: 50px 0 0 0;*/
+}
+
+/*.phone-book_table td {*/
+/*border-right: 2px solid darkgreen;*/
+/*padding-left: 5px;*/
+/*}*/
+
+/*.phone-book_table td:last-child {*/
+/*border-right: none;*/
+/*}*/
+
+/*.phone-book_table thead {*/
+/*position: relative;*/
+/*}*/
+
+/*.phone-book_table thead td,*/
+/*.phone-book_table tfoot td {*/
+/*background-color: darkgreen;*/
+/*color: white;*/
+/*padding: 5px 0 5px 5px;*/
+/*}*/
+
+/*.phone-book_table tbody td {*/
+/*background-color: white;*/
+/*}*/
+
+/*.phone-book_table tbody tr:nth-last-child(even) td {*/
+/*background-color: #c8ff00;*/
+/*}*/
+
+.phone-book_table tbody tr.checked-row td {
+    background-color: #dc3545;
+}
+
+/*.phone-book_table-wrapper .phone-book_table tbody tr:hover {*/
+/*outline: 3px solid red;*/
+/*}*/
+
+
+/*Таблица контактов: Размеры*/
+
+.phone-book_table td:nth-child(1) {
+    width: 30px;
+}
+
+.phone-book_table td:nth-child(2) {
+    width: 150px;
+}
+
+.phone-book_table td:nth-child(3) {
+    width: 150px;
+}
+
+.phone-book_table td:nth-last-child(2) {
+    width: 20px;
+    min-width: 20px;
+}
+
+.phone-book_table td:last-child {
+    width: 95px;
+    min-width: 95px;
+}
+
+
+/*Круглые кнопки*/
+
+.phone-book .circle-button {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 9px;
+    border: none;
+    text-align: center;
+    vertical-align: middle;
+    margin: 1px 5px;
+    cursor: pointer;
+    background-color: #343a40;
+}
+
+.phone-book .add-button:hover {
+    background-color: #22fc01;
+}
+
+.phone-book .edit-button:hover {
+    background-color: yellow;
+}
+
+.phone-book .delete-button:hover {
+    background-color: red;
+}
+
+
+/*Флажки*/
+
+.phone-book .checkbox {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: none;
+    vertical-align: middle;
+    margin: 1px 2px 1px 0;
+    padding: 0;
+}
+
+
+/*Большие нопки*/
+
+.phone-book .button {
+    font-size: 16px;
+    display: inline-block;
+    width: 120px;
+    height: 30px;
+    border-radius: 15px;
+    border: none;
+    text-align: center;
+    vertical-align: middle;
+    margin: 10px 3px;
+    cursor: pointer;
+    background-color: white;
+    color: #343a40;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.phone-book .button:hover {
+    background-color: red;
+    color: white;
+}
+
+.phone-book .add-button:hover {
+    background-color: #22fc01;
+    color: #343a40;
+}
+
+.phone-book .edit-button:hover {
+    background-color: yellow;
+    color: #343a40;
+}
+
+.phone-book .delete-button:hover {
+    background-color: red;
+    color: #343a40;
+}
+
+
+/*Поисковое поле*/
+
+.phone-book .search-wrapper,
+.phone-book .search-input {
+    display: inline-block;
+    position: static;
+    height: 30px;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+    background-color: white;
+}
+
+.phone-book .search-wrapper {
+    width: 240px;
+    margin: 10px 3px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.phone-book .search-input {
+    width: 200px;
+    margin: 0;
+    padding: 5px 5px 5px 15px;
+    color: darkgreen;
+    font-weight: bold;
+}
+
+.phone-book .search-reset-button {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    border: none;
+    margin: 6px 7px 8px 10px;
+    background-color: white;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    padding-left: 5px;
+    vertical-align: middle;
+    line-height: 14px;
+}
+
+.phone-book .search-reset-button.visible-button {
+    cursor: pointer;
+    background-color: red;
+}
+
+
+/*Диалоговые окна*/
+
+
+/*Невидимость для диалоговых окон*/
+
+.invisible {
+    display: none;
+}
+
+
+/*Полупрозрачный экран для диалоговых окон*/
+
+.shield-window {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: lightgray;
+    opacity: 0.7;
+}
+
+
+/*Общие стили диалоговых окон*/
+
+.dialog-window {
+    border: 5px solid darkgreen;
+    border-radius: 20px;
+    background-color: #c8ff00;
+    color: darkgreen;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    box-shadow: 10px 20px rgba(128, 128, 128, 0.7);
+}
+
+.dialog-window table {
+    border-collapse: collapse;
+    border: none;
+    width: 100%;
+    position: static;
+    text-align: center;
+}
+
+.dialog-window td.message {
+    background-color: darkgreen;
+    color: white;
+    font-weight: bold;
+    padding: 15px 10px;
+}
+
+
+/*Диалоговое окно вывода сообщений*/
+
+.message-dialog {
+    width: 300px;
+    margin-left: -150px;
+}
+
+
+/*Диалоговое окно подтверждения*/
+
+.confirm-dialog {
+    width: 300px;
+    margin-left: -150px;
+}
+
+
+/*Диалоговое окно редактирования*/
+
+.edit-dialog {
+    width: 300px;
+    margin-left: -150px;
+}
+
+.edit-dialog .input {
+    text-align: right;
+}
+
+.edit-dialog .error-marker {
+    outline: 2px solid red;
+}

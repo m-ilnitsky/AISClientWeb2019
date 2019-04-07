@@ -16,6 +16,7 @@
       <module fileurl="file://$PROJECT_DIR$/Task11_Lodash/Task11_Lodash.iml" filepath="$PROJECT_DIR$/Task11_Lodash/Task11_Lodash.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task11_Underscore/Task11_Underscore.iml" filepath="$PROJECT_DIR$/Task11_Underscore/Task11_Underscore.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task11_Underscore_npm/Task11_Underscore_npm.iml" filepath="$PROJECT_DIR$/Task11_Underscore_npm/Task11_Underscore_npm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task12_PhoneBook-Bootstrap_npm/Task12_PhoneBook-Bootstrap_npm.iml" filepath="$PROJECT_DIR$/Task12_PhoneBook-Bootstrap_npm/Task12_PhoneBook-Bootstrap_npm.iml" />
     </modules>
   </component>
 </project>
