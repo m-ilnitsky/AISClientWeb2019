@@ -1,25 +1,57 @@
 /** {*/
+
+
 /*box-sizing: border-box;*/
+
+
 /*}*/
+
 
 /*@media screen and (max-width: 750px) {*/
+
+
 /*.phone-book_window {*/
+
+
 /*margin: 0 5px;*/
+
+
 /*}*/
 
+
 /*.phone-book_header {*/
+
+
 /*margin: 0 5px;*/
+
+
 /*}*/
+
+
 /*}*/
+
 
 /*@media screen and (min-width: 750px) {*/
+
+
 /*.phone-book_window {*/
+
+
 /*margin: 0 30px;*/
+
+
 /*}*/
 
+
 /*.phone-book_header {*/
+
+
 /*margin: 0 30px;*/
+
+
 /*}*/
+
+
 /*}*/
 
 
@@ -30,47 +62,86 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+
 /*.phone-book_window {*/
+
+
 /*overflow-x: auto;*/
+
+
 /*}*/
 
 
 /*Шапка телефонной книги*/
 
+
 /*.phone-book_header-position {*/
+
+
 /*position: relative;*/
+
+
 /*}*/
+
 
 /*.phone-book_header-wrapper {*/
+
+
 /*position: fixed;*/
+
+
 /*width: 100%;*/
+
+
 /*left: 0;*/
+
+
 /*top: 0;*/
+
+
 /*}*/
 
+
 /*.phone-book_header {*/
+
+
 /*width: 100%;*/
+
+
 /*position: static;*/
+
+
 /*background-color: #c8ff00;*/
+
+
 /*color: darkgreen;*/
+
+
 /*overflow-x: hidden;*/
+
+
 /*}*/
 
 .phone-book_add-dialog {
-    padding-top: 20px;
+    padding-top: 10px;
     margin-bottom: 10px;
 }
 
 .phone-book_header {
     padding-left: 5px;
-    min-width: 520px;
+    min-width: 250px;
 }
 
 
 /*Таблица контактов: Стили*/
 
+
 /*.phone-book_table-wrapper {*/
+
+
 /*margin: 81px 0 0 0;*/
+
+
 /*}*/
 
 .phone-book_table {
@@ -81,40 +152,87 @@
     /*margin: 50px 0 0 0;*/
 }
 
+
 /*.phone-book_table td {*/
+
+
 /*border-right: 2px solid darkgreen;*/
+
+
 /*padding-left: 5px;*/
+
+
 /*}*/
+
 
 /*.phone-book_table td:last-child {*/
+
+
 /*border-right: none;*/
+
+
 /*}*/
+
 
 /*.phone-book_table thead {*/
+
+
 /*position: relative;*/
+
+
 /*}*/
+
 
 /*.phone-book_table thead td,*/
+
+
 /*.phone-book_table tfoot td {*/
+
+
 /*background-color: darkgreen;*/
+
+
 /*color: white;*/
+
+
 /*padding: 5px 0 5px 5px;*/
+
+
 /*}*/
+
 
 /*.phone-book_table tbody td {*/
+
+
 /*background-color: white;*/
+
+
 /*}*/
 
+
 /*.phone-book_table tbody tr:nth-last-child(even) td {*/
+
+
 /*background-color: #c8ff00;*/
+
+
 /*}*/
+
+.phone-book_add-dialog {
+    padding: 10px;
+}
 
 .phone-book_table tbody tr.checked-row td {
     background-color: #dc3545;
 }
 
+
 /*.phone-book_table-wrapper .phone-book_table tbody tr:hover {*/
+
+
 /*outline: 3px solid red;*/
+
+
 /*}*/
 
 
@@ -194,7 +312,7 @@
     border-radius: 15px;
     border: none;
     text-align: center;
-    vertical-align: middle;
+    line-height: 15px;
     margin: 10px 3px;
     cursor: pointer;
     background-color: white;
@@ -248,7 +366,7 @@
     width: 200px;
     margin: 0;
     padding: 5px 5px 5px 15px;
-    color: darkgreen;
+    color: #343a40;
     font-weight: bold;
 }
 
@@ -262,15 +380,28 @@
     background-color: white;
     color: white;
     font-weight: bold;
-    font-size: 12px;
-    padding-left: 5px;
+    font-size: 13px;
+    padding-left: 4px;
     vertical-align: middle;
     line-height: 14px;
 }
 
 .phone-book .search-reset-button.visible-button {
     cursor: pointer;
+    background-color: #343a40;
+}
+
+.phone-book .search-reset-button.visible-button:hover {
     background-color: red;
+}
+
+
+/*Окно создания нового контакта*/
+
+.phone-book_add-dialog input.form-control {
+    height: 30px;
+    border-radius: 15px;
+    border: none;
 }
 
 
