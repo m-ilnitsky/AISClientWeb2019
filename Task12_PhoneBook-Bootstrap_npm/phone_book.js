@@ -11,8 +11,13 @@
         var deletingRowDelButton;
 
         var addButton = $("#add-button");
+        var addDialogInputFamily = $("#add-dialog_family");
+        var addDialogInputName = $("#add-dialog_name");
+        var addDialogInputPhone = $("#add-dialog_phone");
+
         var editButton = $("#edit-button");
         var deleteButton = $("#delete-button");
+
         var textSearchInput = $("#search-input");
         var searchResetButton = $("#search-reset-button");
 
@@ -183,13 +188,10 @@
             $("<div></div>").addClass("circle-button add-button")
                 .attr("title", "Создать новый контакт на основе данного")
                 .click(function () {
-                    editDialogMessage.text("Введите данные нового контакта");
-                    editDialogOkButton.text("Добавить");
-                    editDialog.removeClass("invisible");
-                    editDialogInputFamily.val(tdFamily.text());
-                    editDialogInputName.val(tdName.text());
-                    editDialogInputPhone.val("");
-                    editDialogInputFamily.focus();
+                    addDialogInputFamily.val(tdFamily.text());
+                    addDialogInputName.val(tdName.text());
+                    addDialogInputPhone.val("");
+                    addDialogInputPhone.focus();
                 }).appendTo(tdButtons);
             $("<div></div>").addClass("circle-button edit-button")
                 .attr("title", "Изменить контакт")
@@ -272,13 +274,6 @@
                 confirmDialogOkButton.text("Изменить");
                 confirmDialog.removeClass("invisible");
             }
-        });
-
-        $(addButton).click(function () {
-            editDialogMessage.text("Введите данные нового контакта");
-            editDialogOkButton.text("Добавить");
-            editDialog.removeClass("invisible");
-            editDialogInputFamily.focus();
         });
 
         $(messageDialogButton).click(function () {
@@ -371,6 +366,14 @@
             editDialogInputPhone.removeClass("error-marker");
             return true;
         }
+
+        $(addButton).click(function () {
+            createRow(rowCounter + 1, addDialogInputFamily.val().trim(), addDialogInputName.val().trim(), addDialogInputPhone.val().trim());
+            addDialogInputFamily.val("");
+            addDialogInputName.val("");
+            addDialogInputPhone.val("");
+            showCheckedRowsNumber();
+        });
 
         $(editDialogOkButton).click(function () {
             if (!isValidNewData()) {
