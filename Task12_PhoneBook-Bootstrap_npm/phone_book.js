@@ -1,7 +1,7 @@
 "use strict";
 
-(function() {
-    $(document).ready(function() {
+(function () {
+    $(document).ready(function () {
         var editKey = false;
 
         var filterKey = false;
@@ -57,7 +57,7 @@
             var phones = $("#table-body .column-phone");
 
             var isPhone = false;
-            phones.each(function() {
+            phones.each(function () {
                 var phoneInRow = $(this).text().trim()
                     .replace(/[+]/g, "")
                     .replace(/[(]/g, "")
@@ -73,7 +73,7 @@
 
         function setRowNumbers() {
             var numberColumnElements = $("#table-body tr:visible .column-number");
-            numberColumnElements.each(function(i) {
+            numberColumnElements.each(function (i) {
                 numberColumnElements.eq(i).text(i + 1);
             });
             rowCounter = numberColumnElements.length;
@@ -92,7 +92,7 @@
 
             rowCounter = rows.length;
 
-            rows.each(function(i) {
+            rows.each(function (i) {
                 var family = families.eq(i).text().toLowerCase();
                 var name = names.eq(i).text().toLowerCase();
                 var phone = phones.eq(i).text().toLowerCase();
@@ -140,21 +140,21 @@
 
             if (!filterKey) {
                 filterKey = true;
-                setTimeout(function() {
+                setTimeout(function () {
                     filterRows(textSearchInput.val());
                 }, 100);
             }
         }
 
-        textSearchInput.on("keyup", function() {
+        textSearchInput.on("keyup", function () {
             callFiltering();
         });
 
-        textSearchInput.on("change", function() {
+        textSearchInput.on("change", function () {
             callFiltering();
         });
 
-        searchResetButton.on("click", function() {
+        searchResetButton.on("click", function () {
             textSearchInput.val("");
             searchResetButton.removeClass("visible-button");
             lastFilterString = "";
@@ -166,27 +166,27 @@
                 .prop("role", "alert")
                 .prop("aria-live", "assertive")
                 .prop("aria-atomic", "true");
-            var divToastHeader = $("<div></div>").addClass("toast-header")
+            var divToastHeader = $("<div></div>").addClass("toast-header bg-danger")
                 .appendTo(divToast);
-            var strongMrAuto = $("<strong></strong>").addClass("mr-auto")
+            $("<strong></strong>").addClass("mr-auto")
                 .text(title)
-                .appendTo(divToastHeader);
-            var smallTextMuted = $("<small></small>").addClass("text-muted")
                 .appendTo(divToastHeader);
             var buttonClose = $("<button></button>").addClass("ml-2 mb-1 close")
                 .prop("data-dismiss", "toast")
                 .prop("aria-label", "Close")
+                .click(function () {
+                    divToast.toast("hide");
+                })
                 .appendTo(divToastHeader);
-            var span = $("<span></span>")
+            $("<span>&times;</span>")
                 .prop("aria-hidden", "true")
-                .html("&times;")
                 .appendTo(buttonClose);
-            var divToastBody = $("<div></div>").addClass("toast-body")
+            $("<div></div>").addClass("toast-body")
                 .text(message)
                 .appendTo(divToast);
 
             divToast.appendTo("#toastBox");
-            divToast.toast({ delay: 60000 });
+            divToast.toast({delay: 60000});
             divToast.toast("show");
         }
 
@@ -205,7 +205,7 @@
             var tdCheckbox = $("<td></td>").addClass("column-checkbox").appendTo(tr);
             var checkbox = $("<input type='checkbox'>")
                 .addClass("checkbox")
-                .click(function() {
+                .click(function () {
                     if (checkbox.is(":checked")) {
                         tr.addClass("checked-row");
                         checkedCounter++;
@@ -218,7 +218,7 @@
             var tdButtons = $("<td></td>").addClass("column-buttons").appendTo(tr);
             $("<div></div>").addClass("circle-button add-button")
                 .attr("title", "Создать новый контакт на основе данного")
-                .click(function() {
+                .click(function () {
                     addDialogInputFamily.val(tdFamily.text());
                     addDialogInputName.val(tdName.text());
                     addDialogInputPhone.val("");
@@ -226,7 +226,7 @@
                 }).appendTo(tdButtons);
             $("<div></div>").addClass("circle-button edit-button")
                 .attr("title", "Изменить контакт")
-                .click(function() {
+                .click(function () {
                     editDialogOkButton.text("Применить");
                     editDialogInputFamily.removeClass("is-invalid");
                     editDialogInputName.removeClass("is-invalid");
@@ -243,7 +243,7 @@
                 }).appendTo(tdButtons);
             var delButton = $("<div></div>").addClass("circle-button delete-button")
                 .attr("title", "Удалить контакт")
-                .click(function() {
+                .click(function () {
                     if (singleDeleteKey) {
                         var message = "Вы действительно хотите удалить контакт? <br>" +
                             tdFamily.text() + " <br>" +
@@ -283,7 +283,7 @@
             return "хм..мммм";
         }
 
-        $(deleteButton).click(function() {
+        $(deleteButton).click(function () {
             if (checkedCounter === 0) {
                 messageDialogMessage.html("Не выбрано ни одного контакта!<br>Для выполнения операции выберите контакты!");
                 messageDialog.modal("show");
@@ -291,16 +291,14 @@
                 var checkedDeleteButtons = $("#table-body tr:has(input[type='checkbox']:checked) .delete-button");
                 singleDeleteKey = true;
                 checkedDeleteButtons.click();
-                createToast("Удаление", "Удалена одна запись");
             } else {
                 confirmDialogMessage.text("Вы действительно хотите удалить " + checkedCounter + " " + getContactString(checkedCounter) + "?");
                 confirmDialogOkButton.text("Удалить все");
                 confirmDialog.modal("show");
-                createToast("Удаление", "Удалено " + checkedCounter + " записей");
             }
         });
 
-        $(editButton).click(function() {
+        $(editButton).click(function () {
             if (checkedCounter === 0) {
                 messageDialogMessage.html("Не выбрано ни одного контакта!<br>Для выполнения операции выберите контакты!");
                 messageDialog.modal("show");
@@ -314,21 +312,24 @@
             }
         });
 
-        $(confirmDialogOkButton).click(function() {
+        $(confirmDialogOkButton).click(function () {
             if (confirmDialogOkButton.text() === "Удалить") {
                 singleDeleteKey = false;
                 deletingRowDelButton.click();
                 singleDeleteKey = true;
+                createToast("Удаление", "Удалён один контакт");
             } else if (confirmDialogOkButton.text() === "Удалить все") {
                 var checkedDeleteButtons = $("#table-body tr:has(input[type='checkbox']:checked) .delete-button");
+                var counterValue = checkedCounter;
                 singleDeleteKey = false;
                 checkedDeleteButtons.click();
                 singleDeleteKey = true;
+                createToast("Удаление", "Удалено " + counterValue + " " + getContactString(counterValue));
             } else if (confirmDialogOkButton.text() === "Изменить") {
                 var checkedEditButtons = $("#table-body tr:has(input[type='checkbox']:checked) .edit-button");
                 var i = 0;
                 editKey = false;
-                var timerId = setInterval(function() {
+                var timerId = setInterval(function () {
                     if (!editKey) {
                         editKey = true;
                         checkedEditButtons.eq(i).click();
@@ -344,7 +345,7 @@
 
         var phoneRegexp = /^(\+[0-9]+)?([(][0-9]+[)])?([\-0-9]+)?[0-9]$/;
 
-        $(addButton).click(function() {
+        $(addButton).click(function () {
             var isInvalid = false;
 
             if (addDialogInputFamily.val().trim() === "" && addDialogInputName.val().trim() === "") {
@@ -386,12 +387,12 @@
             showCheckedRowsNumber();
         });
 
-        $(editDialogCancelButton).click(function() {
+        $(editDialogCancelButton).click(function () {
             editDialog.modal("hide");
             editKey = false;
         });
 
-        $(editDialogOkButton).click(function() {
+        $(editDialogOkButton).click(function () {
             var isInvalid = false;
 
             if (editDialogInputFamily.val().trim() === "" && editDialogInputName.val().trim() === "") {
@@ -468,13 +469,13 @@
             }
         }
 
-        $(topCheckbox).click(function() {
+        $(topCheckbox).click(function () {
             var isChecked = topCheckbox.is(":checked");
             bottomCheckbox.prop("checked", isChecked);
             setAllCheckbox(isChecked);
         });
 
-        $(bottomCheckbox).click(function() {
+        $(bottomCheckbox).click(function () {
             var isChecked = bottomCheckbox.is(":checked");
             topCheckbox.prop("checked", isChecked);
             setAllCheckbox(isChecked);
@@ -510,8 +511,8 @@
 
         createTestContacts();
 
-        $('[data-toggle="tooltip"]').tooltip({ container: 'body' });
-        textSearchInput.popover({ container: 'body' });
+        $('[data-toggle="tooltip"]').tooltip({container: 'body'});
+        textSearchInput.popover({container: 'body'});
         textSearchInput.popover("disable");
 
         textSearchInput.focus();

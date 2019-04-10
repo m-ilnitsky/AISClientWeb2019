@@ -1,18 +1,18 @@
-.phone-book_add-wrapper {
-    margin-bottom: 15px;
-}
+/*.phone-book_add-wrapper {*/
+/*margin-bottom: 15px;*/
+/*}*/
 
-@media screen and (max-width: 767px) {
-    .phone-book_add-wrapper {
-        margin: 0 30px 5px 15px;
-    }
-}
+/*@media screen and (max-width: 767px) {*/
+/*.phone-book_add-wrapper {*/
+/*margin: 0 30px 5px 15px;*/
+/*}*/
+/*}*/
 
-@media screen and (max-width: 575px) {
-    .phone-book_add-wrapper {
-        margin: 0 15px 5px 15px;
-    }
-}
+/*@media screen and (max-width: 575px) {*/
+/*.phone-book_add-wrapper {*/
+/*margin: 0 15px 5px 15px;*/
+/*}*/
+/*}*/
 
 .phone-book {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -211,4 +211,27 @@
 
 .phone-book .search-reset-button.visible-button:hover {
     background-color: red;
+}
+
+
+/*Всплывающие подсказки*/
+
+#toastBoxPosition {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+
+#toastBox {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.toast {
+    min-width: 300px;
+}
+
+.toast-header {
+    color: white;
 }
