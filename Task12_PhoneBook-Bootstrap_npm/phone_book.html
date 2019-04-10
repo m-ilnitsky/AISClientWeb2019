@@ -11,173 +11,164 @@
 
 <body>
 
-<div class="container phone-book">
-    <div class="row phone-book_window">
-        <div class="bg-dark col-sm-12 col-md-3 phone-book_add-wrapper">
-            <div class="bg-dark text-white phone-book_add-dialog">
-                <div class="form-group">
-                    <h3>Новый контакт</h3>
-                </div>
-                <div class="form-group">
-                    <label for="add-dialog_family">Фамилия </label>
-                    <input type="text" class="form-control" name="family" id="add-dialog_family"
-                           placeholder="   Ввести фамилию" data-toggle="tooltip" data-placement="auto"
-                           title="Можно не вводить если введено имя">
-                    <div class="invalid-feedback">
-                        Нет ни имени ни фамилии.
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="add-dialog_name">Имя </label>
-                    <input type="text" class="form-control" name="name" id="add-dialog_name"
-                           placeholder="   Ввести имя" data-toggle="tooltip" data-placement="auto"
-                           title="Можно не вводить если введена фамилия">
-                    <div class="invalid-feedback">
-                        Нет ни имени ни фамилии.
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="add-dialog_phone">Телефон </label>
-                    <input type="text" class="form-control" name="phone" id="add-dialog_phone"
-                           placeholder="   Ввести телефон" data-toggle="tooltip" data-placement="auto"
-                           title="Нужен корректный телефонный номер не совпадающий с уже имеющимися">
-                    <div class="invalid-feedback" id="add-dialog_phone-feedback">
-                        Нет номера телефона.
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary button add-button" id="add-button"
-                        title="Создать новый контакт">Добавить
-                </button>
-            </div>
-        </div>
-
-        <div class="col-sm-12 col-md-9 col-lg-8 col-xl-7 phone-book_table-wrapper">
-            <div class="bg-dark phone-book_header">
-                <button type="submit" class="btn btn-primary button edit-button" id="edit-button"
-                        title="Изменить все выделенные контакты">
-                    Изменить
-                </button>
-                <button type="submit" class="btn btn-primary button delete-button" id="delete-button"
-                        title="Удалить все выделенные контакты">Удалить
-                </button>
-                <div class="search-wrapper">
-                    <input type="text" class="search-input" id="search-input" placeholder="   Найти"
-                           data-toggle="popover" data-placement="bottom" title="Поиск"
-                           data-content="Не найдено ни одного совпадения!">
-                    <div class="search-reset-button" id="search-reset-button"><img src="close-icon.png" alt="x"
-                                                                                   title="Очистить поле поиска"></div>
-                </div>
-            </div>
-            <table class="table table-sm table-striped table-hover phone-book_table">
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col">№</th>
-                    <th scope="col">Фамилия</th>
-                    <th scope="col">Имя</th>
-                    <th scope="col">Телефон</th>
-                    <th scope="col"><input type="checkbox" class="checkbox" id="all-checkbox-top"></th>
-                    <th scope="col" id="checked-counter-top"></th>
-                </tr>
-                </thead>
-                <tbody id="table-body">
-                </tbody>
-                <tfoot class="thead-dark">
-                <tr>
-                    <th>№</th>
-                    <th>Фамилия</th>
-                    <th>Имя</th>
-                    <th>Телефон</th>
-                    <th><input type="checkbox" class="checkbox" id="all-checkbox-bottom"></th>
-                    <th id="checked-counter-bottom"></th>
-                </tr>
-                </tfoot>
-            </table>
-        </div>
-    </div>
-
-    <div id="message-dialog" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">Сообщение</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body bg-dark text-white" id="message-dialog_message">
-                </div>
-                <div class="modal-footer bg-dark text-white">
-                    <button type="button" class="button btn btn-primary" data-dismiss="modal">Закрыть</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="confirm-dialog" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">Запрос подтверждения</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body bg-dark text-white" id="confirm-dialog_message">
-                </div>
-                <div class="modal-footer bg-dark text-white">
-                    <button type="button" class="button btn btn-secondary" data-dismiss="modal">Отменить</button>
-                    <button type="button" class="button btn btn-primary" id="confirm-dialog_ok">Подтвердить</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="edit-dialog" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">Изменение данных контакта</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body bg-dark text-white">
+    <div class="container phone-book">
+        <div class="row phone-book_window">
+            <div class="bg-dark col-sm-12 col-md-3 phone-book_add-wrapper">
+                <div class="bg-dark text-white phone-book_add-dialog">
                     <div class="form-group">
-                        <label for="edit-dialog_family">Фамилия </label>
-                        <input type="text" class="form-control" name="family" id="edit-dialog_family">
+                        <h3>Новый контакт</h3>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-dialog_family">Фамилия </label>
+                        <input type="text" class="form-control" name="family" id="add-dialog_family" placeholder="   Ввести фамилию" data-toggle="tooltip" data-placement="auto" title="Можно не вводить если введено имя">
                         <div class="invalid-feedback">
                             Нет ни имени ни фамилии.
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="edit-dialog_name">Имя </label>
-                        <input type="text" class="form-control" name="name" id="edit-dialog_name">
+                        <label for="add-dialog_name">Имя </label>
+                        <input type="text" class="form-control" name="name" id="add-dialog_name" placeholder="   Ввести имя" data-toggle="tooltip" data-placement="auto" title="Можно не вводить если введена фамилия">
                         <div class="invalid-feedback">
                             Нет ни имени ни фамилии.
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="edit-dialog_phone">Телефон </label>
-                        <input type="text" class="form-control" name="phone" id="edit-dialog_phone">
-                        <div class="invalid-feedback" id="edit-dialog_phone-feedback">
+                        <label for="add-dialog_phone">Телефон </label>
+                        <input type="text" class="form-control" name="phone" id="add-dialog_phone" placeholder="   Ввести телефон" data-toggle="tooltip" data-placement="auto" title="Нужен корректный телефонный номер не совпадающий с уже имеющимися">
+                        <div class="invalid-feedback" id="add-dialog_phone-feedback">
                             Нет номера телефона.
                         </div>
                     </div>
+                    <button type="submit" class="btn btn-primary button add-button" id="add-button" title="Создать новый контакт">Добавить
+                </button>
                 </div>
-                <div class="modal-footer bg-dark text-white">
-                    <button type="button" class="button btn btn-secondary" data-dismiss="modal">Отменить</button>
-                    <button type="button" class="button btn btn-primary" id="edit-dialog_ok">Применить</button>
+            </div>
+
+            <div class="col-sm-12 col-md-9 col-lg-8 col-xl-7 phone-book_table-wrapper">
+                <div class="bg-dark phone-book_header">
+                    <button type="submit" class="btn btn-primary button edit-button" id="edit-button" title="Изменить все выделенные контакты">
+                    Изменить
+                </button>
+                    <button type="submit" class="btn btn-primary button delete-button" id="delete-button" title="Удалить все выделенные контакты">Удалить
+                </button>
+                    <div class="search-wrapper">
+                        <input type="text" class="search-input" id="search-input" placeholder="   Найти" data-toggle="popover" data-placement="bottom" title="Поиск" data-content="Не найдено ни одного совпадения!">
+                        <div class="search-reset-button" id="search-reset-button"><img src="close-icon.png" alt="x" title="Очистить поле поиска"></div>
+                    </div>
+                </div>
+                <table class="table table-sm table-striped table-hover phone-book_table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">№</th>
+                            <th scope="col">Фамилия</th>
+                            <th scope="col">Имя</th>
+                            <th scope="col">Телефон</th>
+                            <th scope="col"><input type="checkbox" class="checkbox" id="all-checkbox-top"></th>
+                            <th scope="col" id="checked-counter-top"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                    <tfoot class="thead-dark">
+                        <tr>
+                            <th>№</th>
+                            <th>Фамилия</th>
+                            <th>Имя</th>
+                            <th>Телефон</th>
+                            <th><input type="checkbox" class="checkbox" id="all-checkbox-bottom"></th>
+                            <th id="checked-counter-bottom"></th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <div id="message-dialog" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">Сообщение</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body bg-dark text-white" id="message-dialog_message">
+                    </div>
+                    <div class="modal-footer bg-dark text-white">
+                        <button type="button" class="button btn btn-primary" data-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="confirm-dialog" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">Запрос подтверждения</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body bg-dark text-white" id="confirm-dialog_message">
+                    </div>
+                    <div class="modal-footer bg-dark text-white">
+                        <button type="button" class="button btn btn-secondary" data-dismiss="modal">Отменить</button>
+                        <button type="button" class="button btn btn-primary" id="confirm-dialog_ok">Подтвердить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="edit-dialog" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">Изменение данных контакта</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body bg-dark text-white">
+                        <div class="form-group">
+                            <label for="edit-dialog_family">Фамилия </label>
+                            <input type="text" class="form-control" name="family" id="edit-dialog_family">
+                            <div class="invalid-feedback">
+                                Нет ни имени ни фамилии.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-dialog_name">Имя </label>
+                            <input type="text" class="form-control" name="name" id="edit-dialog_name">
+                            <div class="invalid-feedback">
+                                Нет ни имени ни фамилии.
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-dialog_phone">Телефон </label>
+                            <input type="text" class="form-control" name="phone" id="edit-dialog_phone">
+                            <div class="invalid-feedback" id="edit-dialog_phone-feedback">
+                                Нет номера телефона.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer bg-dark text-white">
+                        <button type="button" class="button btn btn-secondary" data-dismiss="modal">Отменить</button>
+                        <button type="button" class="button btn btn-primary" id="edit-dialog_ok">Применить</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-</div>
+    <div aria-live="polite" aria-atomic="true" style="position: fixed; min-height: 300px; top:0; right:0;">
+        <div style="position: absolute; top: 0; right: 0;" id="toastBox">
+        </div>
+    </div>
 
-<script src="node_modules/jquery/dist/jquery.js"></script>
-<script src="node_modules/popper.js/dist/umd/popper.js"></script>
-<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-<script src="phone_book.js"></script>
+
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <!--script src="node_modules/popper.js/dist/umd/popper.js"></script-->
+    <!--script src="node_modules/bootstrap/dist/js/bootstrap.js"></script-->
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="phone_book.js"></script>
 </body>
 
 </html>
