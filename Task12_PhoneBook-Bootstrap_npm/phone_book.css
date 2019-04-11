@@ -1,18 +1,22 @@
-/*.phone-book_add-wrapper {*/
-/*margin-bottom: 15px;*/
-/*}*/
 
-/*@media screen and (max-width: 767px) {*/
-/*.phone-book_add-wrapper {*/
-/*margin: 0 30px 5px 15px;*/
-/*}*/
-/*}*/
+@media screen and (min-width: 768px) {
+    .phone-book_add-wrapper {
+        margin-bottom: 15px;
+        background-color: #343a40;
+    }
+}
 
-/*@media screen and (max-width: 575px) {*/
-/*.phone-book_add-wrapper {*/
-/*margin: 0 15px 5px 15px;*/
-/*}*/
-/*}*/
+@media screen and (max-width: 767px) {
+    .phone-book_add-dialog {
+        min-width: 270px;
+        margin-bottom: 2px;
+    }
+
+    .phone-book_header {
+        min-width: 270px;
+    }
+}
+
 
 .phone-book {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -20,17 +24,14 @@
 
 .phone-book_add-dialog {
     padding: 8px;
-    margin-bottom: 2px;
 }
 
 .phone-book_header {
     padding-left: 5px;
-    min-width: 270px;
 }
 
 .phone-book_table {
     width: 100%;
-    min-width: 270px;
 }
 
 .phone-book_table tbody tr.checked-row td {
