@@ -22,118 +22,93 @@
     }
 
     $(document).ready(function () {
-        var buttonAddNewTask = $("#add-new-task_btn");
-        var textAddNewTask = $("#add-new-task_text");
+        var buttonAddTask = $("#todo_add-task_btn");
+        var textAddTask = $("#todo_add-task_text");
 
         var tbody = $("#todo_tbody");
-        var buttonAddTask = $("#todo_add-task");
-        var buttonRemoveAll = $("#todo_remove-all");
 
-        var windowRemoveAll = $("#remove-all-window").add("#shield-window");
-        var buttonRemoveAllCancel = $("#remove-all_cancel");
-        var buttonRemoveAllOk = $("#remove-all_ok");
+        var buttonRemoveAll = $("#todo_delete-all-btn");
+        var confirmDialog = $("#confirm-dialog");
+        var confirmDialogMessage = $("#confirm-dialog_message");
+        var confirmDialogOk = $("#confirm-dialog_ok");
 
-        var windowAddTask = $("#add-task-window").add("#shield-window");
-        var buttonAddTaskCancel = $("#add-task_cancel");
-        var buttonAddTaskAdd = $("#add-task_add");
-        var textareaAddTask = $("#add-task_text");
-        var captionAddTask = $("#add-task_caption");
+        var editDialog = $("#edit-dialog");
+        var editDialogTaskText = $("#edit-task_text");
+        var editDialogOk = $("#edit-dialog_ok");
 
         buttonRemoveAll.click(function () {
             var tasksNumber = tbody.children().length;
             if (tasksNumber > 1) {
-                windowRemoveAll.removeClass("invisible");
+                confirmDialogMessage.text("Вы действительно хотите удалить все задачи?");
+                confirmDialog.modal("show");
             } else if (tasksNumber === 1) {
-                tbody.html("");
+                confirmDialogMessage.text("Вы действительно хотите удалить единственную задачу?");
+                confirmDialog.modal("show");
             }
         });
 
-        buttonRemoveAllOk.click(function () {
+        confirmDialogOk.click(function () {
             tbody.html("");
-            windowRemoveAll.addClass("invisible");
-        });
-
-        buttonRemoveAllCancel.click(function () {
-            windowRemoveAll.addClass("invisible");
-        });
-
-        buttonAddTask.click(function () {
-            captionAddTask.text("Введите текст задачи");
-            buttonAddTaskAdd.text("Добавить");
-            windowAddTask.removeClass("invisible");
-            textareaAddTask.focus();
-        });
-
-        buttonAddNewTask.click(function () {
-            var taskText = textAddNewTask.val();
-
-            if (taskText.trim() === "") {
-                return
-            }
-
-            var tr = $("<tr></tr>").appendTo(tbody);
-            var tdDate = $("<td></td>").addClass("date").text(getDateAndTime()).appendTo(tr);
-            var tdText = $("<td></td>").text(taskText).appendTo(tr);
-            var tdButtonEdit = $("<td></td>").addClass("button").text("Изменить").click(function () {
-                captionAddTask.text("Измените текст задачи");
-                buttonAddTaskAdd.text("Сохранить");
-                windowAddTask.removeClass("invisible");
-                textareaAddTask.val(tdText.text());
-                textareaAddTask.focus();
-                editTD = tdText;
-            }).appendTo(tr);
-            var tdButtonDelete = $("<td></td>").addClass("button").text("Удалить").click(function () {
-                tr.remove();
-            }).appendTo(tr);
-
-            textAddNewTask.val("");
-        });
-
-        buttonAddTaskCancel.click(function () {
-            windowAddTask.addClass("invisible");
+            confirmDialog.modal("hide");
         });
 
         var editTD;
 
-        buttonAddTaskAdd.click(function () {
-            if ("Добавить" === buttonAddTaskAdd.text()) {
-                var taskText = textareaAddTask.val();
+        buttonAddTask.click(function () {
+            var taskText = textAddTask.val();
 
-                if (taskText.trim() === "") {
-                    return
-                }
-
-                var tr = $("<tr></tr>").appendTo(tbody);
-                var tdDate = $("<td></td>").addClass("date").text(getDateAndTime()).appendTo(tr);
-                var tdText = $("<td></td>").text(taskText).appendTo(tr);
-                var tdButtonEdit = $("<td></td>").addClass("button").text("Изменить").click(function () {
-                    captionAddTask.text("Измените текст задачи");
-                    buttonAddTaskAdd.text("Сохранить");
-                    windowAddTask.removeClass("invisible");
-                    textareaAddTask.val(tdText.text());
-                    textareaAddTask.focus();
-                    editTD = tdText;
-                }).appendTo(tr);
-                var tdButtonDelete = $("<td></td>").addClass("button").text("Удалить").click(function () {
-                    tr.remove();
-                }).appendTo(tr);
-
-                textareaAddTask.val("");
-
-                windowAddTask.addClass("invisible");
-
-            } else if ("Сохранить" === buttonAddTaskAdd.text()) {
-                var newText = textareaAddTask.val();
-
-                if (newText.trim() === "") {
-                    return
-                }
-
-                editTD.text(newText);
-                textareaAddTask.val("");
-
-                windowAddTask.addClass("invisible");
+            if (taskText.trim() === "") {
+                textAddTask.addClass("is-invalid");
+                return
             }
+            textAddTask.removeClass("is-invalid");
+
+            var tr = $("<tr></tr>")
+                .appendTo(tbody);
+            var tdDate = $("<td></td>").addClass("todo_col-date")
+                .text(getDateAndTime())
+                .appendTo(tr);
+            var tdText = $("<td></td>")
+                .text(taskText)
+                .appendTo(tr);
+            var tdButtonEdit = $("<td></td>").addClass("todo_col-button")
+                .appendTo(tr);
+            var btnEdit = $("<button></button>").addClass("btn btn-primary")
+                .text("Изменить")
+                .click(function () {
+                    editDialog.modal("show");
+                    editDialogTaskText.val(tdText.text());
+                    editDialogTaskText.focus();
+                    editTD = tdText;
+                })
+                .appendTo(tdButtonEdit);
+            var tdButtonDelete = $("<td></td>").addClass("todo_col-button").appendTo(tr);
+            var btnDelete = $("<button></button>").addClass("btn btn-primary")
+                .text("Удалить")
+                .click(function () {
+                    tr.remove();
+                })
+                .appendTo(tdButtonDelete);
+
+            textAddTask.val("");
+            textAddTask.focus();
         });
+
+        editDialogOk.click(function () {
+            var newText = editDialogTaskText.val();
+
+            if (newText.trim() === "") {
+                editDialogTaskText.addClass("is-invalid");
+                return
+            }
+            editDialogTaskText.removeClass("is-invalid");
+
+            editTD.text(newText);
+            editDialogTaskText.val("");
+
+            editDialog.modal("hide");
+        });
+
+        $('[data-toggle="tooltip"]').tooltip({container: 'body'});
     });
 })();

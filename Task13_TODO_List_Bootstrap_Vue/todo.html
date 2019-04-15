@@ -10,70 +10,173 @@
 </head>
 
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-12" id="todo-list-app">
-            <div class="todo-add-form form-group bg-dark text-white">
-                <label for="add-new-task_text">Создать новую задачу </label>
-                <input type="text" name="task-text" id="add-new-task_text" class="form-control">
-                <button type="button" class="btn btn-primary" id="add-new-task_btn">Добавить в список</button>
+<div class="container todo_container">
+    <div class="row" id="App">
+        <div class="col-sm-12 col-md-3 todo_add-form-col">
+            <div class="todo_delete-form">
+                <button type="button" class="todo_delete-all-btn btn btn-secondary" id="todo_delete-all-btn"
+                        title="Удалить все задачи из списка задач" @click="removeAllTasks">Удалить все задачи
+                </button>
             </div>
-            <table class="table table-sm table-striped table-hover todo-table">
-                <thead class="thead-dark">
+            <div class="todo_add-form form-group">
+                <label for="todo_add-task_text">Новая задача</label>
+                <textarea name="task-text" id="todo_add-task_text" class="form-control todo_text-area"
+                          placeholder=" Сделать..."
+                          data-toggle="tooltip" data-placement="auto"
+                          title="Сформулируйте задачу" v-model="newTaskText"></textarea>
+                <div class="invalid-feedback">
+                    Отсутствует текст задачи
+                </div>
+                <button type="button" class="btn btn-primary" id="todo_add-task_btn" @click.stop.prevent="addTask"
+                        title="Добавить новую задачу в список задач">Добавить
+                </button>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-9">
+            <table class="table table-sm table-striped table-hover todo_table">
+                <thead class="thead">
                 <tr>
-                    <th colspan="4">Задачи</th>
-                </tr>
-                <tr>
-                    <th class="date">Дата</th>
+                    <th class="todo_col-date">Дата</th>
                     <th>Задача</th>
-                    <th class="as-button"></th>
-                    <th class="button" id="todo_remove-all">Удалить всё</th>
+                    <th class="todo_col-button"></th>
+                    <th class="todo_col-button"></th>
                 </tr>
                 </thead>
                 <tbody id="todo_tbody">
+                <tr v-for="(task, index) in tasks" :key="task.id">
+                    <td>{{task.time}}</td>
+                    <td>{{task.text}}</td>
+                    <td>
+                        <button type="button" class="button btn btn-primary" @click="editId=task.id; editTask;">
+                            Изменить
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="button btn btn-primary" @click="removeId=task.id; removeTask;">
+                            Удалить
+                        </button>
+                    </td>
+                </tr>
                 </tbody>
+                <tfoot class="tfoot">
+                <tr>
+                    <th class="todo_col-date">Дата</th>
+                    <th>Задача</th>
+                    <th class="todo_col-button"></th>
+                    <th class="todo_col-button"></th>
+                </tr>
+                </tfoot>
             </table>
         </div>
     </div>
 </div>
 
-<div class="todo-windows">
-    <div class="shield-window invisible" id="shield-window">
+<div id="confirm-dialog" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Запрос подтверждения</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="confirm-dialog_message">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button btn btn-secondary" data-dismiss="modal">Отменить</button>
+                <button type="button" class="button btn btn-primary" id="confirm-dialog_ok">Подтвердить</button>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div class="remove-confirmation invisible" id="remove-all-window">
-        <table>
-            <tr>
-                <th colspan="2">Вы действительно хотите удалить все задачи?</th>
-            </tr>
-            <tr>
-                <td class="button" id="remove-all_cancel">Отменить</td>
-                <td class="button" id="remove-all_ok">Подтвердить</td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="add-task invisible" id="add-task-window">
-        <table>
-            <tr>
-                <th colspan="3"><label id="add-task_caption" for="add-task_text">Введите текст задачи</label></th>
-            </tr>
-            <tr>
-                <th colspan="3" class="task-text"><textarea id="add-task_text"></textarea></th>
-            </tr>
-            <tr>
-                <th class="button" id="add-task_cancel">Отменить</th>
-                <th></th>
-                <th class="button" id="add-task_add">Добавить</th>
-            </tr>
-        </table>
+<div id="edit-dialog" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Изменение текста задачи</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="edit-task_text">Измените текст задачи</label>
+                    <textarea name="task-text" id="edit-task_text" class="form-control todo_text-area"></textarea>
+                    <div class="invalid-feedback">
+                        Отсутствует текст задачи
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button btn btn-secondary" data-dismiss="modal">Отменить</button>
+                <button type="button" class="button btn btn-primary" id="edit-dialog_ok">Применить</button>
+            </div>
+        </div>
     </div>
 </div>
 
 <script src="node_modules/jquery/dist/jquery.js"></script>
 <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
 <script src="node_modules/vue/dist/vue.js"></script>
-<script src="todo.js"></script>
+<!--script src="todo.js"></script-->
+<script>
+    var textAddTask = $("#todo_add-task_text");
+
+    function getDateAndTime() {
+        var date = new Date();
+        var month = date.getMonth() + 1;
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var minutes = date.getMinutes();
+        if (minutes < 10) {
+            minutes = "0" + minutes;
+        }
+        var seconds = date.getSeconds();
+        if (seconds < 10) {
+            seconds = "0" + seconds;
+        }
+        var createDate = date.getDate() + "." + month + "." + date.getFullYear();
+        var createTime = date.getHours() + ":" + minutes + ":" + seconds;
+
+        return createDate + "\n" + createTime;
+    }
+
+    var app = new Vue({
+        el: App,
+        data: {
+            tasks: [],
+            newTaskText: "",
+            id: 0,
+            editId: 0,
+            removeId: 0
+        },
+        methods: {
+            addTask: function () {
+                this.id++;
+                var taskTime = getDateAndTime();
+                var newTask = {
+                    id: this.id,
+                    time: taskTime,
+                    text: this.newTaskText
+                };
+                this.newTaskText = "";
+                this.tasks.push(newTask);
+
+                $("#todo_add-task_text").focus();
+            },
+            removeAllTasks: function () {
+                this.tasks = [];
+            },
+            removeTask: function () {
+                this.tasks = this.tasks.filter(function (task) {
+                    return task.id !== this.removeId;
+                });
+            }
+        }
+    });
+</script>
 </body>
 
 </html>

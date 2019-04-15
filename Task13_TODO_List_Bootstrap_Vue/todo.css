@@ -1,165 +1,62 @@
-/** {*/
-/*    box-sizing: border-box;*/
-/*}*/
+@media screen and (min-width: 768px) {
+    .todo_add-form-col {
+        margin-bottom: 15px;
+        background-color: cornflowerblue;
+    }
 
-/*.todo-wrapper {*/
-/*    font-size: 16px;*/
-/*    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
-/*    padding: 30px;*/
-/*    width: 100%;*/
-/*}*/
+    .todo_container{
+        margin-top: 15px;
+    }
 
-/*.todo-border {*/
-/*    border: 5px solid green;*/
-/*    padding: 0;*/
-/*}*/
+    .btn.todo_delete-all-btn {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+}
 
-/*.todo-table {*/
-/*    border-collapse: collapse;*/
-/*    border: none;*/
-/*    width: 100%;*/
-/*}*/
+@media screen and (max-width: 767px) {
+    .todo_delete-form,
+    .todo_add-form {
+        margin-bottom: 5px;
+    }
+}
 
-/*.todo-table th {*/
-/*    padding: 15px 5px;*/
-/*    border: 3px solid green;*/
-/*}*/
+.todo_delete-form,
+.todo_add-form {
+    background-color: cornflowerblue;
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+}
 
-/*.todo-table td {*/
-/*    padding: 4px;*/
-/*    border: 3px solid green;*/
-/*}*/
+.todo_container .btn {
+    font-weight: bold;
+    width: 100px;
+}
 
-/*.todo-table thead {*/
-/*    border-color: green;*/
-/*    background-color: lightgreen;*/
-/*    color: green;*/
-/*}*/
+.todo_add-form .btn{
+    margin-top: 15px;
+}
 
-/*.todo-table tbody {*/
-/*    border-color: green;*/
-/*    background-color: white;*/
-/*    color: black;*/
-/*}*/
+.btn.todo_delete-all-btn {
+    width: 180px;
+}
 
-/*tbody tr:nth-child(even) td {*/
-/*    background-color: lightgreen;*/
-/*}*/
+.todo_text-area{
+    min-height: 40px;
+}
 
-/*.todo-table .as-button {*/
-/*    width: 110px;*/
-/*}*/
+.todo_table thead,
+.todo_table tfoot {
+    background-color: cornflowerblue;
+    color: white;
+}
 
-/*.todo-table .button,*/
-/*.add-task .button,*/
-/*.remove-confirmation .button {*/
-/*    background-color: limegreen;*/
-/*    color: white;*/
-/*    border-color: green;*/
-/*    width: 110px;*/
-/*    padding: 15px 2px;*/
-/*    font-size: 16px;*/
-/*    font-weight: bold;*/
-/*    text-align: center;*/
-/*    vertical-align: middle;*/
-/*}*/
+.todo_table .todo_col-date {
+    width: 150px;
+}
 
-/*.todo-table .button:hover,*/
-/*.add-task .button:hover,*/
-/*.remove-confirmation .button:hover {*/
-/*    background-color: lawngreen;*/
-/*    color: green;*/
-/*    cursor: pointer;*/
-/*}*/
-
-/*.date {*/
-/*    width: 100px;*/
-/*    text-align: center;*/
-/*    vertical-align: top;*/
-/*}*/
-
-/*.todo-windows {*/
-/*    position: relative;*/
-/*}*/
-
-/*.invisible {*/
-/*    display: none;*/
-/*}*/
-
-/*.shield-window {*/
-/*    position: fixed;*/
-/*    top: 0;*/
-/*    bottom: 0;*/
-/*    left: 0;*/
-/*    right: 0;*/
-/*    background-color: lightgray;*/
-/*    opacity: 0.7;*/
-/*}*/
-
-/*.remove-confirmation {*/
-/*    position: fixed;*/
-/*    left: 50%;*/
-/*    margin-left: -120px;*/
-/*    !*left: calc(50% - 120px);*!*/
-/*    top: 25%;*/
-/*    border: 5px solid green;*/
-/*    max-width: 240px;*/
-/*    height: auto;*/
-/*    font-size: 16px;*/
-/*    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
-/*    opacity: 1;*/
-/*}*/
-
-/*.remove-confirmation table {*/
-/*    border-collapse: collapse;*/
-/*    border: 3px solid green;*/
-/*}*/
-
-/*.remove-confirmation table th {*/
-/*    background-color: lightgreen;*/
-/*    color: green;*/
-/*    padding: 15px 5px;*/
-/*    border: 3px solid green;*/
-/*}*/
-
-/*.remove-confirmation table td {*/
-/*    border: 3px solid green;*/
-/*}*/
-
-/*.add-task {*/
-/*    position: fixed;*/
-/*    left: 50%;*/
-/*    margin-left: -259px;*/
-/*    !*left: calc(50% - 259px);*!*/
-/*    top: 25%;*/
-/*    border: 5px solid green;*/
-/*    min-width: 519px;*/
-/*    height: auto;*/
-/*    font-size: 16px;*/
-/*    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
-/*    opacity: 1;*/
-/*}*/
-
-/*.add-task table {*/
-/*    border-collapse: collapse;*/
-/*    border: 3px solid green;*/
-/*    width: 509px;*/
-/*}*/
-
-/*.add-task table th {*/
-/*    background-color: lightgreen;*/
-/*    color: green;*/
-/*    padding: 15px 5px;*/
-/*    border: 3px solid green;*/
-/*}*/
-
-/*.add-task table textarea {*/
-/*    min-width: 500px;*/
-/*    min-height: 40px;*/
-/*    height: 100px;*/
-/*    margin: 5px 5px 2px 5px;*/
-/*}*/
-
-/*.add-task table .task-text {*/
-/*    padding: 0;*/
-/*}*/
+.todo_table .todo_col-button {
+    width: 110px;
+    margin: 0 5px;
+}
