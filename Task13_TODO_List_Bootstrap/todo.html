@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Задача "TODO List Bootstrap"</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="todo.css">
+</head>
+
+<body>
+<div class="container todo_container">
+    <div class="row" id="todo_app">
+        <div class="col-sm-12 col-md-3 todo_add-form-col">
+            <div class="todo_delete-form">
+                <button type="button" class="todo_delete-all-btn btn btn-secondary" id="todo_delete-all-btn"
+                        title="Удалить все задачи из списка задач">Удалить все задачи
+                </button>
+            </div>
+            <div class="todo_add-form form-group">
+                <label for="todo_add-task_text">Новая задача</label>
+                <textarea name="task-text" id="todo_add-task_text" class="form-control todo_text-area"
+                          placeholder=" Сделать..."
+                          data-toggle="tooltip" data-placement="auto"
+                          title="Сформулируйте задачу"></textarea>
+                <div class="invalid-feedback">
+                    Отсутствует текст задачи
+                </div>
+                <button type="button" class="btn btn-primary" id="todo_add-task_btn"
+                        title="Добавить новую задачу в список задач">Добавить
+                </button>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-9">
+            <table class="table table-sm table-striped table-hover todo_table">
+                <thead class="thead">
+                <tr>
+                    <th class="todo_col-date">Дата</th>
+                    <th>Задача</th>
+                    <th class="todo_col-button"></th>
+                    <th class="todo_col-button"></th>
+                </tr>
+                </thead>
+                <tbody id="todo_tbody">
+                </tbody>
+                <tfoot class="tfoot">
+                <tr>
+                    <th class="todo_col-date">Дата</th>
+                    <th>Задача</th>
+                    <th class="todo_col-button"></th>
+                    <th class="todo_col-button"></th>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="confirm-dialog" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Запрос подтверждения</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body" id="confirm-dialog_message">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button btn btn-secondary" data-dismiss="modal">Отменить</button>
+                <button type="button" class="button btn btn-primary" id="confirm-dialog_ok">Подтвердить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="edit-dialog" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Изменение текста задачи</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="edit-task_text">Измените текст задачи</label>
+                    <textarea name="task-text" id="edit-task_text" class="form-control todo_text-area"></textarea>
+                    <div class="invalid-feedback">
+                        Отсутствует текст задачи
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="button btn btn-secondary" data-dismiss="modal">Отменить</button>
+                <button type="button" class="button btn btn-primary" id="edit-dialog_ok">Применить</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="node_modules/jquery/dist/jquery.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+<script src="todo.js"></script>
+</body>
+
+</html>
