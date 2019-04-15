@@ -65,7 +65,7 @@
 
             var tr = $("<tr></tr>")
                 .appendTo(tbody);
-            var tdDate = $("<td></td>").addClass("todo_col-date")
+            $("<td></td>").addClass("todo_col-date")
                 .text(getDateAndTime())
                 .appendTo(tr);
             var tdText = $("<td></td>")
@@ -73,7 +73,7 @@
                 .appendTo(tr);
             var tdButtonEdit = $("<td></td>").addClass("todo_col-button")
                 .appendTo(tr);
-            var btnEdit = $("<button></button>").addClass("btn btn-primary")
+            $("<button></button>").addClass("btn btn-primary")
                 .text("Изменить")
                 .click(function () {
                     editDialog.modal("show");
@@ -83,7 +83,7 @@
                 })
                 .appendTo(tdButtonEdit);
             var tdButtonDelete = $("<td></td>").addClass("todo_col-button").appendTo(tr);
-            var btnDelete = $("<button></button>").addClass("btn btn-primary")
+            $("<button></button>").addClass("btn btn-primary")
                 .text("Удалить")
                 .click(function () {
                     tr.remove();
