@@ -21,94 +21,75 @@
         return createDate + "\n" + createTime;
     }
 
-    $(document).ready(function () {
-        var buttonAddTask = $("#todo_add-task_btn");
-        var textAddTask = $("#todo_add-task_text");
+    new Vue({
+        el: "#App",
+        data: {
+            tasks: [],
+            editTaskText: "",
+            newTaskText: "",
+            isInvalidNewTask: false,
+            id: 0,
+            confirmMessage: ""
+        },
+        methods: {
+            addTask: function () {
+                if (this.newTaskText === "") {
+                    this.isInvalidNewTask = true;
+                    this.$refs.taskTextInput.focus();
+                    return
+                }
+                this.isInvalidNewTask = false;
 
-        var tbody = $("#todo_tbody");
+                this.id++;
+                var taskTime = getDateAndTime();
+                var newTask = {
+                    id: this.id,
+                    time: taskTime,
+                    text: this.newTaskText,
+                    isEdit: false,
+                    isRemove: false
+                };
+                this.newTaskText = "";
+                this.tasks.push(newTask);
 
-        var buttonRemoveAll = $("#todo_delete-all-btn");
-        var confirmDialog = $("#confirm-dialog");
-        var confirmDialogMessage = $("#confirm-dialog_message");
-        var confirmDialogOk = $("#confirm-dialog_ok");
-
-        var editDialog = $("#edit-dialog");
-        var editDialogTaskText = $("#edit-task_text");
-        var editDialogOk = $("#edit-dialog_ok");
-
-        buttonRemoveAll.click(function () {
-            var tasksNumber = tbody.children().length;
-            if (tasksNumber > 1) {
-                confirmDialogMessage.text("Вы действительно хотите удалить все задачи?");
-                confirmDialog.modal("show");
-            } else if (tasksNumber === 1) {
-                confirmDialogMessage.text("Вы действительно хотите удалить единственную задачу?");
-                confirmDialog.modal("show");
+                this.$refs.taskTextInput.focus();
+            },
+            editTask: function (editTask) {
+                this.tasks.forEach(function (task) {
+                    task.isEdit = false;
+                });
+                editTask.isEdit = true;
+                this.editTaskText = editTask.text;
+            },
+            changeTask: function (editTask) {
+                editTask.text = this.editTaskText;
+                editTask.isEdit = false;
+                this.editTaskText = "";
+            },
+            confirmRemoveAllTasks: function () {
+                this.tasks.forEach(function (task) {
+                    task.isRemove = true;
+                });
+                this.confirmMessage = "Вы действительно хотите удалить все задачи?";
+                $("#confirm-dialog").modal("show");
+            },
+            confirmRemoveTask: function (removeTask) {
+                removeTask.isRemove = true;
+                this.confirmMessage = "Вы действительно хотите удалить задачу:<br>" + removeTask.text;
+                $("#confirm-dialog").modal("show");
+            },
+            cancelRemove: function () {
+                this.tasks.forEach(function (task) {
+                    task.isRemove = false;
+                });
+            },
+            applyRemove: function () {
+                this.tasks = this.tasks.filter(function (task) {
+                    return task.isRemove === false;
+                });
             }
-        });
-
-        confirmDialogOk.click(function () {
-            tbody.html("");
-            confirmDialog.modal("hide");
-        });
-
-        var editTD;
-
-        buttonAddTask.click(function () {
-            var taskText = textAddTask.val();
-
-            if (taskText.trim() === "") {
-                textAddTask.addClass("is-invalid");
-                return
-            }
-            textAddTask.removeClass("is-invalid");
-
-            var tr = $("<tr></tr>")
-                .appendTo(tbody);
-            var tdDate = $("<td></td>").addClass("todo_col-date")
-                .text(getDateAndTime())
-                .appendTo(tr);
-            var tdText = $("<td></td>")
-                .text(taskText)
-                .appendTo(tr);
-            var tdButtonEdit = $("<td></td>").addClass("todo_col-button")
-                .appendTo(tr);
-            var btnEdit = $("<button></button>").addClass("btn btn-primary")
-                .text("Изменить")
-                .click(function () {
-                    editDialog.modal("show");
-                    editDialogTaskText.val(tdText.text());
-                    editDialogTaskText.focus();
-                    editTD = tdText;
-                })
-                .appendTo(tdButtonEdit);
-            var tdButtonDelete = $("<td></td>").addClass("todo_col-button").appendTo(tr);
-            var btnDelete = $("<button></button>").addClass("btn btn-primary")
-                .text("Удалить")
-                .click(function () {
-                    tr.remove();
-                })
-                .appendTo(tdButtonDelete);
-
-            textAddTask.val("");
-            textAddTask.focus();
-        });
-
-        editDialogOk.click(function () {
-            var newText = editDialogTaskText.val();
-
-            if (newText.trim() === "") {
-                editDialogTaskText.addClass("is-invalid");
-                return
-            }
-            editDialogTaskText.removeClass("is-invalid");
-
-            editTD.text(newText);
-            editDialogTaskText.val("");
-
-            editDialog.modal("hide");
-        });
-
-        $('[data-toggle="tooltip"]').tooltip({container: 'body'});
+        }
     });
+
+    $('[data-toggle="tooltip"]').tooltip({container: 'body'});
 })();

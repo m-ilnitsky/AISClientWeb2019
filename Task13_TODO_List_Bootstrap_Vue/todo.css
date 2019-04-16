@@ -1,11 +1,17 @@
+[v-cloak] {
+    display: none;
+}
+
 @media screen and (min-width: 768px) {
     .todo_add-form-col {
         margin-bottom: 15px;
         background-color: cornflowerblue;
     }
+
     .todo_container {
         margin-top: 15px;
     }
+
     .btn.todo_delete-all-btn {
         margin-top: 15px;
         margin-bottom: 15px;
@@ -45,15 +51,20 @@
     width: 180px;
 }
 
-.todo_text-area {
+.todo_add-form .todo_text-area {
     font-size: 14px;
     min-height: 40px;
+    height: 40px;
 }
 
 .todo_table thead,
 .todo_table tfoot {
     background-color: cornflowerblue;
     color: white;
+}
+
+.todo_table .todo_col-num {
+    width: 30px;
 }
 
 .todo_table .todo_col-date {
@@ -63,4 +74,17 @@
 .todo_table .todo_col-button {
     width: 110px;
     margin: 0 5px;
+}
+
+.todo_table .todo_col-task {
+    vertical-align: middle;
+}
+
+.todo_table .todo_table_input {
+    height: 40px;
+    min-height: 40px;
+    max-width: available;
+    min-width: 100px;
+    width: 200px;
+    resize: both;
 }
