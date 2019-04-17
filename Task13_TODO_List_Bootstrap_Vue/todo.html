@@ -10,145 +10,112 @@
 </head>
 
 <body>
-<div id="App">
+    <div id="App">
 
-    <div class="container todo_container">
-        <div class="row">
-            <div class="col-sm-12 col-md-3 todo_add-form-col">
-                <div class="todo_delete-form">
-                    <button type="button"
-                            class="todo_delete-all-btn btn btn-secondary"
-                            title="Удалить все задачи из списка задач"
-                            @click="confirmRemoveAllTasks">Удалить все задачи
+        <div class="container todo_container">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 todo_add-form-col">
+                    <div class="todo_delete-form">
+                        <button type="button" class="todo_delete-all-btn btn btn-secondary" title="Удалить все задачи из списка задач" @click="confirmRemoveAllTasks">Удалить все задачи
                     </button>
-                </div>
-                <div class="todo_add-form form-group">
-                    <label for="todo_add-task_text">Новая задача</label>
-                    <textarea :class="{'is-invalid': isInvalidNewTask}"
-                              ref="taskTextInput"
-                              v-model.trim="newTaskText"
-                              name="task-text"
-                              id="todo_add-task_text"
-                              class="form-control todo_text-area"
-                              placeholder=" Сделать..."
-                              data-toggle="tooltip"
-                              data-placement="auto"
-                              title="Сформулируйте задачу">
-                    </textarea>
-                    <div class="invalid-feedback">
-                        Отсутствует текст задачи
                     </div>
-                    <button type="button"
-                            class="btn btn-primary"
-                            @click.stop.prevent="addTask"
-                            title="Добавить новую задачу в список задач">Добавить
+                    <div class="todo_add-form form-group">
+                        <label for="todo_add-task_text">Новая задача</label>
+                        <textarea :class="{'is-invalid': isInvalidNewTask}" ref="taskTextInput" v-model.trim="newTaskText" name="task-text" id="todo_add-task_text" class="form-control todo_text-area" placeholder=" Сделать..." data-toggle="tooltip" data-placement="auto" title="Сформулируйте задачу">
+                    </textarea>
+                        <div class="invalid-feedback">
+                            Отсутствует текст задачи
+                        </div>
+                        <button type="button" class="btn btn-primary" @click.stop.prevent="addTask" title="Добавить новую задачу в список задач">Добавить
                     </button>
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-12 col-md-9">
-                <table class="table table-sm table-striped table-hover todo_table">
-                    <thead class="thead">
-                    <tr>
-                        <th class="todo_col-num">№</th>
-                        <th class="todo_col-date">Дата</th>
-                        <th>Задача</th>
-                        <th class="todo_col-button"></th>
-                        <th class="todo_col-button"></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-cloak v-for="(task, index) in tasks" :key="task.id">
-                        <td>{{index + 1}}</td>
-                        <td>{{task.time}}</td>
-                        <td>
-                            <template v-if="task.isEdit">
+                <div class="col-sm-12 col-md-9">
+                    <table class="table table-sm table-striped table-hover todo_table">
+                        <thead class="thead">
+                            <tr>
+                                <th class="todo_col-num">№</th>
+                                <th class="todo_col-date">Дата</th>
+                                <th>Задача</th>
+                                <th class="todo_col-button"></th>
+                                <th class="todo_col-button"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-cloak v-for="(task, index) in tasks" :key="task.id">
+                                <td>{{index + 1}}</td>
+                                <td>{{task.time}}</td>
+                                <td>
+                                    <template v-if="task.isEdit">
                                 <textarea v-model.trim="editTaskText"
                                           class="todo_table_input">
                                 </textarea>
-                            </template>
-                            <template v-else>
+                                </template>
+                                    <template v-else>
                                 {{task.text}}
-                            </template>
-                        </td>
-                        <td>
-                            <button v-if="task.isEdit" type="button"
-                                    class="button btn btn-danger"
-                                    @click="changeTask(task)">
+                                </template>
+                                </td>
+                                <td>
+                                    <button v-if="task.isEdit" type="button" class="button btn btn-danger" @click="changeTask(task)">
                                 Применить
                             </button>
-                            <button v-else
-                                    type="button"
-                                    class="button btn btn-primary"
-                                    @click="editTask(task)">
+                                    <button v-else type="button" class="button btn btn-primary" @click="editTask(task)">
                                 Изменить
                             </button>
-                        </td>
-                        <td>
-                            <button v-if="task.isEdit"
-                                    type="button"
-                                    class="button btn btn-danger"
-                                    @click="task.isEdit=false">
+                                </td>
+                                <td>
+                                    <button v-if="task.isEdit" type="button" class="button btn btn-danger" @click="task.isEdit=false">
                                 Отменить
                             </button>
-                            <button v-else
-                                    type="button"
-                                    class="button btn btn-primary"
-                                    @click="confirmRemoveTask(task)">
+                                    <button v-else type="button" class="button btn btn-primary" @click="confirmRemoveTask(task)">
                                 Удалить
                             </button>
 
-                        </td>
-                    </tr>
-                    </tbody>
-                    <tfoot class="tfoot">
-                    <tr>
-                        <th class="todo_col-num">№</th>
-                        <th class="todo_col-date">Дата</th>
-                        <th>Задача</th>
-                        <th class="todo_col-button"></th>
-                        <th class="todo_col-button"></th>
-                    </tr>
-                    </tfoot>
-                </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot class="tfoot">
+                            <tr>
+                                <th class="todo_col-num">№</th>
+                                <th class="todo_col-date">Дата</th>
+                                <th>Задача</th>
+                                <th class="todo_col-button"></th>
+                                <th class="todo_col-button"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="confirm-dialog" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Запрос подтверждения</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+        <div id="confirm-dialog" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Запрос подтверждения</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body" v-html="confirmMessage">
-                </div>
-                <div class="modal-footer">
-                    <button type="button"
-                            class="button btn btn-secondary"
-                            data-dismiss="modal"
-                            @click="cancelRemove">
+                    </div>
+                    <div class="modal-body" v-text="confirmMessage">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button btn btn-secondary" data-dismiss="modal" @click="cancelRemove">
                         Отменить
                     </button>
-                    <button type="button"
-                            class="button btn btn-primary"
-                            data-dismiss="modal"
-                            @click="applyRemove">
+                        <button type="button" class="button btn btn-primary" data-dismiss="modal" @click="applyRemove">
                         Подтвердить
                     </button>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 
-</div>
-
-<script src="node_modules/jquery/dist/jquery.js"></script>
-<script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
-<script src="node_modules/vue/dist/vue.js"></script>
-<script src="todo.js"></script>
+    <script src="node_modules/jquery/dist/jquery.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="todo.js"></script>
 </body>
 
 </html>

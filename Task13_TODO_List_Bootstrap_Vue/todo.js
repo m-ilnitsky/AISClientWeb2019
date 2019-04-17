@@ -1,6 +1,6 @@
 "use strict";
 
-(function () {
+(function() {
     function getDateAndTime() {
         var date = new Date();
         var month = date.getMonth() + 1;
@@ -32,11 +32,11 @@
             confirmMessage: ""
         },
         methods: {
-            addTask: function () {
+            addTask: function() {
                 if (this.newTaskText === "") {
                     this.isInvalidNewTask = true;
                     this.$refs.taskTextInput.focus();
-                    return
+                    return;
                 }
                 this.isInvalidNewTask = false;
 
@@ -54,42 +54,42 @@
 
                 this.$refs.taskTextInput.focus();
             },
-            editTask: function (editTask) {
-                this.tasks.forEach(function (task) {
+            editTask: function(editTask) {
+                this.tasks.forEach(function(task) {
                     task.isEdit = false;
                 });
                 editTask.isEdit = true;
                 this.editTaskText = editTask.text;
             },
-            changeTask: function (editTask) {
+            changeTask: function(editTask) {
                 editTask.text = this.editTaskText;
                 editTask.isEdit = false;
                 this.editTaskText = "";
             },
-            confirmRemoveAllTasks: function () {
-                this.tasks.forEach(function (task) {
+            confirmRemoveAllTasks: function() {
+                this.tasks.forEach(function(task) {
                     task.isRemove = true;
                 });
                 this.confirmMessage = "Вы действительно хотите удалить все задачи?";
                 $("#confirm-dialog").modal("show");
             },
-            confirmRemoveTask: function (removeTask) {
+            confirmRemoveTask: function(removeTask) {
                 removeTask.isRemove = true;
-                this.confirmMessage = "Вы действительно хотите удалить задачу:<br>" + removeTask.text;
+                this.confirmMessage = "Вы действительно хотите удалить задачу: " + removeTask.text;
                 $("#confirm-dialog").modal("show");
             },
-            cancelRemove: function () {
-                this.tasks.forEach(function (task) {
+            cancelRemove: function() {
+                this.tasks.forEach(function(task) {
                     task.isRemove = false;
                 });
             },
-            applyRemove: function () {
-                this.tasks = this.tasks.filter(function (task) {
-                    return task.isRemove === false;
+            applyRemove: function() {
+                this.tasks = this.tasks.filter(function(task) {
+                    return !task.isRemove;
                 });
             }
         }
     });
 
-    $('[data-toggle="tooltip"]').tooltip({container: 'body'});
+    $('[data-toggle="tooltip"]').tooltip({ container: 'body' });
 })();
