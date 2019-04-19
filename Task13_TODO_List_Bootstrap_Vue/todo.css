@@ -5,11 +5,13 @@
 @media screen and (min-width: 768px) {
     .todo_add-form-col {
         margin-bottom: 15px;
-        background-color: cornflowerblue;
+        background-color: darkslategray;
     }
+
     .todo_container {
         margin-top: 15px;
     }
+
     .btn.todo_delete-all-btn {
         margin-top: 15px;
         margin-bottom: 15px;
@@ -29,7 +31,7 @@
 
 .todo_delete-form,
 .todo_add-form {
-    background-color: cornflowerblue;
+    background-color: darkslategray;
     color: white;
     font-weight: bold;
     padding: 5px;
@@ -52,12 +54,12 @@
 .todo_add-form .todo_text-area {
     font-size: 14px;
     min-height: 40px;
-    height: 40px;
+    height: 60px;
 }
 
 .todo_table thead,
 .todo_table tfoot {
-    background-color: cornflowerblue;
+    background-color: darkslategray;
     color: white;
 }
 
@@ -85,4 +87,9 @@
     min-width: 100px;
     width: 200px;
     resize: both;
+}
+
+.todo_container .btn-primary {
+    background-color: darkslategray;
+    border: none;
 }
