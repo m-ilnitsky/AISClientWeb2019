@@ -19,6 +19,8 @@
       <module fileurl="file://$PROJECT_DIR$/Task12_PhoneBook-Bootstrap_npm/Task12_PhoneBook-Bootstrap_npm.iml" filepath="$PROJECT_DIR$/Task12_PhoneBook-Bootstrap_npm/Task12_PhoneBook-Bootstrap_npm.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task13_TODO_List_Bootstrap/Task13_TODO_List_Bootstrap.iml" filepath="$PROJECT_DIR$/Task13_TODO_List_Bootstrap/Task13_TODO_List_Bootstrap.iml" />
       <module fileurl="file://$PROJECT_DIR$/Task13_TODO_List_Bootstrap_Vue/Task13_TODO_List_Bootstrap_Vue.iml" filepath="$PROJECT_DIR$/Task13_TODO_List_Bootstrap_Vue/Task13_TODO_List_Bootstrap_Vue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task14_PhoneBook_Bootstrap_Vue/Task14_PhoneBook_Bootstrap_Vue.iml" filepath="$PROJECT_DIR$/Task14_PhoneBook_Bootstrap_Vue/Task14_PhoneBook_Bootstrap_Vue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Task14_PhoneBook_Bootstrap_Vue/Task14_PhoneBook_Bootstrap_Vue.iml" filepath="$PROJECT_DIR$/Task14_PhoneBook_Bootstrap_Vue/Task14_PhoneBook_Bootstrap_Vue.iml" />
     </modules>
   </component>
 </project>
