@@ -62,8 +62,8 @@
 }
 
 .phone-book_table td:last-child {
-    width: 95px;
-    min-width: 95px;
+    width: 100px;
+    min-width: 100px;
 }
 
 
