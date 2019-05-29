@@ -5,32 +5,32 @@
         el: "#App",
         data: {
             contacts: [
-                                          {id:1, family:"Иванов", name:"Василий",  phone:"123321", checked:false},
-                                          {id:2, family:"Васильев",  name:"Дмитрий", phone:"234234", checked:false},
-                                          {id:3, family:"Дмитриев",  name:"Иоган", phone:"345345", checked:false},
-                                          {id:4, family:"Йохансон",  name:"Скарлетт", phone:"456456", checked:false},
-                                          {id:5, family:"Скарлетсон",  name:"Рагнар", phone:"567567", checked:false},
-                                          {id:6, family:"Рагнарсон",  name:"Сигурд", phone:"678678", checked:false},
-                                          {id:7, family:"Сигурдсон",  name:"Снорри", phone:"789789", checked:false},
-                                          {id:8, family:"Стурлуссон",  name:"Снорри", phone:"890890", checked:false},
-                                          {id:9, family:"Барбаросса",  name:"Фридрих", phone:"779988", checked:false},
-                                          {id:10, family:"Арагонский",  name:"Фердинанд", phone:"123456", checked:false},
-                                          {id:11, family:"Македонский",  name:"Александр", phone:"112233", checked:false},
-                                          {id:12, family:"Итакский",  name:"Одиссей", phone:"123456789", checked:false},
-                                          {id:13, family:"Африканский",  name:"Сципион", phone:"123456123", checked:false},
-                                          {id:14, family:"Кортес",  name:"Эрнан", phone:"7654321", checked:false},
-                                          {id:15, family:"Юлий Цезарь",  name:"Гай", phone:"123123123", checked:false},
-                                          {id:16, family:"",  name:"Ксенофонт", phone:"7775773", checked:false},
-                                          {id:17, family:"",  name:"Фукидид", phone:"7775772", checked:false},
-                                          {id:18, family:"",  name:"Геродод", phone:"7775771", checked:false},
-                                          {id:19, family:"",  name:"Аристотель", phone:"5775773", checked:false},
-                                          {id:20, family:"",  name:"Платон", phone:"5775772", checked:false},
-                                          {id:21, family:"Плюшкины",  name:"", phone:"123771", checked:false},
-                                          {id:22, family:"Неваляшкины",  name:"", phone:"123772", checked:false},
-                                          {id:23, family:"Поваляшкины",  name:"", phone:"123773", checked:false},
-                                          {id:24, family:"Деточкины",  name:"", phone:"123774", checked:false},
-                                          {id:25, family:"Мышкины",  name:"", phone:"123775", checked:false}
-                                      ],
+                {id: 1, family: "Иванов", name: "Василий", phone: "123321", checked: false},
+                {id: 2, family: "Васильев", name: "Дмитрий", phone: "234234", checked: false},
+                {id: 3, family: "Дмитриев", name: "Иоган", phone: "345345", checked: false},
+                {id: 4, family: "Йохансон", name: "Скарлетт", phone: "456456", checked: false},
+                {id: 5, family: "Скарлетсон", name: "Рагнар", phone: "567567", checked: false},
+                {id: 6, family: "Рагнарсон", name: "Сигурд", phone: "678678", checked: false},
+                {id: 7, family: "Сигурдсон", name: "Снорри", phone: "789789", checked: false},
+                {id: 8, family: "Стурлуссон", name: "Снорри", phone: "890890", checked: false},
+                {id: 9, family: "Барбаросса", name: "Фридрих", phone: "779988", checked: false},
+                {id: 10, family: "Арагонский", name: "Фердинанд", phone: "123456", checked: false},
+                {id: 11, family: "Македонский", name: "Александр", phone: "112233", checked: false},
+                {id: 12, family: "Итакский", name: "Одиссей", phone: "123456789", checked: false},
+                {id: 13, family: "Африканский", name: "Сципион", phone: "123456123", checked: false},
+                {id: 14, family: "Кортес", name: "Эрнан", phone: "7654321", checked: false},
+                {id: 15, family: "Юлий Цезарь", name: "Гай", phone: "123123123", checked: false},
+                {id: 16, family: "", name: "Ксенофонт", phone: "7775773", checked: false},
+                {id: 17, family: "", name: "Фукидид", phone: "7775772", checked: false},
+                {id: 18, family: "", name: "Геродод", phone: "7775771", checked: false},
+                {id: 19, family: "", name: "Аристотель", phone: "5775773", checked: false},
+                {id: 20, family: "", name: "Платон", phone: "5775772", checked: false},
+                {id: 21, family: "Плюшкины", name: "", phone: "123771", checked: false},
+                {id: 22, family: "Неваляшкины", name: "", phone: "123772", checked: false},
+                {id: 23, family: "Поваляшкины", name: "", phone: "123773", checked: false},
+                {id: 24, family: "Деточкины", name: "", phone: "123774", checked: false},
+                {id: 25, family: "Мышкины", name: "", phone: "123775", checked: false}
+            ],
             newContact: {
                 family: "",
                 name: "",
@@ -43,28 +43,79 @@
             },
             id: 0,
             filterString: "",
-            checkedAll: true,
+            isFilter: false,
+            checkedAll: false,
             confirmDialogMessage: "",
             warningDialogMessage: ""
         },
-        computed:{
-            filteredContacts: function(){
-                return this.contacts;
+        computed: {
+            filteredContacts: function () {
+                var str = this.filterString.trim();
+
+                if (str === "") {
+                    this.isFilter = false;
+                    return this.contacts;
+                }
+
+                this.isFilter = true;
+
+                return this.contacts.filter(
+                    function (contact) {
+                        return contact.family.includes(str)
+                            || contact.name.includes(str)
+                            || contact.phone.includes(str);
+                    }
+                );
+            },
+            checkedCount: function () {
+                return this.filteredContacts.reduce(
+                    function (number, contact) {
+                        if (contact.checked) {
+                            return number + 1;
+                        }
+                        return number;
+                    }, 0
+                );
             }
         },
-        methods:{
-            checkAll: function(){
-                if(this.contacts.every(function(element, index, array){return element.checked == true;})){
-                    this.checkedAll = false;
-                    this.contacts.forEach(function(element){
-                        element.checked == false;
-                    });
-                }else{
+        methods: {
+            checkAll: function () {
+                if (!this.checkedAll) {
                     this.checkedAll = true;
-                    this.contacts.forEach(function(element){
-                        element.checked == true;
+                    this.contacts.forEach(function (element) {
+                        element.checked = true;
                     });
+                } else {
+                    if (this.contacts.every(function (element, index, array) {
+                        return element.checked;
+                    })) {
+                        this.checkedAll = false;
+                        this.contacts.forEach(function (element) {
+                            element.checked = false;
+                        });
+                    } else {
+                        this.checkedAll = true;
+                        this.contacts.forEach(function (element) {
+                            element.checked = true;
+                        });
+                    }
                 }
+            },
+            check: function (contact) {
+                contact.checked = !contact.checked;
+                if (this.checkedAll && this.contacts.some(function (element, index, array) {
+                    return element.checked == false;
+                })) {
+                    this.checkedAll = false;
+                }
+            },
+            resetFilter: function () {
+                this.filterString = "";
+            },
+            copyContact: function(contact){
+                this.newContact.family = contact.family;
+                this.newContact.name = contact.name;
+                this.$refs.newPhone.focus();
             }
         }
     });
@@ -199,34 +250,34 @@
         }
 
         function callFiltering() {
-            var newFilterString = textSearchInput.val().toLowerCase().trim();
-            if (newFilterString === lastFilterString) {
-                return;
-            } else {
-                lastFilterString = newFilterString;
-            }
+            /*    var newFilterString = textSearchInput.val().toLowerCase().trim();
+                if (newFilterString === lastFilterString) {
+                    return;
+                } else {
+                    lastFilterString = newFilterString;
+                }
 
-            if (!filterKey) {
-                filterKey = true;
-                setTimeout(function () {
-                    filterRows(textSearchInput.val());
-                }, 100);
-            }
+                if (!filterKey) {
+                    filterKey = true;
+                    setTimeout(function () {
+                        filterRows(textSearchInput.val());
+                    }, 100);
+                }*/
         }
 
         textSearchInput.on("keyup", function () {
-            callFiltering();
+            //callFiltering();
         });
 
         textSearchInput.on("change", function () {
-            callFiltering();
+            //callFiltering();
         });
 
         searchResetButton.on("click", function () {
-            textSearchInput.val("");
+            /*textSearchInput.val("");
             searchResetButton.removeClass("visible-button");
             lastFilterString = "";
-            filterRows(textSearchInput.val());
+            filterRows(textSearchInput.val());*/
         });
 
         function createToast(title, message) {
@@ -512,47 +563,47 @@
         });
 
         function showCheckedRowsNumber() {
-            if (checkedCounter === 0) {
-                topCounter.text("");
-                bottomCounter.text("");
-                topCheckbox.prop("checked", false);
-                bottomCheckbox.prop("checked", false);
-            } else if (checkedCounter === rowCounter) {
-                topCounter.text("все(" + checkedCounter + ")");
-                bottomCounter.text("все(" + checkedCounter + ")");
-                topCheckbox.prop("checked", true);
-                bottomCheckbox.prop("checked", true);
-            } else {
-                topCounter.text(checkedCounter);
-                bottomCounter.text(checkedCounter);
-                topCheckbox.prop("checked", false);
-                bottomCheckbox.prop("checked", false);
-            }
+            /*    if (checkedCounter === 0) {
+                    topCounter.text("");
+                    bottomCounter.text("");
+                    topCheckbox.prop("checked", false);
+                    bottomCheckbox.prop("checked", false);
+                } else if (checkedCounter === rowCounter) {
+                    topCounter.text("все(" + checkedCounter + ")");
+                    bottomCounter.text("все(" + checkedCounter + ")");
+                    topCheckbox.prop("checked", true);
+                    bottomCheckbox.prop("checked", true);
+                } else {
+                    topCounter.text(checkedCounter);
+                    bottomCounter.text(checkedCounter);
+                    topCheckbox.prop("checked", false);
+                    bottomCheckbox.prop("checked", false);
+                }*/
         }
 
         function setAllCheckbox(isChecked) {
-         /*   var allTableBodyCheckboxes = $("#table-body tr:visible input[type='checkbox']");
-            if (isChecked) {
-                checkedCounter = 0;
-                allTableBodyCheckboxes.prop("checked", false);
-                allTableBodyCheckboxes.click();
-            } else {
-                allTableBodyCheckboxes.prop("checked", true);
-                allTableBodyCheckboxes.click();
-                checkedCounter = 0;
-            }*/
+            /*   var allTableBodyCheckboxes = $("#table-body tr:visible input[type='checkbox']");
+               if (isChecked) {
+                   checkedCounter = 0;
+                   allTableBodyCheckboxes.prop("checked", false);
+                   allTableBodyCheckboxes.click();
+               } else {
+                   allTableBodyCheckboxes.prop("checked", true);
+                   allTableBodyCheckboxes.click();
+                   checkedCounter = 0;
+               }*/
         }
 
         $(topCheckbox).click(function () {
-          /*  var isChecked = topCheckbox.is(":checked");
-            bottomCheckbox.prop("checked", isChecked);
-            setAllCheckbox(isChecked);*/
+            /*  var isChecked = topCheckbox.is(":checked");
+              bottomCheckbox.prop("checked", isChecked);
+              setAllCheckbox(isChecked);*/
         });
 
         $(bottomCheckbox).click(function () {
-          /*  var isChecked = bottomCheckbox.is(":checked");
-            topCheckbox.prop("checked", isChecked);
-            setAllCheckbox(isChecked);*/
+            /*  var isChecked = bottomCheckbox.is(":checked");
+              topCheckbox.prop("checked", isChecked);
+              setAllCheckbox(isChecked);*/
         });
 
         function createTestContacts() {
@@ -582,34 +633,34 @@
             createRow(24, "Деточкины", "", "123774");
             createRow(25, "Мышкины", "", "123775");
         }
-        
+
         App.contacts = [
-                    {id:1, family:"Иванов", name:"Василий",  phone:"123321"},
-                    {id:2, family:"Васильев",  name:"Дмитрий", phone:"234234"},
-                    {id:3, family:"Дмитриев",  name:"Иоган", phone:"345345"},
-                    {id:4, family:"Йохансон",  name:"Скарлетт", phone:"456456"},
-                    {id:5, family:"Скарлетсон",  name:"Рагнар", phone:"567567"},
-                    {id:6, family:"Рагнарсон",  name:"Сигурд", phone:"678678"},
-                    {id:7, family:"Сигурдсон",  name:"Снорри", phone:"789789"},
-                    {id:8, family:"Стурлуссон",  name:"Снорри", phone:"890890"},
-                    {id:9, family:"Барбаросса",  name:"Фридрих", phone:"779988"},
-                    {id:10, family:"Арагонский",  name:"Фердинанд", phone:"123456"},
-                    {id:11, family:"Македонский",  name:"Александр", phone:"112233"},
-                    {id:12, family:"Итакский",  name:"Одиссей", phone:"123456789"},
-                    {id:13, family:"Африканский",  name:"Сципион", phone:"123456123"},
-                    {id:14, family:"Кортес",  name:"Эрнан", phone:"7654321"},
-                    {id:15, family:"Юлий Цезарь",  name:"Гай", phone:"123123123"},
-                    {id:16, family:"",  name:"Ксенофонт", phone:"7775773"},
-                    {id:17, family:"",  name:"Фукидид", phone:"7775772"},
-                    {id:18, family:"",  name:"Геродод", phone:"7775771"},
-                    {id:19, family:"",  name:"Аристотель", phone:"5775773"},
-                    {id:20, family:"",  name:"Платон", phone:"5775772"},
-                    {id:21, family:"Плюшкины",  name:"", phone:"123771"},
-                    {id:22, family:"Неваляшкины",  name:"", phone:"123772"},
-                    {id:23, family:"Поваляшкины",  name:"", phone:"123773"},
-                    {id:24, family:"Деточкины",  name:"", phone:"123774"},
-                    {id:25, family:"Мышкины",  name:"", phone:"123775"}
-                ];
+            {id: 1, family: "Иванов", name: "Василий", phone: "123321"},
+            {id: 2, family: "Васильев", name: "Дмитрий", phone: "234234"},
+            {id: 3, family: "Дмитриев", name: "Иоган", phone: "345345"},
+            {id: 4, family: "Йохансон", name: "Скарлетт", phone: "456456"},
+            {id: 5, family: "Скарлетсон", name: "Рагнар", phone: "567567"},
+            {id: 6, family: "Рагнарсон", name: "Сигурд", phone: "678678"},
+            {id: 7, family: "Сигурдсон", name: "Снорри", phone: "789789"},
+            {id: 8, family: "Стурлуссон", name: "Снорри", phone: "890890"},
+            {id: 9, family: "Барбаросса", name: "Фридрих", phone: "779988"},
+            {id: 10, family: "Арагонский", name: "Фердинанд", phone: "123456"},
+            {id: 11, family: "Македонский", name: "Александр", phone: "112233"},
+            {id: 12, family: "Итакский", name: "Одиссей", phone: "123456789"},
+            {id: 13, family: "Африканский", name: "Сципион", phone: "123456123"},
+            {id: 14, family: "Кортес", name: "Эрнан", phone: "7654321"},
+            {id: 15, family: "Юлий Цезарь", name: "Гай", phone: "123123123"},
+            {id: 16, family: "", name: "Ксенофонт", phone: "7775773"},
+            {id: 17, family: "", name: "Фукидид", phone: "7775772"},
+            {id: 18, family: "", name: "Геродод", phone: "7775771"},
+            {id: 19, family: "", name: "Аристотель", phone: "5775773"},
+            {id: 20, family: "", name: "Платон", phone: "5775772"},
+            {id: 21, family: "Плюшкины", name: "", phone: "123771"},
+            {id: 22, family: "Неваляшкины", name: "", phone: "123772"},
+            {id: 23, family: "Поваляшкины", name: "", phone: "123773"},
+            {id: 24, family: "Деточкины", name: "", phone: "123774"},
+            {id: 25, family: "Мышкины", name: "", phone: "123775"}
+        ];
 
         createTestContacts();
 

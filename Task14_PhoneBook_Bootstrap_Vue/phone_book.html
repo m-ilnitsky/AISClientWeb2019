@@ -25,7 +25,8 @@
                            placeholder=" Ввести фамилию"
                            data-toggle="tooltip"
                            data-placement="auto"
-                           title="Можно не вводить если введено имя">
+                           title="Можно не вводить если введено имя"
+                           v-model="newContact.family">
                     <div class="invalid-feedback">
                         Нет ни имени ни фамилии.
                     </div>
@@ -39,7 +40,8 @@
                            placeholder=" Ввести имя"
                            data-toggle="tooltip"
                            data-placement="auto"
-                           title="Можно не вводить если введена фамилия">
+                           title="Можно не вводить если введена фамилия"
+                           v-model="newContact.name">
                     <div class="invalid-feedback">
                         Нет ни имени ни фамилии.
                     </div>
@@ -53,7 +55,8 @@
                            placeholder=" Ввести телефон"
                            data-toggle="tooltip"
                            data-placement="auto"
-                           title="Нужен корректный телефонный номер не совпадающий с уже имеющимися">
+                           title="Нужен корректный телефонный номер не совпадающий с уже имеющимися"
+                           ref="newPhone">
                     <div class="invalid-feedback" id="add-dialog_phone-feedback">
                         Нет номера телефона.
                     </div>
@@ -85,11 +88,14 @@
                            data-toggle="popover"
                            data-placement="bottom"
                            title="Поиск"
-                           data-content="Не найдено ни одного совпадения!">
+                           data-content="Не найдено ни одного совпадения!"
+                           v-model="filterString">
                     <div class="search-reset-button"
-                         id="search-reset-button"><img src="icon-close.png"
-                                                       alt="x"
-                                                       title="Очистить поле поиска"></div>
+                         id="search-reset-button"
+                         :class="{'visible-button': isFilter}"
+                         @click="resetFilter"><img src="icon-close.png"
+                                                   alt="x"
+                                                   title="Очистить поле поиска"></div>
                 </div>
             </div>
             <table class="table table-sm table-striped table-hover phone-book_table">
@@ -101,14 +107,14 @@
                     <th>Телефон</th>
                     <th><input type="checkbox"
                                class="checkbox"
-                               id="all-checkbox-top"></th>
-                    <th id="checked-counter-top"
-                        v-model="checkedAll"
-                        @click="checkAll"></th>
+                               id="all-checkbox-top"
+                               v-model="checkedAll"
+                               @click="checkAll"></th>
+                    <th id="checked-counter-top">{{checkedCount}}</th>
                 </tr>
                 </thead>
                 <tbody id="table-body">
-                <tr v-for="(contact, index) in contacts"
+                <tr v-for="(contact, index) in filteredContacts"
                     :key="contact.id"
                     :class="{'checked-row': contact.checked}">
                     <td class="column-number">{{index+1}}</td>
@@ -118,12 +124,14 @@
                     <td class="column-checkbox">
                         <input type="checkbox"
                                class="checkbox"
-                               @click="contact.checked=!contact.checked">
+                               v-model="contact.checked"
+                               @click="check(contact)">
                     </td>
                     <td class="column-buttons">
                         <div class="circle-button add-button"
-                             title="Создать новый контакт на основе данного"><img src="icon-add.png"
-                                                                                  alt="a"></div>
+                             title="Создать новый контакт на основе данного"
+                             @click="copyContact(contact)"><img src="icon-add.png"
+                                                                alt="a"></div>
                         <div class="circle-button edit-button"
                              title="Изменить контакт"><img src="icon-edit.png"
                                                            alt="e"></div>
@@ -142,10 +150,10 @@
                     <th>Телефон</th>
                     <th><input type="checkbox"
                                class="checkbox"
-                               id="all-checkbox-bottom"></th>
-                    <th id="checked-counter-bottom"
-                        v-model="checkedAll"
-                        @click="checkAll"></th>
+                               id="all-checkbox-bottom"
+                               v-model="checkedAll"
+                               @click="checkAll"></th>
+                    <th id="checked-counter-bottom">{{checkedCount}}</th>
                 </tr>
                 </tfoot>
             </table>
