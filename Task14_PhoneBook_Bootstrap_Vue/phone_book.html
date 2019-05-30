@@ -80,13 +80,14 @@
                 <button type="submit"
                         class="btn btn-primary button edit-button"
                         id="edit-button"
-                        title="Изменить все выделенные контакты">
-                    Изменить
+                        title="Изменить все выделенные контакты"
+                        @click="confirmEditChecked">Изменить
                 </button>
                 <button type="submit"
                         class="btn btn-primary button delete-button"
                         id="delete-button"
-                        title="Удалить все выделенные контакты">Удалить
+                        title="Удалить все выделенные контакты"
+                        @click="confirmRemoveChecked">Удалить
                 </button>
                 <div class="search-wrapper">
                     <input type="text"
@@ -170,8 +171,7 @@
         </div>
     </div>
 
-    <div id="message-dialog"
-         ref="messageDialog"
+    <div ref="messageDialog"
          class="modal"
          tabindex="-1"
          role="dialog"
@@ -187,8 +187,9 @@
                             data-dismiss="modal"
                             aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
-                <div class="modal-body bg-dark text-white"
-                     id="message-dialog_message">
+                <div class="modal-body bg-dark text-white">
+                    Не выбрано ни одного контакта!<br>
+                    Для выполнения операции выберите контакты!
                 </div>
                 <div class="modal-footer bg-dark text-white">
                     <button type="button"
@@ -237,8 +238,7 @@
         </div>
     </div>
 
-    <div id="confirm-dialog"
-         ref="confirmDialog"
+    <div ref="confirmDialog"
          class="modal"
          tabindex="-1"
          role="dialog"
@@ -256,8 +256,7 @@
                             aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body bg-dark text-white"
-                     id="confirm-dialog_message"
-                     v-text="confirmDialogMessage">
+                     v-text="confirmDialog.message">
                 </div>
                 <div class="modal-footer bg-dark text-white">
                     <button type="button"
@@ -266,7 +265,7 @@
                     </button>
                     <button type="button"
                             class="button btn btn-primary"
-                            id="confirm-dialog_ok">{{}}
+                            @click="confirm">{{confirmDialog.okButtonText}}
                     </button>
                 </div>
             </div>

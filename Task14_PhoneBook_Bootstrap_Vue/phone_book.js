@@ -80,8 +80,10 @@
                 name: "",
                 phone: ""
             },
-            confirmDialogMessage: "",
-            warningDialogMessage: ""
+            confirmDialog: {
+                message: "",
+                okButtonText: ""
+            }
         },
         computed: {
             filteredContacts: function () {
@@ -113,16 +115,16 @@
                 );
             },
             filteredContactsCount: function () {
-                if(this.contacts.length === 0) {
+                if (this.contacts.length === 0) {
                     $(this.$refs.searchInput).popover("disable");
                     $(this.$refs.searchInput).popover("hide");
                     return 0;
                 }
 
-                if(this.filteredContacts.length > 0) {
+                if (this.filteredContacts.length > 0) {
                     $(this.$refs.searchInput).popover("disable");
                     $(this.$refs.searchInput).popover("hide");
-                }else{
+                } else {
                     $(this.$refs.searchInput).popover("enable");
                     $(this.$refs.searchInput).popover("show");
                 }
@@ -164,18 +166,18 @@
             resetFilter: function () {
                 this.filterString = "";
             },
-            copyContact: function(contact){
+            copyContact: function (contact) {
                 this.newContact.family = contact.family;
                 this.newContact.name = contact.name;
                 this.$refs.newPhone.focus();
             },
-            changeContact: function(contact){
+            changeContact: function (contact) {
                 this.editContact.family = contact.family;
                 this.editContact.name = contact.name;
                 this.editContact.phone = contact.phone;
                 //this.$refs.newPhone.focus();
             },
-            havePhone: function(phoneNumber) {
+            havePhone: function (phoneNumber) {
                 var newPhone = phoneNumber.trim()
                     .replace(/[+]/g, "")
                     .replace(/[(]/g, "")
@@ -186,10 +188,10 @@
 
                 this.contacts.forEach(function (contact) {
                     var phoneInRow = contact.phone.trim()
-                                .replace(/[+]/g, "")
-                                .replace(/[(]/g, "")
-                                .replace(/[)]/g, "")
-                                .replace(/[-]/g, "");
+                        .replace(/[+]/g, "")
+                        .replace(/[(]/g, "")
+                        .replace(/[)]/g, "")
+                        .replace(/[-]/g, "");
                     if (phoneInRow === newPhone) {
                         isPhone = true;
                         return false;
@@ -198,10 +200,10 @@
 
                 return isPhone;
             },
-            isCorrectPhone: function(phoneNumber){
+            isCorrectPhone: function (phoneNumber) {
                 return phoneRegexp.test(phoneNumber);
             },
-            addContact: function(){
+            addContact: function () {
                 this.newContact.isInvalidFamily = false;
                 this.newContact.isInvalidName = false;
                 this.newContact.isInvalidPhone = false;
@@ -235,14 +237,16 @@
 
                 this.contacts.push(contact);
 
+                this.newContact.phone = "";
+
                 this.id++;
             },
-            removeContact: function(){
+            removeContact: function () {
                 var index = this.contacts.indexOf(this.contactForRemove);
                 this.contacts.splice(index, 1);
                 $(this.$refs.confirmDialogRemoveContact).modal("hide");
             },
-            confirmRemove: function(contact){
+            confirmRemove: function (contact) {
                 this.confirmRemoveContact.message = "Вы действительно хотите удалить контакт?";
                 this.confirmRemoveContact.family = contact.family;
                 this.confirmRemoveContact.name = contact.name;
@@ -250,6 +254,60 @@
 
                 $(this.$refs.confirmDialogRemoveContact).modal("show");
                 this.contactForRemove = contact;
+            },
+            removeCheckedContacts: function () {
+                var str = this.filterString.trim();
+
+                this.contacts = this.contacts.filter(
+                    function (contact) {
+                        return !(contact.checked && (contact.family.includes(str) || contact.name.includes(str) || contact.phone.includes(str)));
+                    }
+                );
+            },
+            confirmRemoveChecked: function () {
+                if (this.checkedContactsCount === 0) {
+                    $(this.$refs.messageDialog).modal("show");
+                } else if (this.checkedContactsCount === 1) {
+                    var checkedContacts = this.filteredContacts.filter(
+                        function (contact) {
+                            return contact.checked;
+                        }
+                    );
+                    this.confirmRemove(checkedContacts[0]);
+                } else {
+                    this.confirmDialog.message = "Вы действительно хотите удалить " + this.checkedContactsCount + " " + getContactString(this.checkedContactsCount) + "?";
+                    this.confirmDialog.okButtonText = "Удалить все";
+                    $(this.$refs.confirmDialog).modal("show");
+                }
+            },
+            confirmEditChecked: function () {
+                if (this.checkedContactsCount === 0) {
+                    $(this.$refs.messageDialog).modal("show");
+                    return;
+                }
+
+                var checkedContacts = this.filteredContacts.filter(
+                    function (contact) {
+                        return contact.checked;
+                    }
+                );
+
+                if (this.checkedContactsCount === 1) {
+
+                } else {
+                    this.confirmDialog.message = "Вы действительно хотите изменить " + this.checkedContactsCount + " " + getContactString(this.checkedContactsCount) + "?";
+                    this.confirmDialog.okButtonText = "Изменить";
+                    $(this.$refs.confirmDialog).modal("show");
+                }
+            },
+            confirm: function () {
+                if (this.confirmDialog.okButtonText === "Удалить все") {
+                    this.removeCheckedContacts();
+                } else if (this.confirmDialog.okButtonText === "Изменить") {
+
+                }
+
+                $(this.$refs.confirmDialog).modal("hide");
             }
         }
     });
@@ -333,54 +391,54 @@
         }
 
         function filterRows(searchingString) {
-        /*    var str = searchingString.toLowerCase().trim();
+            /*    var str = searchingString.toLowerCase().trim();
 
-            searchResetButton.toggleClass("visible-button", str.length !== 0);
+                searchResetButton.toggleClass("visible-button", str.length !== 0);
 
-            var rows = $("#table-body tr");
-            var families = $("#table-body .column-family");
-            var names = $("#table-body .column-name");
-            var phones = $("#table-body .column-phone");
-            var checkboxes = $("#table-body .column-checkbox input");
+                var rows = $("#table-body tr");
+                var families = $("#table-body .column-family");
+                var names = $("#table-body .column-name");
+                var phones = $("#table-body .column-phone");
+                var checkboxes = $("#table-body .column-checkbox input");
 
-            rowCounter = rows.length;
+                rowCounter = rows.length;
 
-            rows.each(function (i) {
-                var family = families.eq(i).text().toLowerCase();
-                var name = names.eq(i).text().toLowerCase();
-                var phone = phones.eq(i).text().toLowerCase();
-                var phoneDigits = phone.replace(/[+]/g, "")
-                    .replace(/[(]/g, "")
-                    .replace(/[)]/g, "")
-                    .replace(/[-]/g, "");
+                rows.each(function (i) {
+                    var family = families.eq(i).text().toLowerCase();
+                    var name = names.eq(i).text().toLowerCase();
+                    var phone = phones.eq(i).text().toLowerCase();
+                    var phoneDigits = phone.replace(/[+]/g, "")
+                        .replace(/[(]/g, "")
+                        .replace(/[)]/g, "")
+                        .replace(/[-]/g, "");
 
-                var isString = (family.indexOf(str) >= 0) ||
-                    (name.indexOf(str) >= 0) ||
-                    (phone.indexOf(str) >= 0) ||
-                    (phoneDigits.indexOf(str) >= 0);
+                    var isString = (family.indexOf(str) >= 0) ||
+                        (name.indexOf(str) >= 0) ||
+                        (phone.indexOf(str) >= 0) ||
+                        (phoneDigits.indexOf(str) >= 0);
 
-                $(this).toggle(isString);
+                    $(this).toggle(isString);
 
-                if (!isString) {
-                    if (checkboxes.eq(i).is(":checked")) {
-                        checkboxes.eq(i).click();
+                    if (!isString) {
+                        if (checkboxes.eq(i).is(":checked")) {
+                            checkboxes.eq(i).click();
+                        }
+                        rowCounter--;
                     }
-                    rowCounter--;
+                });
+
+                if (rowCounter === 0) {
+                    textSearchInput.popover("enable");
+                    textSearchInput.popover("show");
+                } else {
+                    textSearchInput.popover("disable");
+                    textSearchInput.popover("hide");
                 }
-            });
 
-            if (rowCounter === 0) {
-                textSearchInput.popover("enable");
-                textSearchInput.popover("show");
-            } else {
-                textSearchInput.popover("disable");
-                textSearchInput.popover("hide");
-            }
+                setRowNumbers();
+                showCheckedRowsNumber();
 
-            setRowNumbers();
-            showCheckedRowsNumber();
-
-            filterKey = false;*/
+                filterKey = false;*/
         }
 
         function callFiltering() {
@@ -399,20 +457,20 @@
                 }*/
         }
 
-        textSearchInput.on("keyup", function () {
+        /*textSearchInput.on("keyup", function () {
             //callFiltering();
-        });
+        });*/
 
-        textSearchInput.on("change", function () {
+        /*textSearchInput.on("change", function () {
             //callFiltering();
-        });
+        });*/
 
-        searchResetButton.on("click", function () {
-            /*textSearchInput.val("");
+        /*searchResetButton.on("click", function () {
+            textSearchInput.val("");
             searchResetButton.removeClass("visible-button");
             lastFilterString = "";
-            filterRows(textSearchInput.val());*/
-        });
+            filterRows(textSearchInput.val());
+        });*/
 
         function createToast(title, message) {
             var divToast = $("<div></div>").addClass("toast")
@@ -542,7 +600,7 @@
             return "хм..мммм";
         }
 
-        $(deleteButton).click(function () {
+        /*$(deleteButton).click(function () {
             if (checkedCounter === 0) {
                 messageDialogMessage.html("Не выбрано ни одного контакта!<br>Для выполнения операции выберите контакты!");
                 messageDialog.modal("show");
@@ -555,9 +613,9 @@
                 confirmDialogOkButton.text("Удалить все");
                 confirmDialog.modal("show");
             }
-        });
+        });*/
 
-        $(editButton).click(function () {
+        /*$(editButton).click(function () {
             if (checkedCounter === 0) {
                 messageDialogMessage.html("Не выбрано ни одного контакта!<br>Для выполнения операции выберите контакты!");
                 messageDialog.modal("show");
@@ -569,9 +627,9 @@
                 confirmDialogOkButton.text("Изменить");
                 confirmDialog.modal("show");
             }
-        });
+        });*/
 
-        $(confirmDialogOkButton).click(function () {
+        /*$(confirmDialogOkButton).click(function () {
             if (confirmDialogOkButton.text() === "Удалить") {
                 singleDeleteKey = false;
                 deletingRowDelButton.click();
@@ -600,7 +658,7 @@
                 }, 50);
             }
             confirmDialog.modal("hide");
-        });
+        });*/
 
         var phoneRegexp = /^(\+[0-9]+)?([(][0-9]+[)])?([\-0-9]+)?[0-9]$/;
 
@@ -646,12 +704,13 @@
             showCheckedRowsNumber();
         });*/
 
-        $(editDialogCancelButton).click(function () {
+        /*$(editDialogCancelButton).click(function () {
             editDialog.modal("hide");
             editKey = false;
-        });
+        });*/
 
-        $(editDialogOkButton).click(function () {
+        /*$(editDialogOkButton).click(function () {
+
             var isInvalid = false;
 
             if (editDialogInputFamily.val().trim() === "" && editDialogInputName.val().trim() === "") {
@@ -694,7 +753,8 @@
             editKey = false;
 
             createToast("Редактирование", "Изменён контакт: " + editDialogInputFamily.val() + " " + editDialogInputName.val());
-        });
+
+        });*/
 
         function showCheckedRowsNumber() {
             /*    if (checkedCounter === 0) {
@@ -728,17 +788,17 @@
                }*/
         }
 
-        $(topCheckbox).click(function () {
-            /*  var isChecked = topCheckbox.is(":checked");
+        /*$(topCheckbox).click(function () {
+              var isChecked = topCheckbox.is(":checked");
               bottomCheckbox.prop("checked", isChecked);
-              setAllCheckbox(isChecked);*/
-        });
+              setAllCheckbox(isChecked);
+        });*/
 
-        $(bottomCheckbox).click(function () {
-            /*  var isChecked = bottomCheckbox.is(":checked");
+        /*$(bottomCheckbox).click(function () {
+              var isChecked = bottomCheckbox.is(":checked");
               topCheckbox.prop("checked", isChecked);
-              setAllCheckbox(isChecked);*/
-        });
+              setAllCheckbox(isChecked);
+        });*/
 
         function createTestContacts() {
             createRow(1, "Иванов", "Василий", "123321");
