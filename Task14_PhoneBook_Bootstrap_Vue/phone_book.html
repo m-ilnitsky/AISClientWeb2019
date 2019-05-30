@@ -26,7 +26,8 @@
                            data-toggle="tooltip"
                            data-placement="auto"
                            title="Можно не вводить если введено имя"
-                           v-model="newContact.family">
+                           v-model="newContact.family"
+                           :class="{'is-invalid': newContact.isInvalidFamily}">
                     <div class="invalid-feedback">
                         Нет ни имени ни фамилии.
                     </div>
@@ -41,7 +42,8 @@
                            data-toggle="tooltip"
                            data-placement="auto"
                            title="Можно не вводить если введена фамилия"
-                           v-model="newContact.name">
+                           v-model="newContact.name"
+                           :class="{'is-invalid': newContact.isInvalidName}">
                     <div class="invalid-feedback">
                         Нет ни имени ни фамилии.
                     </div>
@@ -56,13 +58,19 @@
                            data-toggle="tooltip"
                            data-placement="auto"
                            title="Нужен корректный телефонный номер не совпадающий с уже имеющимися"
-                           ref="newPhone">
-                    <div class="invalid-feedback" id="add-dialog_phone-feedback">
-                        Нет номера телефона.
+                           ref="newPhone"
+                           v-model="newContact.phone"
+                           :class="{'is-invalid': newContact.isInvalidPhone}">
+                    <div class="invalid-feedback"
+                         id="add-dialog_phone-feedback">
+                        {{newContact.invalidPhoneFeedback}}
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary button add-button" id="add-button"
-                        title="Создать новый контакт">Добавить
+                <button type="submit"
+                        class="btn btn-primary button add-button"
+                        id="add-button"
+                        title="Создать новый контакт"
+                        @click="addContact">Добавить
                 </button>
             </div>
         </div>
@@ -89,6 +97,7 @@
                            data-placement="bottom"
                            title="Поиск"
                            data-content="Не найдено ни одного совпадения!"
+                           ref="searchInput"
                            v-model="filterString">
                     <div class="search-reset-button"
                          id="search-reset-button"
@@ -110,7 +119,7 @@
                                id="all-checkbox-top"
                                v-model="checkedAll"
                                @click="checkAll"></th>
-                    <th id="checked-counter-top">{{checkedCount}}</th>
+                    <th id="checked-counter-top">{{checkedContactsCount}} / {{filteredContactsCount}}</th>
                 </tr>
                 </thead>
                 <tbody id="table-body">
@@ -136,8 +145,9 @@
                              title="Изменить контакт"><img src="icon-edit.png"
                                                            alt="e"></div>
                         <div class="circle-button delete-button"
-                             title="Удалить контакт"><img src="icon-close.png"
-                                                          alt="x"></div>
+                             title="Удалить контакт"
+                             @click="confirmRemove(contact)"><img src="icon-close.png"
+                                                                  alt="x"></div>
                     </td>
                 </tr>
 
@@ -153,7 +163,7 @@
                                id="all-checkbox-bottom"
                                v-model="checkedAll"
                                @click="checkAll"></th>
-                    <th id="checked-counter-bottom">{{checkedCount}}</th>
+                    <th id="checked-counter-bottom">{{checkedContactsCount}} / {{filteredContactsCount}}</th>
                 </tr>
                 </tfoot>
             </table>
@@ -161,12 +171,14 @@
     </div>
 
     <div id="message-dialog"
+         ref="messageDialog"
          class="modal"
          tabindex="-1"
          role="dialog"
          aria-labelledby="exampleModalLabel"
          aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog"
+             role="document">
             <div class="modal-content">
                 <div class="modal-header text-white">
                     <h5 class="modal-title">Сообщение</h5>
@@ -188,23 +200,28 @@
         </div>
     </div>
 
-    <div id="confirm-dialog"
+    <div ref="confirmDialogRemoveContact"
          class="modal"
          tabindex="-1"
          role="dialog"
          aria-labelledby="exampleModalLabel"
          aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog"
+             role="document">
             <div class="modal-content">
                 <div class="modal-header text-white">
                     <h5 class="modal-title">Запрос подтверждения</h5>
-                    <button type="button" class="close"
+                    <button type="button"
+                            class="close"
                             data-dismiss="modal"
                             aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 </div>
-                <div class="modal-body bg-dark text-white"
-                     id="confirm-dialog_message">
+                <div class="modal-body bg-dark text-white">
+                    {{confirmRemoveContact.message}}<br>
+                    {{confirmRemoveContact.family}}<br>
+                    {{confirmRemoveContact.name}}<br>
+                    {{confirmRemoveContact.phone}}
                 </div>
                 <div class="modal-footer bg-dark text-white">
                     <button type="button"
@@ -213,7 +230,43 @@
                     </button>
                     <button type="button"
                             class="button btn btn-primary"
-                            id="confirm-dialog_ok">Подтвердить
+                            @click="removeContact">Удалить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirm-dialog"
+         ref="confirmDialog"
+         class="modal"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog"
+             role="document">
+            <div class="modal-content">
+                <div class="modal-header text-white">
+                    <h5 class="modal-title">Запрос подтверждения</h5>
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body bg-dark text-white"
+                     id="confirm-dialog_message"
+                     v-text="confirmDialogMessage">
+                </div>
+                <div class="modal-footer bg-dark text-white">
+                    <button type="button"
+                            class="button btn btn-secondary"
+                            data-dismiss="modal">Отменить
+                    </button>
+                    <button type="button"
+                            class="button btn btn-primary"
+                            id="confirm-dialog_ok">{{}}
                     </button>
                 </div>
             </div>
@@ -221,6 +274,7 @@
     </div>
 
     <div id="edit-dialog"
+         ref="editDialog"
          class="modal"
          tabindex="-1"
          role="dialog"

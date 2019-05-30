@@ -1,10 +1,29 @@
 "use strict";
 
 (function () {
+
+    function getContactString(number) {
+        var twoDigits = number % 100;
+        var lastDigit = number % 10;
+
+        if ((twoDigits >= 5 && twoDigits <= 20) || (lastDigit === 0) || (lastDigit >= 5 && lastDigit <= 9)) {
+            return "контактов";
+        } else if (lastDigit === 1) {
+            return "контакт";
+        } else if (lastDigit >= 2 && lastDigit <= 4) {
+            return "контакта";
+        }
+
+        return "хм..мммм";
+    }
+
+    var phoneRegexp = /^(\+[0-9]+)?([(][0-9]+[)])?([\-0-9]+)?[0-9]$/;
+
     new Vue({
         el: "#App",
         data: {
             contacts: [
+                {id: 0, family: "Козлов", name: "Генрих", phone: "103987", checked: false},
                 {id: 1, family: "Иванов", name: "Василий", phone: "123321", checked: false},
                 {id: 2, family: "Васильев", name: "Дмитрий", phone: "234234", checked: false},
                 {id: 3, family: "Дмитриев", name: "Иоган", phone: "345345", checked: false},
@@ -34,17 +53,33 @@
             newContact: {
                 family: "",
                 name: "",
-                phone: ""
+                phone: "",
+                isInvalidFamily: false,
+                isInvalidName: false,
+                isInvalidPhone: false,
+                invalidPhoneFeedback: ""
             },
             editContact: {
                 family: "",
                 name: "",
-                phone: ""
+                phone: "",
+                isInvalidFamily: false,
+                isInvalidName: false,
+                isInvalidPhone: false,
+                invalidPhoneFeedback: ""
             },
-            id: 0,
+            id: 26,
             filterString: "",
             isFilter: false,
             checkedAll: false,
+            contactForRemove: {},
+            contactForEdit: {},
+            confirmRemoveContact: {
+                message: "",
+                family: "",
+                name: "",
+                phone: ""
+            },
             confirmDialogMessage: "",
             warningDialogMessage: ""
         },
@@ -67,7 +102,7 @@
                     }
                 );
             },
-            checkedCount: function () {
+            checkedContactsCount: function () {
                 return this.filteredContacts.reduce(
                     function (number, contact) {
                         if (contact.checked) {
@@ -76,6 +111,23 @@
                         return number;
                     }, 0
                 );
+            },
+            filteredContactsCount: function () {
+                if(this.contacts.length === 0) {
+                    $(this.$refs.searchInput).popover("disable");
+                    $(this.$refs.searchInput).popover("hide");
+                    return 0;
+                }
+
+                if(this.filteredContacts.length > 0) {
+                    $(this.$refs.searchInput).popover("disable");
+                    $(this.$refs.searchInput).popover("hide");
+                }else{
+                    $(this.$refs.searchInput).popover("enable");
+                    $(this.$refs.searchInput).popover("show");
+                }
+
+                return this.filteredContacts.length;
             }
         },
         methods: {
@@ -116,6 +168,88 @@
                 this.newContact.family = contact.family;
                 this.newContact.name = contact.name;
                 this.$refs.newPhone.focus();
+            },
+            changeContact: function(contact){
+                this.editContact.family = contact.family;
+                this.editContact.name = contact.name;
+                this.editContact.phone = contact.phone;
+                //this.$refs.newPhone.focus();
+            },
+            havePhone: function(phoneNumber) {
+                var newPhone = phoneNumber.trim()
+                    .replace(/[+]/g, "")
+                    .replace(/[(]/g, "")
+                    .replace(/[)]/g, "")
+                    .replace(/[-]/g, "");
+
+                var isPhone = false;
+
+                this.contacts.forEach(function (contact) {
+                    var phoneInRow = contact.phone.trim()
+                                .replace(/[+]/g, "")
+                                .replace(/[(]/g, "")
+                                .replace(/[)]/g, "")
+                                .replace(/[-]/g, "");
+                    if (phoneInRow === newPhone) {
+                        isPhone = true;
+                        return false;
+                    }
+                });
+
+                return isPhone;
+            },
+            isCorrectPhone: function(phoneNumber){
+                return phoneRegexp.test(phoneNumber);
+            },
+            addContact: function(){
+                this.newContact.isInvalidFamily = false;
+                this.newContact.isInvalidName = false;
+                this.newContact.isInvalidPhone = false;
+
+                if (this.newContact.family === "" && this.newContact.name === "") {
+                    this.newContact.isInvalidFamily = true;
+                    this.newContact.isInvalidName = true;
+                }
+
+                if (this.newContact.phone.trim().length === 0) {
+                    this.newContact.isInvalidPhone = true;
+                    this.newContact.invalidPhoneFeedback = "Нет номера телефона.";
+                } else if (!this.isCorrectPhone(this.newContact.phone.trim())) {
+                    this.newContact.isInvalidPhone = true;
+                    this.newContact.invalidPhoneFeedback = "Некорректный номер телефона.";
+                } else if (this.havePhone(this.newContact.phone)) {
+                    this.newContact.isInvalidPhone = true;
+                    this.newContact.invalidPhoneFeedback = "Такой номер телефона уже есть.";
+                }
+
+                if (this.newContact.isInvalidFamily || this.newContact.isInvalidName || this.newContact.isInvalidPhone) {
+                    return;
+                }
+
+                var contact = {};
+                contact.id = this.id;
+                contact.family = this.newContact.family;
+                contact.name = this.newContact.name;
+                contact.phone = this.newContact.phone;
+                contact.checked = false;
+
+                this.contacts.push(contact);
+
+                this.id++;
+            },
+            removeContact: function(){
+                var index = this.contacts.indexOf(this.contactForRemove);
+                this.contacts.splice(index, 1);
+                $(this.$refs.confirmDialogRemoveContact).modal("hide");
+            },
+            confirmRemove: function(contact){
+                this.confirmRemoveContact.message = "Вы действительно хотите удалить контакт?";
+                this.confirmRemoveContact.family = contact.family;
+                this.confirmRemoveContact.name = contact.name;
+                this.confirmRemoveContact.phone = contact.phone;
+
+                $(this.$refs.confirmDialogRemoveContact).modal("show");
+                this.contactForRemove = contact;
             }
         }
     });
@@ -199,7 +333,7 @@
         }
 
         function filterRows(searchingString) {
-            var str = searchingString.toLowerCase().trim();
+        /*    var str = searchingString.toLowerCase().trim();
 
             searchResetButton.toggleClass("visible-button", str.length !== 0);
 
@@ -246,7 +380,7 @@
             setRowNumbers();
             showCheckedRowsNumber();
 
-            filterKey = false;
+            filterKey = false;*/
         }
 
         function callFiltering() {
@@ -470,7 +604,7 @@
 
         var phoneRegexp = /^(\+[0-9]+)?([(][0-9]+[)])?([\-0-9]+)?[0-9]$/;
 
-        $(addButton).click(function () {
+        /*$(addButton).click(function () {
             var isInvalid = false;
 
             if (addDialogInputFamily.val().trim() === "" && addDialogInputName.val().trim() === "") {
@@ -510,7 +644,7 @@
             addDialogInputName.val("");
             addDialogInputPhone.val("");
             showCheckedRowsNumber();
-        });
+        });*/
 
         $(editDialogCancelButton).click(function () {
             editDialog.modal("hide");
@@ -614,55 +748,9 @@
             createRow(5, "Скарлетсон", "Рагнар", "567567");
             createRow(6, "Рагнарсон", "Сигурд", "678678");
             createRow(7, "Сигурдсон", "Снорри", "789789");
-            createRow(8, "Стурлуссон", "Снорри", "890890");
-            createRow(9, "Барбаросса", "Фридрих", "779988");
-            createRow(10, "Арагонский", "Фердинанд", "123456");
-            createRow(11, "Македонский", "Александр", "112233");
-            createRow(12, "Итакский", "Одиссей", "123456789");
-            createRow(13, "Африканский", "Сципион", "123456123");
-            createRow(14, "Кортес", "Эрнан", "7654321");
-            createRow(15, "Юлий Цезарь", "Гай", "123123123");
-            createRow(16, "", "Ксенофонт", "7775773");
-            createRow(17, "", "Фукидид", "7775772");
-            createRow(18, "", "Геродод", "7775771");
-            createRow(19, "", "Аристотель", "5775773");
-            createRow(20, "", "Платон", "5775772");
-            createRow(21, "Плюшкины", "", "123771");
-            createRow(22, "Неваляшкины", "", "123772");
-            createRow(23, "Поваляшкины", "", "123773");
-            createRow(24, "Деточкины", "", "123774");
-            createRow(25, "Мышкины", "", "123775");
         }
 
-        App.contacts = [
-            {id: 1, family: "Иванов", name: "Василий", phone: "123321"},
-            {id: 2, family: "Васильев", name: "Дмитрий", phone: "234234"},
-            {id: 3, family: "Дмитриев", name: "Иоган", phone: "345345"},
-            {id: 4, family: "Йохансон", name: "Скарлетт", phone: "456456"},
-            {id: 5, family: "Скарлетсон", name: "Рагнар", phone: "567567"},
-            {id: 6, family: "Рагнарсон", name: "Сигурд", phone: "678678"},
-            {id: 7, family: "Сигурдсон", name: "Снорри", phone: "789789"},
-            {id: 8, family: "Стурлуссон", name: "Снорри", phone: "890890"},
-            {id: 9, family: "Барбаросса", name: "Фридрих", phone: "779988"},
-            {id: 10, family: "Арагонский", name: "Фердинанд", phone: "123456"},
-            {id: 11, family: "Македонский", name: "Александр", phone: "112233"},
-            {id: 12, family: "Итакский", name: "Одиссей", phone: "123456789"},
-            {id: 13, family: "Африканский", name: "Сципион", phone: "123456123"},
-            {id: 14, family: "Кортес", name: "Эрнан", phone: "7654321"},
-            {id: 15, family: "Юлий Цезарь", name: "Гай", phone: "123123123"},
-            {id: 16, family: "", name: "Ксенофонт", phone: "7775773"},
-            {id: 17, family: "", name: "Фукидид", phone: "7775772"},
-            {id: 18, family: "", name: "Геродод", phone: "7775771"},
-            {id: 19, family: "", name: "Аристотель", phone: "5775773"},
-            {id: 20, family: "", name: "Платон", phone: "5775772"},
-            {id: 21, family: "Плюшкины", name: "", phone: "123771"},
-            {id: 22, family: "Неваляшкины", name: "", phone: "123772"},
-            {id: 23, family: "Поваляшкины", name: "", phone: "123773"},
-            {id: 24, family: "Деточкины", name: "", phone: "123774"},
-            {id: 25, family: "Мышкины", name: "", phone: "123775"}
-        ];
-
-        createTestContacts();
+        //createTestContacts();
 
         $('[data-toggle="tooltip"]').tooltip({container: 'body'});
         textSearchInput.popover({container: 'body'});
