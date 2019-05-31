@@ -361,13 +361,15 @@
                     }
                 );
 
-                var i = 0;
                 this.isEditing = false;
 
+                var i = 0;
+                var self = this;
+
                 var timerId = setInterval(function () {
-                    if (!app.isEditing) {
-                        app.isEditing = true;
-                        app.editContact(checkedContacts[i]);
+                    if (!self.isEditing) {
+                        self.isEditing = true;
+                        self.editContact(checkedContacts[i]);
                         i++;
                     }
                     if (i >= checkedContacts.length) {
