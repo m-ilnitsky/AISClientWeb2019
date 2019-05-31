@@ -66,6 +66,10 @@
     min-width: 98px;
 }
 
+[v-cloak] {
+    display: none;
+}
+
 
 /*Круглые кнопки*/
 
@@ -80,8 +84,6 @@
     margin: 1px 5px;
     cursor: pointer;
     background-color: orangered;
-
-    /*margin: 6px 7px 8px 10px;*/
     line-height: 15px;
 }
 
@@ -129,35 +131,9 @@
     color: #343a40;
 }
 
-/*.modal .button:focus,*/
-/*.phone-book .button:focus {*/
-/*    border-color: white;*/
-/*}*/
-
-/*.modal .button:hover,*/
-/*.phone-book .button:hover {*/
-/*    background-color: red;*/
-/*    color: white;*/
-/*}*/
-
 .phone-book .add-button {
     margin-left: 0;
 }
-
-/*.phone-book .add-button:hover {*/
-/*    background-color: #22fc01;*/
-/*    color: #343a40;*/
-/*}*/
-
-/*.phone-book .edit-button:hover {*/
-/*    background-color: yellow;*/
-/*    color: #343a40;*/
-/*}*/
-
-/*.phone-book .delete-button:hover {*/
-/*    background-color: red;*/
-/*    color: #343a40;*/
-/*}*/
 
 
 /*Поле ввода*/

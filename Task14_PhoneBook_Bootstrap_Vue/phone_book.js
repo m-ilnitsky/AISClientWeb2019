@@ -1,7 +1,6 @@
 "use strict";
 
 (function () {
-
     function getContactString(number) {
         var twoDigits = number % 100;
         var lastDigit = number % 10;
@@ -22,33 +21,7 @@
     var app = new Vue({
         el: "#App",
         data: {
-            contacts: [
-                {id: 0, family: "Иванов", name: "Василий", phone: "123321", checked: false},
-                {id: 1, family: "Васильев", name: "Дмитрий", phone: "234234", checked: false},
-                {id: 2, family: "Дмитриев", name: "Иоган", phone: "345345", checked: false},
-                {id: 3, family: "Йохансон", name: "Скарлетт", phone: "456456", checked: false},
-                {id: 4, family: "Скарлетсон", name: "Рагнар", phone: "567567", checked: false},
-                {id: 5, family: "Рагнарсон", name: "Сигурд", phone: "678678", checked: false},
-                {id: 6, family: "Сигурдсон", name: "Снорри", phone: "789789", checked: false},
-                {id: 7, family: "Стурлуссон", name: "Снорри", phone: "890890", checked: false},
-                {id: 8, family: "Барбаросса", name: "Фридрих", phone: "779988", checked: false},
-                {id: 9, family: "Арагонский", name: "Фердинанд", phone: "123456", checked: false},
-                {id: 10, family: "Македонский", name: "Александр", phone: "112233", checked: false},
-                {id: 11, family: "Итакский", name: "Одиссей", phone: "123456789", checked: false},
-                {id: 12, family: "Африканский", name: "Сципион", phone: "123456123", checked: false},
-                {id: 13, family: "Кортес", name: "Эрнан", phone: "7654321", checked: false},
-                {id: 14, family: "Юлий Цезарь", name: "Гай", phone: "123123123", checked: false},
-                {id: 15, family: "", name: "Ксенофонт", phone: "7775773", checked: false},
-                {id: 16, family: "", name: "Фукидид", phone: "7775772", checked: false},
-                {id: 17, family: "", name: "Геродод", phone: "7775771", checked: false},
-                {id: 18, family: "", name: "Аристотель", phone: "5775773", checked: false},
-                {id: 19, family: "", name: "Платон", phone: "5775772", checked: false},
-                {id: 20, family: "Плюшкины", name: "", phone: "123771", checked: false},
-                {id: 21, family: "Неваляшкины", name: "", phone: "123772", checked: false},
-                {id: 22, family: "Поваляшкины", name: "", phone: "123773", checked: false},
-                {id: 23, family: "Деточкины", name: "", phone: "123774", checked: false},
-                {id: 24, family: "Мышкины", name: "", phone: "123775", checked: false}
-            ],
+            contacts: [],
             newContact: {
                 family: "",
                 name: "",
@@ -69,7 +42,7 @@
                 invalidPhoneFeedback: ""
             },
             isEditing: false,
-            id: 26,
+            id: 0,
             filterString: "",
             isFilter: false,
             checkedAll: false,
@@ -99,9 +72,9 @@
 
                 return this.contacts.filter(
                     function (contact) {
-                        return contact.family.includes(str)
-                            || contact.name.includes(str)
-                            || contact.phone.includes(str);
+                        return contact.family.indexOf(str) >= 0
+                            || contact.name.indexOf(str) >= 0
+                            || contact.phone.indexOf(str) >= 0;
                     }
                 );
             },
@@ -141,7 +114,7 @@
                         element.checked = true;
                     });
                 } else {
-                    if (this.contacts.every(function (element, index, array) {
+                    if (this.contacts.every(function (element) {
                         return element.checked;
                     })) {
                         this.checkedAll = false;
@@ -158,8 +131,8 @@
             },
             check: function (contact) {
                 contact.checked = !contact.checked;
-                if (this.checkedAll && this.contacts.some(function (element, index, array) {
-                    return element.checked == false;
+                if (this.checkedAll && this.contacts.some(function (element) {
+                    return !element.checked;
                 })) {
                     this.checkedAll = false;
                 }
@@ -172,7 +145,7 @@
                 this.newContact.name = contact.name;
                 this.$refs.newPhone.focus();
             },
-            havePhone: function (phoneNumber) {
+            hasPhone: function (phoneNumber) {
                 var newPhone = phoneNumber.trim()
                     .replace(/[+]/g, "")
                     .replace(/[(]/g, "")
@@ -198,6 +171,18 @@
             isCorrectPhone: function (phoneNumber) {
                 return phoneRegexp.test(phoneNumber);
             },
+            loadContact: function (family, name, phone) {
+                var contact = {};
+
+                contact.id = this.id;
+                contact.family = family;
+                contact.name = name;
+                contact.phone = phone;
+                contact.checked = false;
+
+                this.contacts.push(contact);
+                this.id++;
+            },
             addContact: function () {
                 this.newContact.isInvalidFamily = false;
                 this.newContact.isInvalidName = false;
@@ -214,20 +199,26 @@
                 } else if (!this.isCorrectPhone(this.newContact.phone.trim())) {
                     this.newContact.isInvalidPhone = true;
                     this.newContact.invalidPhoneFeedback = "Некорректный номер телефона.";
-                } else if (this.havePhone(this.newContact.phone)) {
+                } else if (this.hasPhone(this.newContact.phone)) {
                     this.newContact.isInvalidPhone = true;
                     this.newContact.invalidPhoneFeedback = "Такой номер телефона уже есть.";
                 }
 
-                if (this.newContact.isInvalidFamily || this.newContact.isInvalidName || this.newContact.isInvalidPhone) {
+                if (this.newContact.isInvalidFamily || this.newContact.isInvalidName) {
+                    this.$refs.newFamily.focus();
+                    return;
+                }
+
+                if (this.newContact.isInvalidPhone) {
+                    this.$refs.newPhone.focus();
                     return;
                 }
 
                 var contact = {};
                 contact.id = this.id;
-                contact.family = this.newContact.family;
-                contact.name = this.newContact.name;
-                contact.phone = this.newContact.phone;
+                contact.family = this.newContact.family.trim();
+                contact.name = this.newContact.name.trim();
+                contact.phone = this.newContact.phone.trim();
                 contact.checked = false;
 
                 this.contacts.push(contact);
@@ -236,11 +227,12 @@
                 this.createToast("Создание", "Добавлен контакт: " + this.newContact.family + " " + this.newContact.name + " " + this.newContact.phone);
 
                 this.newContact.phone = "";
+                this.$refs.newPhone.focus();
             },
             removeContact: function () {
                 var index = this.contacts.indexOf(this.contactForRemove);
 
-                this.createToast("Удаление", "Удалён контакт:" + this.contacts[index].family + " " + this.contacts[index].name + " " + this.contacts[index].phone);
+                this.createToast("Удаление", "Удалён контакт: " + this.contacts[index].family + " " + this.contacts[index].name + " " + this.contacts[index].phone);
 
                 this.contacts.splice(index, 1);
 
@@ -262,7 +254,7 @@
 
                 this.contacts = this.contacts.filter(
                     function (contact) {
-                        return !(contact.checked && (contact.family.includes(str) || contact.name.includes(str) || contact.phone.includes(str)));
+                        return !(contact.checked && (contact.family.indexOf(str) >= 0 || contact.name.indexOf(str) >= 0 || contact.phone.indexOf(str) >= 0));
                     }
                 );
 
@@ -302,28 +294,42 @@
                 } else if (!this.isCorrectPhone(this.editedContact.phone.trim())) {
                     this.editedContact.isInvalidPhone = true;
                     this.editedContact.invalidPhoneFeedback = "Некорректный номер телефона.";
-                } else if ((this.editedContact.initPhone.trim() !== this.editedContact.phone.trim()) && this.havePhone(this.editedContact.phone)) {
+                } else if ((this.editedContact.initPhone.trim() !== this.editedContact.phone.trim()) && this.hasPhone(this.editedContact.phone)) {
                     this.editedContact.isInvalidPhone = true;
                     this.editedContact.invalidPhoneFeedback = "Такой номер телефона уже есть.";
                 }
 
-                if (this.editedContact.isInvalidFamily || this.editedContact.isInvalidName || this.editedContact.isInvalidPhone) {
+                if (this.editedContact.isInvalidFamily || this.editedContact.isInvalidName) {
+                    this.$refs.editFamily.focus();
                     return;
                 }
 
-                this.contactForEdit.family = this.editedContact.family;
-                this.contactForEdit.name = this.editedContact.name;
-                this.contactForEdit.phone = this.editedContact.phone;
-                this.contactForEdit.checked = false;
+                if (this.editedContact.isInvalidPhone) {
+                    this.$refs.editPhone.focus();
+                    return;
+                }
+
+                if (this.editedContact.initFamily.trim() !== this.editedContact.family.trim()
+                    || this.editedContact.initName.trim() !== this.editedContact.name.trim()
+                    || this.editedContact.initPhone.trim() !== this.editedContact.phone.trim()) {
+                    this.contactForEdit.family = this.editedContact.family.trim();
+                    this.contactForEdit.name = this.editedContact.name.trim();
+                    this.contactForEdit.phone = this.editedContact.phone.trim();
+                    this.contactForEdit.checked = false;
+
+                    this.createToast("Редактирование", "Изменён контакт: " + this.editedContact.family + " " + this.editedContact.name + " " + this.editedContact.phone);
+                }
 
                 $(this.$refs.editDialog).modal("hide");
                 this.isEditing = false;
-                this.createToast("Редактирование", "Изменён контакт: " + this.editedContact.family + " " + this.editedContact.name + " " + this.editedContact.phone);
             },
             editContact: function (contact) {
                 this.editedContact.family = contact.family;
                 this.editedContact.name = contact.name;
                 this.editedContact.phone = contact.phone;
+
+                this.editedContact.initFamily = contact.family;
+                this.editedContact.initName = contact.name;
                 this.editedContact.initPhone = contact.phone;
 
                 this.editedContact.isInvalidFamily = false;
@@ -333,6 +339,7 @@
                 this.contactForEdit = contact;
 
                 $(this.$refs.editDialog).modal("show");
+                this.$refs.editPhone.focus();
             },
             confirmEditChecked: function () {
                 if (this.checkedContactsCount === 0) {
@@ -386,7 +393,7 @@
 
                 $(this.$refs.confirmDialog).modal("hide");
             },
-            createToast: function(title, message) {
+            createToast: function (title, message) {
                 var divToast = $("<div></div>").addClass("toast")
                     .prop("role", "alert")
                     .prop("aria-live", "assertive")
@@ -423,6 +430,36 @@
     });
 
     $(document).ready(function () {
+        function createTestContacts() {
+            app.loadContact("Иванов", "Василий", "123321");
+            app.loadContact("Васильев", "Дмитрий", "234234");
+            app.loadContact("Дмитриев", "Иоган", "345345");
+            app.loadContact("Йохансон", "Скарлетт", "456456");
+            app.loadContact("Скарлетсон", "Рагнар", "567567");
+            app.loadContact("Рагнарсон", "Сигурд", "678678");
+            app.loadContact("Сигурдсон", "Снорри", "789789");
+            app.loadContact("Стурлуссон", "Снорри", "890890");
+            app.loadContact("Барбаросса", "Фридрих", "779988");
+            app.loadContact("Арагонский", "Фердинанд", "123456");
+            app.loadContact("Македонский", "Александр", "112233");
+            app.loadContact("Итакский", "Одиссей", "123456789");
+            app.loadContact("Африканский", "Сципион", "123456123");
+            app.loadContact("Кортес", "Эрнан", "7654321");
+            app.loadContact("Юлий Цезарь", "Гай", "123123123");
+            app.loadContact("", "Ксенофонт", "7775773");
+            app.loadContact("", "Фукидид", "7775772");
+            app.loadContact("", "Геродод", "7775771");
+            app.loadContact("", "Аристотель", "5775773");
+            app.loadContact("", "Платон", "5775772");
+            app.loadContact("Плюшкины", "", "123771");
+            app.loadContact("Неваляшкины", "", "123772");
+            app.loadContact("Поваляшкины", "", "123773");
+            app.loadContact("Деточкины", "", "123774");
+            app.loadContact("Мышкины", "", "123775");
+        }
+
+        createTestContacts();
+
         $('[data-toggle="tooltip"]').tooltip({container: 'body'});
 
         $(app.$refs.searchInput).popover({container: 'body'});

@@ -26,6 +26,7 @@
                            data-toggle="tooltip"
                            data-placement="auto"
                            title="Можно не вводить если введено имя"
+                           ref="newFamily"
                            v-model="newContact.family"
                            :class="{'is-invalid': newContact.isInvalidFamily}">
                     <div class="invalid-feedback">
@@ -120,17 +121,17 @@
                                id="all-checkbox-top"
                                v-model="checkedAll"
                                @click="checkAll"></th>
-                    <th id="checked-counter-top">{{checkedContactsCount}} / {{filteredContactsCount}}</th>
+                    <th id="checked-counter-top" v-cloak v-text="checkedContactsCount+' / '+filteredContactsCount"></th>
                 </tr>
                 </thead>
                 <tbody id="table-body">
-                <tr v-for="(contact, index) in filteredContacts"
+                <tr v-cloak v-for="(contact, index) in filteredContacts"
                     :key="contact.id"
                     :class="{'checked-row': contact.checked}">
-                    <td class="column-number">{{index+1}}</td>
-                    <td class="column-family">{{contact.family}}</td>
-                    <td class="column-name">{{contact.name}}</td>
-                    <td class="column-phone">{{contact.phone}}</td>
+                    <td class="column-number" v-cloak v-text="index+1"></td>
+                    <td class="column-family" v-cloak v-text="contact.family"></td>
+                    <td class="column-name" v-cloak v-text="contact.name"></td>
+                    <td class="column-phone" v-cloak v-text="contact.phone"></td>
                     <td class="column-checkbox">
                         <input type="checkbox"
                                class="checkbox"
@@ -165,7 +166,8 @@
                                id="all-checkbox-bottom"
                                v-model="checkedAll"
                                @click="checkAll"></th>
-                    <th id="checked-counter-bottom">{{checkedContactsCount}} / {{filteredContactsCount}}</th>
+                    <th id="checked-counter-bottom" v-cloak
+                        v-text="checkedContactsCount+' / '+filteredContactsCount"></th>
                 </tr>
                 </tfoot>
             </table>
@@ -296,6 +298,7 @@
                                class="form-control"
                                name="family"
                                id="edit-dialog_family"
+                               ref="editFamily"
                                v-model="editedContact.family"
                                :class="{'is-invalid': editedContact.isInvalidFamily}">
                         <div class="invalid-feedback">
@@ -320,6 +323,7 @@
                                class="form-control"
                                name="phone"
                                id="edit-dialog_phone"
+                               ref="editPhone"
                                v-model="editedContact.phone"
                                :class="{'is-invalid': editedContact.isInvalidPhone}">
                         <div class="invalid-feedback"
