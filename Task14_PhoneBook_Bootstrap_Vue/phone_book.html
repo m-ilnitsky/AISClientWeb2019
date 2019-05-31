@@ -143,8 +143,9 @@
                              @click="copyContact(contact)"><img src="icon-add.png"
                                                                 alt="a"></div>
                         <div class="circle-button edit-button"
-                             title="Изменить контакт"><img src="icon-edit.png"
-                                                           alt="e"></div>
+                             title="Изменить контакт"
+                             @click="editContact(contact)"><img src="icon-edit.png"
+                                                                alt="e"></div>
                         <div class="circle-button delete-button"
                              title="Удалить контакт"
                              @click="confirmRemove(contact)"><img src="icon-close.png"
@@ -272,8 +273,7 @@
         </div>
     </div>
 
-    <div id="edit-dialog"
-         ref="editDialog"
+    <div ref="editDialog"
          class="modal"
          tabindex="-1"
          role="dialog"
@@ -295,7 +295,9 @@
                         <input type="text"
                                class="form-control"
                                name="family"
-                               id="edit-dialog_family">
+                               id="edit-dialog_family"
+                               v-model="editedContact.family"
+                               :class="{'is-invalid': editedContact.isInvalidFamily}">
                         <div class="invalid-feedback">
                             Нет ни имени ни фамилии.
                         </div>
@@ -305,7 +307,9 @@
                         <input type="text"
                                class="form-control"
                                name="name"
-                               id="edit-dialog_name">
+                               id="edit-dialog_name"
+                               v-model="editedContact.name"
+                               :class="{'is-invalid': editedContact.isInvalidName}">
                         <div class="invalid-feedback">
                             Нет ни имени ни фамилии.
                         </div>
@@ -315,10 +319,12 @@
                         <input type="text"
                                class="form-control"
                                name="phone"
-                               id="edit-dialog_phone">
+                               id="edit-dialog_phone"
+                               v-model="editedContact.phone"
+                               :class="{'is-invalid': editedContact.isInvalidPhone}">
                         <div class="invalid-feedback"
                              id="edit-dialog_phone-feedback">
-                            Нет номера телефона.
+                            {{editedContact.invalidPhoneFeedback}}
                         </div>
                     </div>
                 </div>
@@ -329,7 +335,8 @@
                     </button>
                     <button type="button"
                             class="button btn btn-primary"
-                            id="edit-dialog_ok">Применить
+                            id="edit-dialog_ok"
+                            @click="applyChange">Применить
                     </button>
                 </div>
             </div>

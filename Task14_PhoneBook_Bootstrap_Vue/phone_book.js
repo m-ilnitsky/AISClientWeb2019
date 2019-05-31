@@ -19,36 +19,35 @@
 
     var phoneRegexp = /^(\+[0-9]+)?([(][0-9]+[)])?([\-0-9]+)?[0-9]$/;
 
-    new Vue({
+    var app = new Vue({
         el: "#App",
         data: {
             contacts: [
-                {id: 0, family: "Козлов", name: "Генрих", phone: "103987", checked: false},
-                {id: 1, family: "Иванов", name: "Василий", phone: "123321", checked: false},
-                {id: 2, family: "Васильев", name: "Дмитрий", phone: "234234", checked: false},
-                {id: 3, family: "Дмитриев", name: "Иоган", phone: "345345", checked: false},
-                {id: 4, family: "Йохансон", name: "Скарлетт", phone: "456456", checked: false},
-                {id: 5, family: "Скарлетсон", name: "Рагнар", phone: "567567", checked: false},
-                {id: 6, family: "Рагнарсон", name: "Сигурд", phone: "678678", checked: false},
-                {id: 7, family: "Сигурдсон", name: "Снорри", phone: "789789", checked: false},
-                {id: 8, family: "Стурлуссон", name: "Снорри", phone: "890890", checked: false},
-                {id: 9, family: "Барбаросса", name: "Фридрих", phone: "779988", checked: false},
-                {id: 10, family: "Арагонский", name: "Фердинанд", phone: "123456", checked: false},
-                {id: 11, family: "Македонский", name: "Александр", phone: "112233", checked: false},
-                {id: 12, family: "Итакский", name: "Одиссей", phone: "123456789", checked: false},
-                {id: 13, family: "Африканский", name: "Сципион", phone: "123456123", checked: false},
-                {id: 14, family: "Кортес", name: "Эрнан", phone: "7654321", checked: false},
-                {id: 15, family: "Юлий Цезарь", name: "Гай", phone: "123123123", checked: false},
-                {id: 16, family: "", name: "Ксенофонт", phone: "7775773", checked: false},
-                {id: 17, family: "", name: "Фукидид", phone: "7775772", checked: false},
-                {id: 18, family: "", name: "Геродод", phone: "7775771", checked: false},
-                {id: 19, family: "", name: "Аристотель", phone: "5775773", checked: false},
-                {id: 20, family: "", name: "Платон", phone: "5775772", checked: false},
-                {id: 21, family: "Плюшкины", name: "", phone: "123771", checked: false},
-                {id: 22, family: "Неваляшкины", name: "", phone: "123772", checked: false},
-                {id: 23, family: "Поваляшкины", name: "", phone: "123773", checked: false},
-                {id: 24, family: "Деточкины", name: "", phone: "123774", checked: false},
-                {id: 25, family: "Мышкины", name: "", phone: "123775", checked: false}
+                {id: 0, family: "Иванов", name: "Василий", phone: "123321", checked: false},
+                {id: 1, family: "Васильев", name: "Дмитрий", phone: "234234", checked: false},
+                {id: 2, family: "Дмитриев", name: "Иоган", phone: "345345", checked: false},
+                {id: 3, family: "Йохансон", name: "Скарлетт", phone: "456456", checked: false},
+                {id: 4, family: "Скарлетсон", name: "Рагнар", phone: "567567", checked: false},
+                {id: 5, family: "Рагнарсон", name: "Сигурд", phone: "678678", checked: false},
+                {id: 6, family: "Сигурдсон", name: "Снорри", phone: "789789", checked: false},
+                {id: 7, family: "Стурлуссон", name: "Снорри", phone: "890890", checked: false},
+                {id: 8, family: "Барбаросса", name: "Фридрих", phone: "779988", checked: false},
+                {id: 9, family: "Арагонский", name: "Фердинанд", phone: "123456", checked: false},
+                {id: 10, family: "Македонский", name: "Александр", phone: "112233", checked: false},
+                {id: 11, family: "Итакский", name: "Одиссей", phone: "123456789", checked: false},
+                {id: 12, family: "Африканский", name: "Сципион", phone: "123456123", checked: false},
+                {id: 13, family: "Кортес", name: "Эрнан", phone: "7654321", checked: false},
+                {id: 14, family: "Юлий Цезарь", name: "Гай", phone: "123123123", checked: false},
+                {id: 15, family: "", name: "Ксенофонт", phone: "7775773", checked: false},
+                {id: 16, family: "", name: "Фукидид", phone: "7775772", checked: false},
+                {id: 17, family: "", name: "Геродод", phone: "7775771", checked: false},
+                {id: 18, family: "", name: "Аристотель", phone: "5775773", checked: false},
+                {id: 19, family: "", name: "Платон", phone: "5775772", checked: false},
+                {id: 20, family: "Плюшкины", name: "", phone: "123771", checked: false},
+                {id: 21, family: "Неваляшкины", name: "", phone: "123772", checked: false},
+                {id: 22, family: "Поваляшкины", name: "", phone: "123773", checked: false},
+                {id: 23, family: "Деточкины", name: "", phone: "123774", checked: false},
+                {id: 24, family: "Мышкины", name: "", phone: "123775", checked: false}
             ],
             newContact: {
                 family: "",
@@ -59,15 +58,17 @@
                 isInvalidPhone: false,
                 invalidPhoneFeedback: ""
             },
-            editContact: {
+            editedContact: {
                 family: "",
                 name: "",
                 phone: "",
+                initPhone: "",
                 isInvalidFamily: false,
                 isInvalidName: false,
                 isInvalidPhone: false,
                 invalidPhoneFeedback: ""
             },
+            isEditing: false,
             id: 26,
             filterString: "",
             isFilter: false,
@@ -170,12 +171,6 @@
                 this.newContact.family = contact.family;
                 this.newContact.name = contact.name;
                 this.$refs.newPhone.focus();
-            },
-            changeContact: function (contact) {
-                this.editContact.family = contact.family;
-                this.editContact.name = contact.name;
-                this.editContact.phone = contact.phone;
-                //this.$refs.newPhone.focus();
             },
             havePhone: function (phoneNumber) {
                 var newPhone = phoneNumber.trim()
@@ -280,6 +275,53 @@
                     $(this.$refs.confirmDialog).modal("show");
                 }
             },
+            applyChange: function () {
+                this.editedContact.isInvalidFamily = false;
+                this.editedContact.isInvalidName = false;
+                this.editedContact.isInvalidPhone = false;
+
+                if (this.editedContact.family === "" && this.editedContact.name === "") {
+                    this.editedContact.isInvalidFamily = true;
+                    this.editedContact.isInvalidName = true;
+                }
+
+                if (this.editedContact.phone.trim().length === 0) {
+                    this.editedContact.isInvalidPhone = true;
+                    this.editedContact.invalidPhoneFeedback = "Нет номера телефона.";
+                } else if (!this.isCorrectPhone(this.editedContact.phone.trim())) {
+                    this.editedContact.isInvalidPhone = true;
+                    this.editedContact.invalidPhoneFeedback = "Некорректный номер телефона.";
+                } else if ((this.editedContact.initPhone.trim() !== this.editedContact.phone.trim()) && this.havePhone(this.editedContact.phone)) {
+                    this.editedContact.isInvalidPhone = true;
+                    this.editedContact.invalidPhoneFeedback = "Такой номер телефона уже есть.";
+                }
+
+                if (this.editedContact.isInvalidFamily || this.editedContact.isInvalidName || this.editedContact.isInvalidPhone) {
+                    return;
+                }
+
+                this.contactForEdit.family = this.editedContact.family;
+                this.contactForEdit.name = this.editedContact.name;
+                this.contactForEdit.phone = this.editedContact.phone;
+                this.contactForEdit.checked = false;
+
+                $(this.$refs.editDialog).modal("hide");
+                isEditing = false;
+            },
+            editContact: function (contact) {
+                this.editedContact.family = contact.family;
+                this.editedContact.name = contact.name;
+                this.editedContact.phone = contact.phone;
+                this.editedContact.initPhone = contact.phone;
+
+                this.editedContact.isInvalidFamily = false;
+                this.editedContact.isInvalidName = false;
+                this.editedContact.isInvalidPhone = false;
+
+                this.contactForEdit = contact;
+
+                $(this.$refs.editDialog).modal("show");
+            },
             confirmEditChecked: function () {
                 if (this.checkedContactsCount === 0) {
                     $(this.$refs.messageDialog).modal("show");
@@ -293,18 +335,39 @@
                 );
 
                 if (this.checkedContactsCount === 1) {
-
+                    this.editContact(checkedContacts[0]);
                 } else {
                     this.confirmDialog.message = "Вы действительно хотите изменить " + this.checkedContactsCount + " " + getContactString(this.checkedContactsCount) + "?";
                     this.confirmDialog.okButtonText = "Изменить";
                     $(this.$refs.confirmDialog).modal("show");
                 }
             },
+            editCheckedContacts: function () {
+                var checkedContacts = this.filteredContacts.filter(
+                    function (contact) {
+                        return contact.checked;
+                    }
+                );
+
+                var i = 0;
+                this.isEditing = false;
+
+                var timerId = setInterval(function () {
+                    if (!this.isEditing) {
+                        this.isEditing = true;
+                        app.editContact(checkedContacts[i]);
+                        i++;
+                    }
+                    if (i >= checkedContacts.length) {
+                        clearInterval(timerId);
+                    }
+                }, 50);
+            },
             confirm: function () {
                 if (this.confirmDialog.okButtonText === "Удалить все") {
                     this.removeCheckedContacts();
                 } else if (this.confirmDialog.okButtonText === "Изменить") {
-
+                    this.editCheckedContacts();
                 }
 
                 $(this.$refs.confirmDialog).modal("hide");
