@@ -22,7 +22,7 @@
                     <label for="add-dialog_family">Фамилия </label>
                     <input type="text" class="form-control"
                            name="family" id="add-dialog_family"
-                           placeholder=" Ввести фамилию"
+                           placeholder="Ввести фамилию"
                            data-toggle="tooltip"
                            data-placement="auto"
                            title="Можно не вводить если введено имя"
@@ -39,7 +39,7 @@
                            class="form-control"
                            name="name"
                            id="add-dialog_name"
-                           placeholder=" Ввести имя"
+                           placeholder="Ввести имя"
                            data-toggle="tooltip"
                            data-placement="auto"
                            title="Можно не вводить если введена фамилия"
@@ -55,7 +55,7 @@
                            class="form-control"
                            name="phone"
                            id="add-dialog_phone"
-                           placeholder=" Ввести телефон"
+                           placeholder="Ввести телефон"
                            data-toggle="tooltip"
                            data-placement="auto"
                            title="Нужен корректный телефонный номер не совпадающий с уже имеющимися"
@@ -94,7 +94,7 @@
                     <input type="text"
                            class="search-input"
                            id="search-input"
-                           placeholder="   Найти"
+                           placeholder="Найти"
                            data-toggle="popover"
                            data-placement="bottom"
                            title="Поиск"
@@ -335,11 +335,10 @@
                 <div class="modal-footer bg-dark text-white">
                     <button type="button"
                             class="button btn btn-secondary"
-                            data-dismiss="modal">Отменить
+                            @click="cancelChange">Отменить
                     </button>
                     <button type="button"
                             class="button btn btn-primary"
-                            id="edit-dialog_ok"
                             @click="applyChange">Применить
                     </button>
                 </div>
